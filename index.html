@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Dash</title>
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-89iH5oJT3aJN+6MxnIh6mBgqTDClve1n/u3xG0myksQ=' 'sha256-2N7slj1mLCuzJSAUg7+dQ+n+H56mpRk6XV9in1j4NyY='; style-src 'unsafe-inline'; img-src 'self' data:; manifest-src 'self'; worker-src 'self'; connect-src https://jm01995.github.io/notes-sync-7k2/latest.enc https://jm01995.github.io/notes-sync-7k2/market.enc https://jm01995.github.io/notes-sync-7k2/live.enc https://api.kraken.com/0/public/Ticker https://api.kraken.com/0/public/Depth; form-action 'none'; base-uri 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-IuY1No0RO7NQtrmK3/JHyeG1N67gXzZCBvf91AkG4Vw=' 'sha256-Gy2jTtjZn1xml4UPjLmzgl6q4iAZvi4hQhHg5myyaq0='; style-src 'unsafe-inline'; img-src 'self' data:; manifest-src 'self'; worker-src 'self'; connect-src https://jm01995.github.io/notes-sync-7k2/latest.enc https://jm01995.github.io/notes-sync-7k2/market.enc https://jm01995.github.io/notes-sync-7k2/live.enc https://api.kraken.com/0/public/Ticker https://api.kraken.com/0/public/Depth; form-action 'none'; base-uri 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="theme-color" content="#0f1720">
 <meta name="color-scheme" content="dark">
@@ -1141,7 +1141,7 @@ html[data-priv="1"] .hm-cell .hm-f{filter:none}
     sleeve: 'A sleeve is one strategy’s share of the account: Trend (momentum weights) or Pullback (buy the dip in an uptrend).',
     'win rate': 'Win rate is the share of closed trades that made money. Read it with profit factor: many small wins can lose to a few big losses.',
     'profit factor': 'Profit factor is gross wins divided by gross losses. Above 1 the closed trades made money overall.',
-    'price alert': 'A price alert is set on this phone only and is checked each time the phone loads new market prices. It cannot trade.',
+    'price alert': 'A price alert is set on this phone only. It is checked on every live price while a price screen is open, and each time the phone loads new market prices. It cannot trade.',
     snapshot: 'A snapshot is the encrypted file the PC uploads with the bot’s state. The phone decrypts it; nothing is sent back.'
   };
   function lblH(t, g) { return GLOSS[g] ? '<div class="lbl">' + esc(t) + '<button type="button" class="why" data-g="' + esc(g) + '" aria-label="What is ' + esc(g) + '?" aria-expanded="false">?</button></div><div class="gloss" hidden>' + esc(GLOSS[g]) + '</div>' : lbl(t); }
@@ -1160,14 +1160,17 @@ html[data-priv="1"] .hm-cell .hm-f{filter:none}
   }
   window.__shellExport = { csv: exportCsv };
   // ---- price alerts, device-only (round 4): {sym, dir:'above'|'below', px, set, hit}; checked whenever this phone loads market prices ----
-  function palerts() { try { var v = JSON.parse(localStorage.getItem('ui_palerts') || '[]'); return Array.isArray(v) ? v : []; } catch (e) { return []; } }
+  function palerts() { try { var v = JSON.parse(localStorage.getItem('ui_palerts') || '[]'); return Array.isArray(v) ? v.filter(function (x) { return !!x && typeof x === 'object' && !Array.isArray(x) && typeof x.sym === 'string'; }) : []; } catch (e) { return []; } }
   function savePalerts(a) { try { localStorage.setItem('ui_palerts', JSON.stringify(a.slice(0, 50))); } catch (e) { } }
+  function paName(x) { return x.dir === 'move' ? 'moves ±' + (isN(x.pct) ? String(x.pct) : '-') + '%' : String(x.dir) + ' ' + price(x.px) + (x.rep === true ? ' (repeat)' : ''); }
+  function paNote(x) { var A = window.AwayAlerts; if (!A || !A.enabled || typeof A.note !== 'function') return ''; var t = ''; try { t = String(A.note(x) || ''); } catch (e) { } return '<span class="la-n" data-la="' + esc(x.sym + '|' + x.set) + '">' + esc(t) + '</span>'; }
+  function paSrc(x) { if (!x || x.src !== 'market') return ''; var C = window.AwayAlerts && window.AwayAlerts._core; var t = '(market price, not live)'; try { if (C && typeof C.mktTag === 'function') t = C.mktTag(x.mat); } catch (e) { } return ' ' + esc(t); }
   function checkPriceAlerts(mk) {
-    var a = palerts(), hit = 0, now = Math.floor(Date.now() / 1000); if (!a.length || !mk) return;
-    a.forEach(function (x) { if (x.hit) return; var c = coin(mk, x.sym); if (!c || !isN(c.last)) return; if ((x.dir === 'above' && c.last >= x.px) || (x.dir === 'below' && c.last <= x.px)) { x.hit = now; x.at = c.last; hit++; } });
+    var a = palerts(), C = window.AwayAlerts && window.AwayAlerts._core, now = Math.floor(Date.now() / 1000); if (!a.length || !mk || !C || typeof C.marketHits !== 'function') return;
+    var r = C.marketHits(a, mk, now, function (s) { var c = coin(mk, s); return c && isN(c.last) ? c.last : null; }), hit = r.hits.length;
     if (!hit) return;
-    savePalerts(a); haptic(); toast(hit + ' price alert' + (hit > 1 ? 's' : '') + ' hit');
-    try { if (window.Notification && Notification.permission === 'granted') a.filter(function (x) { return x.hit === now; }).forEach(function (x) { new Notification(x.sym + ' ' + x.dir + ' ' + price(x.px), { body: 'now ' + price(x.at) + ' (read-only alert from this phone)', tag: 'palert-' + x.sym }); }); } catch (e) { }
+    savePalerts(a); haptic(); toast(hit + ' price alert' + (hit > 1 ? 's' : '') + ' hit ' + r.tag);
+    try { if (window.Notification && Notification.permission === 'granted') r.hits.forEach(function (x) { new Notification(x.sym + ' ' + x.dir + ' ' + price(x.px), { body: price(x.at) + ' ' + r.tag + ' (read-only alert from this phone)', tag: 'palert-' + x.sym }); }); } catch (e) { }
   }
   // ---- "since your last visit" (round 4): the state this phone showed when the app was last put away; never sent anywhere ----
   var seen = { ts: null, equity: null, fills: null, alerts: null, seq: null };
@@ -1676,9 +1679,9 @@ html[data-priv="1"] .hm-cell .hm-f{filter:none}
           (c.candidate_note ? '<div class="mut small" style="margin-top:8px">' + esc(c.candidate_note) + '</div>' : '') + '</div>';
         // price alerts set on this phone (round 4): above / below a price, checked when new market prices load
         var mine = palerts().filter(function (x) { return x.sym === sym; });
-        h += '<div class="card pa">' + lblH('Price alerts on this phone', 'price alert') + (mine.length ? '<div class="list inner">' + mine.map(function (x, i) { return '<div class="fill"><span class="side ' + (x.hit ? (x.dir === 'above' ? 'buy' : 'sell') : '') + '">' + (x.dir === 'above' ? '▲' : '▼') + '</span><span class="m"><b>' + esc(x.dir) + ' ' + price(x.px) + '</b><span class="s">' + (x.hit ? 'HIT ' + when(x.hit) + ' at ' + price(x.at) : 'waiting · set ' + when(x.set) + (isN(last) && x.px ? ' · ' + pct((x.px / last - 1) * 100, 1) + ' from now' : '')) + '</span></span><button type="button" class="ack" data-pa-del="' + esc(x.sym + '|' + x.set) + '" aria-label="Remove alert ' + esc(x.dir + ' ' + price(x.px)) + '">' + I.trash + '</button></div>'; }).join('') + '</div>' : '') +
-          '<form class="parow" data-pa-form="' + esc(sym) + '"><select aria-label="Direction" name="dir"><option value="above">Above</option><option value="below">Below</option></select><input name="px" type="text" inputmode="decimal" placeholder="' + esc(isN(last) ? price(last) : 'price') + '" aria-label="Alert price" autocomplete="off"><button type="submit" class="pri">Add</button></form>' +
-          '<div class="mut small">Checked each time this phone loads new prices (not in the background). It never places an order.</div></div>';
+        h += '<div class="card pa">' + lblH('Price alerts on this phone', 'price alert') + (mine.length ? '<div class="list inner">' + mine.map(function (x, i) { return '<div class="fill"><span class="side ' + (x.hit ? (x.dir === 'above' ? 'buy' : 'sell') : '') + '">' + (x.dir === 'above' ? '▲' : x.dir === 'move' ? '↕' : '▼') + '</span><span class="m"><b>' + esc(paName(x)) + '</b><span class="s">' + (x.hit ? 'HIT ' + when(x.hit) + ' at ' + price(x.at) + paSrc(x) : 'waiting · set ' + when(x.set) + (isN(last) && x.px ? ' · ' + pct((x.px / last - 1) * 100, 1) + ' from now' : '')) + paNote(x) + '</span></span><button type="button" class="ack" data-pa-del="' + esc(x.sym + '|' + x.set) + '" aria-label="Remove alert ' + esc(paName(x)) + '">' + I.trash + '</button></div>'; }).join('') + '</div>' : '') +
+          '<form class="parow" data-pa-form="' + esc(sym) + '"><select aria-label="Direction" name="dir"><option value="above">Above</option><option value="below">Below</option><option value="above_r">Above, repeat</option><option value="below_r">Below, repeat</option><option value="move">Moves ±%</option></select><input name="px" type="text" inputmode="decimal" placeholder="' + esc(isN(last) ? price(last) : 'price') + '" aria-label="Alert price" autocomplete="off"><button type="submit" class="pri">Add</button></form>' +
+          '<div class="mut small">Fire on live prices; DELAYED live prices never fire. Market prices under 10 min old can still fire a one-time alert, marked as such.</div></div>';
         if (pos) h += posCard(pos, c);
         if (fills.length) h += '<div class="card">' + lbl('Fills on ' + sym) + '</div>' + fillList(fills.slice(0, 20));
         return h;
@@ -1765,8 +1768,8 @@ html[data-priv="1"] .hm-cell .hm-f{filter:none}
         if (b) h += '<h2 class="sec">Bot outbox <span class="cap">sent by the bot</span></h2><div class="card">' + (b.length ? b.slice(0, 20).map(function (x) { return item(x, false).replace(/<button[\s\S]*?<\/button>/, ''); }).join('') : empty('Outbox empty', 'the bot has sent no alerts')) + '</div>';
         var pa = palerts(), paHit = pa.filter(function (x) { return x.hit; }).sort(function (x, y) { return y.hit - x.hit; }), paWait = pa.filter(function (x) { return !x.hit; });
         if (pa.length) h += '<h2 class="sec">Price alerts <span class="cap">set on this phone</span></h2><div class="card">' + paHit.concat(paWait).slice(0, 20).map(function (x) {
-          return '<div class="alert ' + (x.hit ? 'warning' : 'info') + '"><span class="dot"></span><span class="t"><b><span class="sev ' + (x.hit ? 'warning' : 'info') + '">' + (x.hit ? 'hit' : 'armed') + '</span><a href="#chart/' + encodeURIComponent(x.sym) + '" style="color:inherit;text-decoration:none">' + esc(x.sym + ' ' + x.dir + ' ' + price(x.px)) + '</a></b><span class="s">' + (x.hit ? 'hit ' + when(x.hit) + ' at ' + price(x.at) : 'waiting since ' + when(x.set)) + '</span></span><button type="button" class="ack" data-pa-del="' + esc(x.sym + '|' + x.set) + '" aria-label="Remove alert">' + I.trash + '</button></div>';
-        }).join('') + '<div class="mut small" style="margin-top:6px">Checked when this phone loads new prices; nothing runs in the background.</div></div>';
+          return '<div class="alert ' + (x.hit ? 'warning' : 'info') + '"><span class="dot"></span><span class="t"><b><span class="sev ' + (x.hit ? 'warning' : 'info') + '">' + (x.hit ? 'hit' : 'armed') + '</span><a href="#chart/' + encodeURIComponent(x.sym) + '" style="color:inherit;text-decoration:none">' + esc(x.sym + ' ' + paName(x)) + '</a></b><span class="s">' + (x.hit ? 'hit ' + when(x.hit) + ' at ' + price(x.at) + paSrc(x) : 'waiting since ' + when(x.set)) + paNote(x) + '</span></span><button type="button" class="ack" data-pa-del="' + esc(x.sym + '|' + x.set) + '" aria-label="Remove alert">' + I.trash + '</button></div>';
+        }).join('') + '<div class="mut small" style="margin-top:6px">Checked on live prices while a price screen is open and when this phone loads new prices; nothing runs in the background.</div></div>';
         var hist = alog().filter(function (e) { return !l.some(function (x) { return key(x) === e.k; }); }).slice(0, 30);
         h += '<h2 class="sec">History <span class="cap">alerts this phone has seen</span></h2><div class="card">' + (hist.length ? hist.map(function (e) { return item({ level: e.level, msg: e.msg }, false, e); }).join('') : empty('No past alerts', 'alerts are remembered here after they clear')) + '</div>';
         var lines = String(dg.text || '').split('\n').filter(Boolean);
@@ -1924,7 +1927,10 @@ html[data-priv="1"] .hm-cell .hm-f{filter:none}
     Array.prototype.forEach.call(view.querySelectorAll('[data-pa-del]'), function (b) { b.onclick = function (e) { e.preventDefault(); var k = b.dataset.paDel.split('|'); savePalerts(palerts().filter(function (x) { return !(x.sym === k[0] && String(x.set) === k[1]); })); haptic(); render(true); }; });
     Array.prototype.forEach.call(view.querySelectorAll('[data-pa-form]'), function (f) { f.onsubmit = function (e) {
       e.preventDefault(); var px = parseFloat(String(f.px.value).replace(/[,$\s]/g, '')); if (!isN(px) || px <= 0) { toast('Enter a price'); return; }
-      var a = palerts(); a.unshift({ sym: f.dataset.paForm, dir: f.dir.value, px: px, set: Math.floor(Date.now() / 1000), hit: null }); savePalerts(a); haptic(); toast('Alert set: ' + f.dataset.paForm + ' ' + f.dir.value + ' ' + price(px)); render(true);
+      var dv = String(f.dir.value), mv = dv === 'move', nx; if (mv && (px < 0.1 || px > 50)) { toast('Enter a move from 0.1 to 50 %'); return; }
+      if (mv) { var rf = null; try { rf = window.AwayAlerts && window.AwayAlerts.ref ? window.AwayAlerts.ref(f.dataset.paForm) : null; } catch (er) { } if (!isN(rf)) { var cm = coin(lastMarket, f.dataset.paForm); rf = cm && isN(cm.last) && cm.last > 0 ? cm.last : null; } nx = { sym: f.dataset.paForm, dir: 'move', pct: Math.round(px * 100) / 100, ref: rf, set: Math.floor(Date.now() / 1000), hit: null }; }
+      else nx = { sym: f.dataset.paForm, dir: dv === 'below' || dv === 'below_r' ? 'below' : 'above', px: px, rep: /_r$/.test(dv), set: Math.floor(Date.now() / 1000), hit: null };
+      var a = palerts(); a.unshift(nx); savePalerts(a); haptic(); toast('Alert set: ' + f.dataset.paForm + ' ' + paName(nx)); render(true);
     }; });
     Array.prototype.forEach.call(view.querySelectorAll('[data-exp]'), function (b) { b.onclick = function () {
       var k = b.dataset.exp, stamp = new Date().toISOString().slice(0, 10);
@@ -2075,7 +2081,7 @@ html[data-priv="1"] .hm-cell .hm-f{filter:none}
     if (!soft && !SNAP && !view.children.length) skeleton();
     pages[t](arg).then(function (h) {
       var y = soft ? window.scrollY : 0;
-      view.innerHTML = h; wire(t); wireSide(view); if (window.AwayNews && typeof window.AwayNews.after === 'function') { try { window.AwayNews.after(view, t, arg, SNAP); } catch (e) { } } if (window.AwayPrices && typeof window.AwayPrices.after === 'function') { try { window.AwayPrices.after(view, t, arg, SNAP); } catch (e) { } } view.classList.remove('in'); void view.offsetWidth; if (!soft) view.classList.add('in');
+      view.innerHTML = h; wire(t); wireSide(view); if (window.AwayNews && typeof window.AwayNews.after === 'function') { try { window.AwayNews.after(view, t, arg, SNAP); } catch (e) { } } if (window.AwayPrices && typeof window.AwayPrices.after === 'function') { try { window.AwayPrices.after(view, t, arg, SNAP); } catch (e) { } } if (window.AwayAlerts && typeof window.AwayAlerts.after === 'function') { try { window.AwayAlerts.after(view, t, arg, SNAP); } catch (e) { } } view.classList.remove('in'); void view.offsetWidth; if (!soft) view.classList.add('in');
       window.scrollTo(0, soft ? y : 0);
       get('freshness').then(function (fr) {
         lanSummary(fr);
@@ -6042,7 +6048,10 @@ html[data-priv="1"] .hm-cell .hm-f{filter:none}
    - Back-off on errors (doubling, jitter, x4 base for HTTP 429 / Kraken rate errors); after MAX_FAIL failures in a row the poller
      stops and the screen falls back to the market file (relay snapshot) prices with a visible DELAYED badge. Tap the badge to retry.
    - Polls only while the page is visible (visibilitychange pauses at once) and the screen that needs the data is open.
-   - Display only: no order, no key, no storage beyond one device preference (ui_lpbook = order book card open), no alert evaluation. */
+   - Display only: no order, no key, no storage beyond one device preference (ui_lpbook = order book card open), no alert evaluation.
+   - 11-21 alerts DEV COPY: AP.onTick(fn) hands each ticker result (copies of the quotes + LIVE/DELAYED mode) to app/livealerts.js,
+     and AP.extraSyms (set by livealerts.js) adds the coins of armed price alerts to the SAME batched request, only on screens that
+     already poll. No new request, path or host. */
 (function () {
   'use strict';
   var G = typeof window !== 'undefined' ? window : globalThis;
@@ -6252,7 +6261,7 @@ html[data-priv="1"] .hm-cell .hm-f{filter:none}
     stats: stats, TICKER: TICKER, DEPTH: DEPTH };
 
   if (typeof document === 'undefined' || !ON) {                // Node unit tests, or the module compiled off (test builds): no DOM work
-    AP.after = function () { }; AP.status = function () { return { enabled: ON, state: 'off' }; };
+    AP.after = function () { }; AP.status = function () { return { enabled: ON, state: 'off' }; }; AP.onTick = function () { }; AP.quote = function () { return null; };
     return;
   }
 
@@ -6273,7 +6282,7 @@ html[data-priv="1"] .hm-cell .hm-f{filter:none}
 
   function wantedSyms() {
     var r = routeNow(), out = [], add = function (s) { if (s && allow.bySym[s] && out.indexOf(s) < 0 && out.length < MAX_PAIRS) out.push(s); };
-    if (r.t === 'chart' && r.arg && heroPrice()) add(r.arg);
+    if (r.t === 'chart' && r.arg && heroPrice()) { add(r.arg); extra().forEach(add); }
     if (r.t === 'markets') {
       var all = rows(), w = watchList(), vh = G.innerHeight || 844, held = [], watch = [], vis = [];
       all.forEach(function (a) {
@@ -6282,10 +6291,22 @@ html[data-priv="1"] .hm-cell .hm-f{filter:none}
         if (w.indexOf(s) >= 0) watch.push(s);
         var b = a.getBoundingClientRect(); if (b.bottom > -vh * 0.5 && b.top < vh * 1.5) vis.push(s);
       });
-      held.concat(watch, vis).forEach(add);
+      if (all.length) held.concat(watch, extra(), vis).forEach(add);
     }
     return out;
   }
+  // coins of armed price alerts (app/livealerts.js), only appended on screens that already poll; never more than MAX_PAIRS in total
+  function extra() { var x = []; try { x = typeof AP.extraSyms === 'function' ? AP.extraSyms() : []; } catch (e) { x = []; } return Array.isArray(x) ? x.filter(function (s) { return typeof s === 'string' && SYM_RE.test(s); }).slice(0, 20) : []; }
+  // tick subscribers (app/livealerts.js): each gets copies only, after every ticker answer or state change; errors are contained
+  var subs = [];
+  AP.onTick = function (fn) { if (typeof fn === 'function' && subs.length < 4) subs.push(fn); };
+  function emit() {
+    if (!subs.length) return;
+    var q = {}; Object.keys(quotes).forEach(function (s) { var v = quotes[s]; q[s] = { last: v.last, bid: v.bid, ask: v.ask, t: v.t }; });
+    var info = { mode: tickerMode(), state: tPoll.state, lastOk: tPoll.lastOk, asked: tickerSyms.slice(), quotes: q };
+    subs.forEach(function (fn) { try { fn(info); } catch (e) { } });
+  }
+  AP.quote = function (sym) { var q = own(quotes, sym) ? quotes[sym] : null; return q && tickerMode() === 'live' && Date.now() - q.t < STALE_MS ? { last: q.last, t: q.t } : null; };
   function tickerWanted() { return visible() && wantedSyms().length > 0; }
 
   var tickerSyms = [];
@@ -6295,8 +6316,8 @@ html[data-priv="1"] .hm-cell .hm-f{filter:none}
       var asked = tickerSyms.slice();
       return kget(u, TICKER_CAP).then(function (x) { return x.ok ? parseTicker(x.text, asked, allow) : x; });
     },
-    onData: function (r) { if (r.ok) { var now = Date.now(); Object.keys(r.quotes).forEach(function (s) { r.quotes[s].t = now; quotes[s] = r.quotes[s]; }); } paint(true); },
-    onState: function () { paint(false); } });
+    onData: function (r) { if (r.ok) { var now = Date.now(); Object.keys(r.quotes).forEach(function (s) { r.quotes[s].t = now; quotes[s] = r.quotes[s]; }); } paint(true); emit(); },
+    onState: function () { paint(false); emit(); } });
   var dPoll = new Poller({ interval: DEPTH_MS, minGap: MIN_GAP_D, maxFail: MAX_FAIL, maxBackoff: MAX_BACKOFF,
     wanted: function () { var r = routeNow(); return visible() && book.open && r.t === 'chart' && r.arg === book.sym && !!document.querySelector('#view .lp-book'); },
     fetchOnce: function () {
@@ -6515,6 +6536,318 @@ html[data-priv="1"] .hm-cell .hm-f{filter:none}
   G.addEventListener('hashchange', function () { setTimeout(sync, 0); });
   G.addEventListener('scroll', function () { if (routeNow().t === 'markets') { clearTimeout(AP._sc); AP._sc = setTimeout(function () { tPoll.kick(); }, 400); } }, { passive: true });
   AP.status = function () { return { enabled: ON, ticker: tPoll.state, tickerFails: tPoll.fails, tickerMode: tickerMode(), lastOk: tPoll.lastOk, book: dPoll.state, bookFails: dPoll.fails, bookMode: bookMode(), bookSym: book.sym, bookOpen: book.open, pairs: allow.n, asked: tickerSyms.slice(), stats: { ticker: stats.ticker, depth: stats.depth, refused: stats.refused } }; };
+})();
+
+/* ---- livealerts.js ---- */
+/* livealerts.js - AwayAlerts 1.0.0 (DEV COPY 11-21, NOT published).
+   Evaluates the price alerts the user set ON THIS PHONE (localStorage ui_palerts, the shell's own list: static/app.js palerts())
+   against every live Kraken tick that app/liveprices.js already fetched (AwayPrices.onTick). This file makes NO network request of
+   its own, adds no address, no key, no service worker push; it only reads the ticks liveprices.js hands it.
+   Rules (one per alert): above / below a price, or "moves +-N %" from a reference price (repeats: each hit moves the reference).
+   Above / below are one-shot (as before: hit -> done), or repeating when set with "repeat".
+   Market file (judge fix 11-21): the shell's market-load check calls _core.marketHits(): one-shot above / below only, and only when the
+   market file is <= 10 min old; such a hit is marked src 'market' and labelled "(market price HH:MMZ, not live)". Repeating alerts are
+   never fired, disarmed or cooled down by the market file.
+   Anti-spam:
+   - hysteresis: a repeating above/below alert that fired re-arms only after the price went back HYST_PCT past its level;
+   - cooldown: a repeating alert never fires again within COOLDOWN_MS of its last hit;
+   - one live evaluator per phone: a short lease in localStorage (ui_lalock) so two open tabs never both fire; at fire time the alert
+     list and the state are re-read from storage and an alert already hit by another tab is skipped;
+   - max MAX_FIRES alerts per tick (the rest wait for the next tick).
+   Bad data: only LIVE ticks are used (DELAYED / stale / connecting ticks never fire; the alert is marked "checked with delayed prices");
+   a quote older than STALE_MS is not used; NaN / Infinity / <= 0 / > 1e10 is refused; a jump of more than MAX_JUMP from the last
+   accepted live price (or more than x10 from the market-file price) must be confirmed by the next tick (within CONFIRM_PCT) first;
+   an alert whose coin is not in the tick is skipped ("no live price").
+   State: ui_lastate (per-alert armed / last hit / last live check / delayed check), written only when alerts exist. Every storage access
+   is wrapped in try/catch; with storage blocked the evaluator still works for this tab (memory only).
+   DOM: createElement / textContent only. Delivery = the shell's existing alert UI: toast banner, the hit written into ui_palerts (the
+   coin screen card and the Alerts tab show it), haptic, and a system Notification only if the user already allowed it in More. */
+(function () {
+  'use strict';
+  var G = typeof window !== 'undefined' ? window : globalThis;
+  var AA = G.AwayAlerts = G.AwayAlerts || {};
+  AA.version = '1.0.0';
+  var CFG = { HYST_PCT: 0.5, COOLDOWN_MS: 15 * 60 * 1000, STALE_MS: 30000, MAX_JUMP: 0.3, FILE_FACTOR: 10, CONFIRM_PCT: 2, LEASE_MS: 20000,
+    MAX_ALERTS: 50, MAX_FIRES: 5, PRICE_MAX: 1e10, PCT_MIN: 0.1, PCT_MAX: 50, MKT_MAX_AGE_S: 600, MKT_SKEW_S: 300 };
+  AA.cfg = CFG;
+  var SYM_RE = /^[A-Z0-9]{1,15}$/;
+  function isN(v) { return typeof v === 'number' && isFinite(v); }
+  function plain(o) { return !!o && typeof o === 'object' && !Array.isArray(o); }
+  function own(o, k) { return Object.prototype.hasOwnProperty.call(o, k); }
+  function idOf(x) { return x.sym + '|' + x.set; }
+  function goodPx(v) { return isN(v) && v > 0 && v <= CFG.PRICE_MAX; }
+
+  // ------------------------------------------------------------------ pure core (Node unit tests: tests/livealerts_unit.cjs)
+  function valid(x) {
+    if (!plain(x) || typeof x.sym !== 'string' || !SYM_RE.test(x.sym) || !isN(x.set)) return false;
+    if (x.dir === 'above' || x.dir === 'below') return goodPx(x.px);
+    if (x.dir === 'move') return isN(x.pct) && x.pct >= CFG.PCT_MIN && x.pct <= CFG.PCT_MAX && (x.ref == null || goodPx(x.ref));
+    return false;
+  }
+  function repeats(x) { return x.dir === 'move' || x.rep === true; }
+  function newState() { return { v: 1, a: {} }; }
+  function cleanState(s) {
+    var out = newState(); if (!plain(s) || !plain(s.a)) return out;
+    Object.keys(s.a).slice(0, 200).forEach(function (k) {
+      var e = s.a[k]; if (!plain(e) || typeof k !== 'string' || k.length > 40) return;
+      var c = {}; ['last', 'chk', 'dly', 'miss', 'lp', 'pend', 'ref', 'qt'].forEach(function (f) { if (isN(e[f])) c[f] = e[f]; });
+      c.armed = e.armed !== false; out.a[k] = c;
+    });
+    return out;
+  }
+  // one live price for one alert: accepted value or null (and why). Mutates e (lp / pend).
+  function acceptPx(e, px, fileLast) {
+    if (!goodPx(px)) return { px: null, why: 'bad' };
+    var prev = isN(e.lp) ? e.lp : null;
+    var jump = prev !== null ? Math.abs(px / prev - 1) > CFG.MAX_JUMP : goodPx(fileLast) && (px > fileLast * CFG.FILE_FACTOR || px < fileLast / CFG.FILE_FACTOR);
+    if (jump) {
+      if (isN(e.pend) && Math.abs(px / e.pend - 1) * 100 <= CFG.CONFIRM_PCT) { e.lp = px; delete e.pend; return { px: px, why: 'confirmed' }; }
+      e.pend = px; return { px: null, why: 'jump' };
+    }
+    delete e.pend; e.lp = px; return { px: px, why: 'ok' };
+  }
+  // tick = { mode: 'live'|'stale'|'delayed'|'wait', quotes: {SYM: {last, t}}, asked: [SYM], fileLast: function(sym) }
+  // returns { fires: [{ id, sym, px, kind }], st, changed } ; never throws on bad input
+  function evaluate(alerts, st, tick, now) {
+    var s = cleanState(st), fires = [], changed = false, live = tick && tick.mode === 'live';
+    var quotes = tick && plain(tick.quotes) ? tick.quotes : {}, asked = tick && Array.isArray(tick.asked) ? tick.asked : [];
+    var list = Array.isArray(alerts) ? alerts.slice(0, CFG.MAX_ALERTS) : [], keep = {};
+    list.forEach(function (x) {
+      if (!valid(x)) return;
+      var id = idOf(x); keep[id] = true;
+      var e = s.a[id];
+      if (!e) {                                     // first sight: a repeating alert already hit LIVE (another tab / reload) starts disarmed + in cooldown.
+        e = s.a[id] = { armed: true }; changed = true;  // A hit without src 'live' (the market-file check, or an old round-4 build) never disarms
+        if (x.hit && isN(x.hit) && x.src === 'live') { e.last = x.hit * 1000; if (x.dir !== 'move') e.armed = false; }   // or starts a cooldown.
+      }
+      if (!repeats(x) && x.hit) return;                                  // one-shot alert already hit: done (as before)
+      var q = own(quotes, x.sym) && plain(quotes[x.sym]) ? quotes[x.sym] : null;
+      var fresh = q && isN(q.t) && now - q.t >= -5000 && now - q.t < CFG.STALE_MS;
+      if (!live) { if (q || asked.indexOf(x.sym) >= 0) { e.dly = now; changed = true; } return; }   // DELAYED / stale: never fire
+      if (!q) { if (asked.indexOf(x.sym) >= 0) { e.miss = now; changed = true; } return; }
+      if (!fresh) { e.dly = now; changed = true; return; }
+      if (isN(e.qt) && e.qt === q.t) return;                             // same answer seen already (a state-change emit): no new information
+      e.qt = q.t;
+      var fl = null; try { fl = tick.fileLast ? tick.fileLast(x.sym) : null; } catch (er) { fl = null; }
+      var a = acceptPx(e, q.last, fl); changed = true;
+      if (a.px === null) return;
+      var px = a.px; e.chk = now; delete e.miss;
+      var cond, rearm = false;
+      if (x.dir === 'above') { cond = px >= x.px; rearm = px <= x.px * (1 - CFG.HYST_PCT / 100); }
+      else if (x.dir === 'below') { cond = px <= x.px; rearm = px >= x.px * (1 + CFG.HYST_PCT / 100); }
+      else {
+        var ref = goodPx(x.ref) ? x.ref : goodPx(e.ref) ? e.ref : null;
+        if (ref === null) { e.ref = px; return; }                        // first live price becomes the reference
+        cond = Math.abs(px / ref - 1) * 100 >= x.pct; rearm = true;        // the reference moves on each hit: no band needed
+      }
+      if (!e.armed && rearm) e.armed = true;
+      if (!cond || !e.armed) return;
+      if (repeats(x) && isN(e.last) && now - e.last < CFG.COOLDOWN_MS) return;   // cooldown
+      if (fires.length >= CFG.MAX_FIRES) return;
+      fires.push({ id: id, sym: x.sym, px: px, kind: x.dir });
+      e.last = now;
+      if (x.dir === 'move') { e.ref = px; e.armed = true; } else e.armed = false;
+    });
+    Object.keys(s.a).forEach(function (k) { if (!keep[k]) { delete s.a[k]; changed = true; } });
+    return { fires: fires, st: s, changed: changed };
+  }
+  // apply fires to the stored alert list (fresh copy from storage): one-shot -> hit; move -> hit + new reference; counts n
+  function applyFires(alerts, fires, nowSec, already) {
+    var done = [];
+    (Array.isArray(alerts) ? alerts : []).forEach(function (x) {
+      if (!valid(x)) return;
+      var f = null; fires.forEach(function (y) { if (y.id === idOf(x)) f = y; });
+      if (!f) return;
+      if (!repeats(x) && x.hit) return;                                 // another tab got there first
+      if (already && already(x)) return;
+      x.hit = nowSec; x.at = f.px; x.n = (isN(x.n) ? x.n : 0) + 1; x.src = 'live';
+      if (x.dir === 'move') x.ref = f.px;
+      done.push({ x: x, px: f.px });
+    });
+    return done;
+  }
+  // market-file check (static/app.js checkPriceAlerts, patched by build_site.py ALERT_PATCHES to call this): runs when the phone loads
+  // market prices. It fires ONLY one-shot above / below alerts, ONLY when the market file is at most MKT_MAX_AGE_S old (its Ticker time
+  // m.asof, not the download time; up to MKT_SKEW_S in the future is tolerated for clock skew); unknown age = too old. Repeating and
+  // "moves" alerts are never touched by it (they fire on live prices only, so the market file can never disarm or cool them down).
+  // Each hit is marked src 'market' + mat (the market price time) so every screen labels it "(market price HH:MMZ, not live)".
+  // lastOf(sym) -> the market-file last price or null. Mutates the hit alerts in place; returns { hits, age, why, tag }.
+  function mktTag(asof) {
+    if (!isN(asof) || asof < 0 || asof > 1e11) return '(market price, not live)';
+    return '(market price ' + new Date(asof * 1000).toISOString().slice(11, 16) + 'Z, not live)';
+  }
+  function marketHits(alerts, mk, nowSec, lastOf) {
+    var out = { hits: [], age: null, why: 'ok', tag: '' };
+    if (!Array.isArray(alerts) || !alerts.length) { out.why = 'none'; return out; }
+    var asof = plain(mk) && isN(mk.asof) ? mk.asof : null;
+    if (asof === null || !isN(nowSec)) { out.why = 'no-age'; return out; }
+    out.age = nowSec - asof; out.tag = mktTag(asof);
+    if (out.age > CFG.MKT_MAX_AGE_S) { out.why = 'old'; return out; }
+    if (out.age < -CFG.MKT_SKEW_S) { out.why = 'future'; return out; }
+    alerts.slice(0, CFG.MAX_ALERTS).forEach(function (x) {
+      if (!valid(x) || repeats(x) || x.hit) return;
+      var last = null; try { last = typeof lastOf === 'function' ? lastOf(x.sym) : null; } catch (e) { last = null; }
+      if (!goodPx(last)) return;
+      if ((x.dir === 'above' && last >= x.px) || (x.dir === 'below' && last <= x.px)) { x.hit = nowSec; x.at = last; x.src = 'market'; x.mat = asof; out.hits.push(x); }
+    });
+    return out;
+  }
+  function label(x) {
+    if (!plain(x)) return '-';
+    var p = AP() && AP()._core ? AP()._core.fmtPrice : function (v) { return isN(v) ? String(v) : '-'; };
+    if (x.dir === 'move') return 'moves ±' + (isN(x.pct) ? String(x.pct) : '-') + '%';
+    return String(x.dir) + ' ' + p(x.px) + (x.rep === true ? ' (repeat)' : '');
+  }
+  function AP() { return G.AwayPrices || null; }
+  AA._core = { valid: valid, repeats: repeats, evaluate: evaluate, applyFires: applyFires, acceptPx: acceptPx, cleanState: cleanState, label: label, idOf: idOf, marketHits: marketHits, mktTag: mktTag };
+  AA.label = label;
+
+  var ON = !!(AP() && AP().enabled === true && typeof AP().onTick === 'function') && typeof document !== 'undefined';
+  AA.enabled = ON;
+  AA.note = function () { return ''; };
+  AA.ref = function () { return null; };
+  AA.after = function () { };
+  AA.status = function () { return { enabled: ON }; };
+  if (!ON) return;                                   // Node, or live prices compiled off (test builds): the shell behaves as before
+
+  // ------------------------------------------------------------------ browser layer
+  var TAB = Math.random().toString(36).slice(2, 10) + Date.now().toString(36), mem = { st: newState(), alerts: null }, stats = { ticks: 0, evals: 0, fires: 0, skippedLease: 0, delayed: 0, errors: 0, lastErr: null };
+  function lsGet(k) { try { return G.localStorage.getItem(k); } catch (e) { return null; } }
+  function lsSet(k, v) { try { G.localStorage.setItem(k, v); return true; } catch (e) { return false; } }
+  function lsDel(k) { try { G.localStorage.removeItem(k); } catch (e) { } }
+  function jparse(t, d) { if (t == null) return d; try { return JSON.parse(t); } catch (e) { return d; } }
+  var storeOk = (function () { try { var k = 'ui_la_probe'; G.localStorage.setItem(k, '1'); G.localStorage.removeItem(k); return true; } catch (e) { return false; } })();
+  function loadAlerts() { if (!storeOk) return mem.alerts || []; var v = jparse(lsGet('ui_palerts'), []); return Array.isArray(v) ? v : []; }
+  function saveAlerts(a) { if (!lsSet('ui_palerts', JSON.stringify(a.slice(0, 50)))) mem.alerts = a.slice(0, 50); }
+  function loadState() { return storeOk ? cleanState(jparse(lsGet('ui_lastate'), null)) : mem.st; }
+  function saveState(s) { mem.st = s; if (storeOk) lsSet('ui_lastate', JSON.stringify(s)); }
+  // lease: only one tab evaluates; renewed every tick, released when hidden / closed
+  function takeLease(now) {
+    if (!storeOk) return true;
+    var l = jparse(lsGet('ui_lalock'), null);
+    if (plain(l) && l.id !== TAB && isN(l.exp) && l.exp > now && l.exp <= now + CFG.LEASE_MS * 2) return false;
+    lsSet('ui_lalock', JSON.stringify({ id: TAB, exp: now + CFG.LEASE_MS }));
+    var r = jparse(lsGet('ui_lalock'), null);
+    return plain(r) && r.id === TAB;
+  }
+  function dropLease() { if (!storeOk) return; var l = jparse(lsGet('ui_lalock'), null); if (plain(l) && l.id === TAB) lsDel('ui_lalock'); }
+  function fileLast(sym) {
+    var m = G.__SNAPSHOT__ && G.__SNAPSHOT__.market; if (!m || !m.stats || !m.universe || !AP()._core) return null;
+    if (!fileLast.idx || fileLast.src !== m) {
+      var allow = AP()._core.buildAllowlist(m), lastCol = Array.isArray(m.stats.cols) ? m.stats.cols.indexOf('last') : -1, pc = Array.isArray(m.stats.cols) ? m.stats.cols.indexOf('pair') : -1, byPair = {};
+      if (lastCol >= 0 && pc >= 0 && Array.isArray(m.stats.rows)) m.stats.rows.slice(0, 5000).forEach(function (r) { if (Array.isArray(r) && isN(r[lastCol])) byPair[r[pc]] = r[lastCol]; });
+      var idx = {}; Object.keys(allow.bySym).forEach(function (s) { var v = byPair[allow.bySym[s].pair]; if (goodPx(v)) idx[s] = v; });
+      fileLast.idx = idx; fileLast.src = m; fileLast.allow = allow;
+    }
+    return own(fileLast.idx, sym) ? fileLast.idx[sym] : null;
+  }
+  function inAllow(sym) { fileLast(sym); return !!(fileLast.allow && own(fileLast.allow.bySym, sym)); }
+  // symbols liveprices.js should add to its batch (only on screens where it already polls): coins of alerts that can still fire
+  AA.syms = function () {
+    var out = []; loadAlerts().slice(0, CFG.MAX_ALERTS).forEach(function (x) { if (valid(x) && (repeats(x) || !x.hit) && out.indexOf(x.sym) < 0 && out.length < 20) out.push(x.sym); });
+    return out;
+  };
+  var lastTick = null;
+  function onTick(info) {
+    try { tickBody(info); } catch (e) { stats.errors++; stats.lastErr = String(e && e.message ? e.message : e).slice(0, 120); }
+  }
+  function tickBody(info) {
+    stats.ticks++;
+    if (!plain(info)) return;
+    lastTick = { mode: info.mode, at: Date.now() };
+    var alerts = loadAlerts(); if (!alerts.length) return;                // no alert: nothing evaluated, nothing written
+    var now = Date.now();
+    if (!G.document.hidden && !takeLease(now)) { stats.skippedLease++; return; }
+    if (G.document.hidden) return;
+    stats.evals++; if (info.mode !== 'live') stats.delayed++;
+    var r = evaluate(alerts, loadState(), { mode: info.mode, quotes: info.quotes, asked: info.asked, fileLast: fileLast }, now);
+    if (r.fires.length) {
+      var fresh = loadAlerts(), freshSt = loadState();               // re-read: another tab may have fired these meanwhile
+      var done = applyFires(fresh, r.fires, Math.floor(now / 1000), function (x) { var e = freshSt.a[idOf(x)]; return repeats(x) && e && isN(e.last) && now - e.last < CFG.COOLDOWN_MS; });
+      if (done.length) { saveAlerts(fresh); stats.fires += done.length; deliver(done); }
+    }
+    if (r.changed || r.fires.length) saveState(r.st);
+    paintNotes();
+  }
+  // ---- delivery through the shell's alert UI
+  function fmtP(v) { return AP()._core.fmtPrice(v); }
+  function when(sec) { var d = new Date(sec * 1000); return isNaN(d) ? '-' : d.toISOString().slice(0, 16).replace('T', ' ') + 'Z'; }
+  function hhmm(ms) { var d = new Date(ms); return isNaN(d) ? '-' : d.toISOString().slice(11, 16) + 'Z'; }
+  function toast(t) {
+    var d = G.document.createElement('div'); d.className = 'toast la-toast'; d.textContent = t; d.setAttribute('role', 'status');
+    G.document.body.appendChild(d); setTimeout(function () { if (d.parentNode) d.parentNode.removeChild(d); }, 4000);
+  }
+  function deliver(done) {
+    var txt = done.slice(0, 3).map(function (d) { return d.x.sym + ' ' + label(d.x) + ' at ' + fmtP(d.px); }).join('; ');
+    toast((done.length > 1 ? done.length + ' price alerts hit (live): ' : 'Price alert hit (live): ') + txt + (done.length > 3 ? '; ...' : ''));
+    try { if (G.navigator && G.navigator.vibrate) G.navigator.vibrate(6); } catch (e) { }
+    try {
+      var N = G.Notification;
+      if (N && N.permission === 'granted') done.forEach(function (d) { new N(d.x.sym + ' ' + label(d.x), { body: 'live ' + fmtP(d.px) + ' (read-only alert from this phone)', tag: 'palert-' + d.x.sym }); });
+    } catch (e) { }
+    done.forEach(function (d) { paintHit(d.x); });
+  }
+  // rows the shell drew for this alert (coin card .fill rows and Alerts tab .alert rows) carry data-pa-del="SYM|set"
+  function rowsFor(id) {
+    var out = [];
+    Array.prototype.forEach.call(G.document.querySelectorAll('#view [data-pa-del]'), function (b) { if (b.getAttribute('data-pa-del') === id && b.parentNode) out.push(b.parentNode); });
+    return out;
+  }
+  function paintHit(x) {
+    rowsFor(idOf(x)).forEach(function (row) {
+      var s = row.querySelector('.s'), n = row.querySelector('.la-n');
+      if (row.classList.contains('fill')) {
+        var side = row.querySelector('.side'); if (side) { side.classList.add(x.dir === 'below' ? 'sell' : 'buy'); }
+        if (s) { s.textContent = 'HIT ' + when(x.hit) + ' at ' + fmtP(x.at); }
+      } else {
+        row.classList.remove('info'); row.classList.add('warning');
+        var sev = row.querySelector('.sev'); if (sev) { sev.textContent = 'hit'; sev.classList.remove('info'); sev.classList.add('warning'); }
+        if (s) { s.textContent = 'hit ' + when(x.hit) + ' at ' + fmtP(x.at); }
+      }
+      if (s) { if (!n) { n = G.document.createElement('span'); n.className = 'la-n'; n.setAttribute('data-la', idOf(x)); } s.appendChild(n); }
+    });
+  }
+  // the short status tail after each alert row: live check / delayed check / repeat info
+  function noteFor(x, st) {
+    if (!valid(x)) return '';
+    var e = (st || loadState()).a[idOf(x)] || {}, parts = [];
+    if (repeats(x)) {
+      var p = x.dir === 'move' ? 'repeats from ' + (goodPx(x.ref) ? fmtP(x.ref) : goodPx(e.ref) ? fmtP(e.ref) : 'the first live price') : 'repeats';
+      if (isN(x.n) && x.n > 0) p += ', ' + x.n + (x.n > 1 ? ' hits' : ' hit');
+      if (isN(e.last) && Date.now() - e.last < CFG.COOLDOWN_MS) p += ', quiet until ' + hhmm(e.last + CFG.COOLDOWN_MS);
+      else if (e.armed === false && x.dir !== 'move') p += ', re-arms ' + (x.dir === 'above' ? 'below ' : 'above ') + fmtP(x.px * (x.dir === 'above' ? 1 - CFG.HYST_PCT / 100 : 1 + CFG.HYST_PCT / 100));
+      parts.push(p);
+    } else if (x.hit) return x.src === 'live' ? ' · live price' : '';
+    if (!inAllow(x.sym)) parts.push('no live price for this coin');
+    else if (isN(e.dly) && (!isN(e.chk) || e.dly > e.chk)) parts.push('checked with delayed prices ' + hhmm(e.dly) + ', not fired on them');
+    else if (isN(e.chk)) parts.push('checked live ' + hhmm(e.chk));
+    return parts.length ? ' · ' + parts.join(' · ') : '';
+  }
+  AA.note = function (x) { try { return noteFor(x); } catch (e) { return ''; } };
+  function paintNotes() {
+    var a = loadAlerts(), st = loadState(), by = {}; a.forEach(function (x) { if (valid(x)) by[idOf(x)] = x; });
+    Array.prototype.forEach.call(G.document.querySelectorAll('#view .la-n[data-la]'), function (n) { var x = by[n.getAttribute('data-la')]; n.textContent = x ? noteFor(x, st) : ''; });
+  }
+  // reference price for a new "moves +-N %" alert: the live price if it is LIVE right now, else null (the shell uses the market file)
+  AA.ref = function (sym) {
+    try { var q = AP().quote ? AP().quote(sym) : null; return q && goodPx(q.last) ? q.last : null; } catch (e) { return null; }
+  };
+  // form helper on the coin screen: the number box means percent for "Moves +-%"
+  AA.after = function (view, t) {
+    if (t !== 'chart' && t !== 'alerts') return;
+    Array.prototype.forEach.call(view.querySelectorAll('form[data-pa-form]'), function (f) {
+      var sel = f.querySelector('select[name=dir]'), inp = f.querySelector('input[name=px]'); if (!sel || !inp || sel.dataset.la) return;
+      sel.dataset.la = '1'; var ph = inp.getAttribute('placeholder') || 'price';
+      var sync = function () { var mv = sel.value === 'move'; inp.setAttribute('placeholder', mv ? '% move, e.g. 5' : ph); inp.setAttribute('aria-label', mv ? 'Alert move in percent' : 'Alert price'); };
+      sel.addEventListener('change', sync); sync();
+    });
+    paintNotes();
+  };
+  AA.status = function () { return { enabled: ON, tab: TAB, storage: storeOk, lastTick: lastTick, stats: { ticks: stats.ticks, evals: stats.evals, fires: stats.fires, skippedLease: stats.skippedLease, delayed: stats.delayed, errors: stats.errors, lastErr: stats.lastErr } }; };
+  AP().onTick(onTick);
+  AP().extraSyms = AA.syms;
+  G.document.addEventListener('visibilitychange', function () { if (G.document.hidden) dropLease(); });
+  G.addEventListener('pagehide', dropLease);
 })();
 
 /* Away mode: fetch an AES-256-GCM encrypted snapshot (outbound-only relay), authenticate + decrypt it on the phone with a key that never

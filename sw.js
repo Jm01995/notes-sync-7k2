@@ -1,7 +1,7 @@
 /* Away app service worker: caches the app SHELL only (public code). It never touches latest.enc / market.enc / live.enc /
    manifest.json / any cross-origin request: the last good snapshot is kept by the page as CIPHERTEXT and re-verified on every start.
    live.enc (the executor file under its OWN key, 11-20) is listed explicitly so a future same-origin relay can never be cached here. */
-const VER = 'e486c7de4479';
+const VER = 'ed6c2e46d262';
 const SHELL = 'away-shell-' + VER;
 const FILES = ['./', 'index.html', 'manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/apple-touch-icon.png'];
 // cache:'reload' bypasses the HTTP cache (GitHub Pages sends max-age=600): a new worker never caches a stale index.html
