@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Dash</title>
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-IuY1No0RO7NQtrmK3/JHyeG1N67gXzZCBvf91AkG4Vw=' 'sha256-Gy2jTtjZn1xml4UPjLmzgl6q4iAZvi4hQhHg5myyaq0='; style-src 'unsafe-inline'; img-src 'self' data:; manifest-src 'self'; worker-src 'self'; connect-src https://jm01995.github.io/notes-sync-7k2/latest.enc https://jm01995.github.io/notes-sync-7k2/market.enc https://jm01995.github.io/notes-sync-7k2/live.enc https://api.kraken.com/0/public/Ticker https://api.kraken.com/0/public/Depth; form-action 'none'; base-uri 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-MivN54X/fegDQXh+MMzBSbaq41i/BDoqOjVhCGdgS84=' 'sha256-GCzIbtH3MeKVYc+oG6+6wrNzi7tl3DsqO3xz0+R+fwo='; style-src 'unsafe-inline'; img-src 'self' data:; manifest-src 'self'; worker-src 'self'; connect-src https://jm01995.github.io/notes-sync-7k2/latest.enc https://jm01995.github.io/notes-sync-7k2/market.enc https://jm01995.github.io/notes-sync-7k2/live.enc https://api.kraken.com/0/public/Ticker https://api.kraken.com/0/public/Depth; form-action 'none'; base-uri 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="theme-color" content="#0f1720">
 <meta name="color-scheme" content="dark">
@@ -865,8 +865,8 @@ html[data-priv="1"] .hm-cell .hm-f{filter:none}
 .nw .nw-head{display:flex;gap:10px;align-items:flex-start;width:100%;text-align:left;background:none;border:0;color:var(--fg);padding:10px 12px;min-height:56px;margin:0;font:inherit;cursor:pointer}
 .nw .nw-head:active{background:var(--card2)}
 .nw .nw-badge{flex:none;width:34px;height:34px;border-radius:9px;display:inline-flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:800;letter-spacing:.02em;background:var(--card2);border:1px solid var(--line2);color:var(--fg)}
-.nw .nw-s-fed,.nw .nw-s-sec,.nw .nw-s-cftc{border-color:var(--acc)}
-.nw .nw-s-krk{border-color:var(--warn)}
+.nw .nw-s-fed,.nw .nw-s-sec,.nw .nw-s-cftc,.nw .nw-s-secl,.nw .nw-s-ecb,.nw .nw-s-bea,.nw .nw-s-nqh{border-color:var(--acc)}
+.nw .nw-s-krk,.nw .nw-s-cbs{border-color:var(--warn)}
 .nw .nw-b{display:flex;flex-direction:column;min-width:0;flex:1}
 .nw .nw-title{font-size:.9375rem;font-weight:600;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
 .nw .nw-row.open .nw-title{-webkit-line-clamp:unset;display:block}
@@ -898,8 +898,6 @@ html[data-priv="1"] .hm-cell .hm-f{filter:none}
 .nw .nw-mini .nw-note{margin:6px 12px 8px}
 
 /* ---- liveprices.css ---- */
-/* liveprices.css 1.0.0 (DEV COPY 11-21): LIVE / DELAYED chip, price flash, coin-screen quote row and order book card (app/liveprices.js).
-   Uses the shell tokens (--good --bad --warn --mut --card2 --line ...); light theme follows automatically. */
 .lp-bar{display:flex;align-items:center;gap:8px;margin:-4px 0 6px;min-width:0}
 .lp-note{flex:1;min-width:0;color:var(--mut);font-size:.75rem;line-height:1.3}
 .lp-chip{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 4px;margin:0;border:0;background:none;color:var(--fg);font:inherit;cursor:pointer;flex:none;white-space:nowrap}
@@ -919,17 +917,15 @@ html[data-priv="1"] .hm-cell .hm-f{filter:none}
 @keyframes lp-down{0%{background:rgba(255,90,90,.32)}100%{background:transparent}}
 .tick .p.lp-up,.tick .p.lp-down{border-radius:4px}
 @media (prefers-reduced-motion:reduce){
-  .lp-up,.lp-down{animation:none;background:none}
-  .lp-chip[data-state=live] .lp-dot{animation:none}
-  .lp-live{transition:none}
+.lp-up,.lp-down{animation:none;background:none}
+.lp-chip[data-state=live] .lp-dot{animation:none}
+.lp-live{transition:none}
 }
-/* coin screen: quote row inside the hero */
 .lp-quote{display:flex;align-items:center;gap:10px;margin-top:6px;min-width:0;flex-wrap:wrap}
 .lp-qkv{display:flex;gap:14px;flex:1;min-width:0;justify-content:flex-end}
 .lp-qkv>div{min-width:0}
 .lp-qkv .lbl{margin-bottom:2px}
 .lp-qkv b{font-size:.875rem;white-space:nowrap}
-/* order book card */
 .lp-book .lp-bh{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:-10px 0 0;min-height:44px}
 .lp-book .lp-bh .lbl{margin:0}
 .lp-btoggle{display:block;width:100%;min-height:44px;margin:6px 0 0;border:1px solid var(--line2);border-radius:10px;background:var(--card2);color:var(--fg);font:inherit;font-weight:600;font-size:.875rem;cursor:pointer}
@@ -955,6 +951,94 @@ html[data-priv="1"] .hm-cell .hm-f{filter:none}
 .lp-bids .lp-lr .num:first-of-type{color:var(--good)}
 .lp-asks .lp-lr .num:first-of-type{color:var(--bad)}
 .lp-bsrc{margin-top:8px;line-height:1.35;overflow-wrap:anywhere}
+
+/* ---- trust.css ---- */
+#trust{background:var(--card2);border-bottom:1px solid var(--line)}
+#trust .tr-sum{display:flex;flex-wrap:wrap;align-items:center;gap:2px 6px;width:100%;min-height:44px;padding:6px var(--pad,16px);border:0;background:none;color:var(--mut);font:inherit;font-size:.75rem;line-height:1.35;font-weight:500;text-align:left;cursor:pointer;font-variant-numeric:tabular-nums}
+#trust .tr-sum:focus-visible,#trust .tr-link:focus-visible{outline:2px solid var(--lx-focus,var(--acc));outline-offset:-2px;border-radius:8px}
+#trust .tr-p{white-space:nowrap}
+#trust .tr-p b{font-weight:700;color:var(--fg)}
+#trust .tr-p[data-lvl=ok] b{color:var(--good)}
+#trust .tr-p[data-lvl=warn] b{color:var(--warn)}
+#trust .tr-p[data-lvl=bad] b{color:var(--bad)}
+#trust .tr-p[data-lvl=info] b{color:var(--mut)}
+#trust .tr-p[data-k=mode] b{letter-spacing:.02em}
+#trust .tr-sep{color:var(--mut2);opacity:.7}
+#trust .tr-chev{margin-left:auto;color:var(--mut2);padding-left:4px}
+#trust[data-lvl=bad]{box-shadow:inset 3px 0 0 var(--bad)}
+#trust[data-lvl=warn]{box-shadow:inset 3px 0 0 var(--warn)}
+#trust .tr-det{padding:0 var(--pad,16px) 10px;font-size:.75rem;color:var(--mut)}
+#trust .tr-row{display:flex;gap:10px;padding:6px 0;border-top:1px solid var(--line)}
+#trust .tr-l{flex:0 0 7.5em;color:var(--fg);font-weight:600}
+#trust .tr-v{flex:1;min-width:0;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+#trust .tr-row[data-lvl=bad] .tr-l{color:var(--bad)}
+#trust .tr-row[data-lvl=warn] .tr-l{color:var(--warn)}
+#trust .tr-link{display:inline-flex;align-items:center;min-height:44px;color:var(--acc);font-weight:600;text-decoration:none}
+#trust .tr-foot{padding-top:4px;color:var(--mut2)}
+@media (prefers-reduced-motion:reduce){#trust *{transition:none!important;animation:none!important}}
+
+/* ---- watch.css ---- */
+.wl .wl-card{padding-bottom:10px}
+.wl .wl-hd{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:4px}
+.wl .wl-h{font-size:1.0625rem}
+.wl .wl-src{font-size:.75rem;color:var(--mut);margin:0 0 8px}
+.wl .wl-src[data-lvl=warn]{color:var(--warn)}.wl .wl-src[data-lvl=bad]{color:var(--bad)}
+.wl .wl-warn{background:var(--warn);color:#111;border-radius:10px;padding:8px 10px;font-size:.8125rem;font-weight:600;margin:0 0 8px}
+.wl .wl-tools{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px}
+.wl .wl-tb{min-height:44px;padding:0 14px;border-radius:99px;border:1px solid var(--line2);background:var(--card2);color:var(--fg);font:inherit;font-size:.8125rem;font-weight:600;cursor:pointer}
+.wl .wl-tb.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.wl .wl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -14px;padding:0 14px;max-width:calc(100% + 28px)}
+.wl .wl-scroll:focus-visible{outline:2px solid var(--lx-focus,var(--acc));outline-offset:-2px}
+.wl .wl-t{border-collapse:separate;border-spacing:0;width:100%;font-size:.8125rem;font-variant-numeric:tabular-nums}
+.wl .wl-t th,.wl .wl-t td{padding:4px 8px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap;vertical-align:middle}
+.wl .wl-t thead th{font-size:.75rem;color:var(--mut);font-weight:600;padding:0 2px}
+.wl .wl-t th:first-child,.wl .wl-t td:first-child{position:sticky;left:0;z-index:1;background:var(--card);text-align:left;box-shadow:1px 0 0 var(--line)}
+.wl .wl-t thead th:first-child{z-index:2}
+.wl .wl-sb{min-height:44px;min-width:44px;padding:0 6px;border:0;background:none;color:inherit;font:inherit;font-weight:600;cursor:pointer;white-space:nowrap}
+.wl .wl-t th[aria-sort=ascending] .wl-sb,.wl .wl-t th[aria-sort=descending] .wl-sb{color:var(--fg)}
+.wl .wl-c0{min-width:9.5rem;max-width:12rem;font-weight:500}
+.wl .wl-c0t{display:flex;align-items:center;gap:0}
+.wl .wl-sym{flex:1;min-width:0;color:var(--fg);font-weight:700;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:0 4px;overflow:hidden;text-overflow:ellipsis}
+.wl .wl-ib{min-width:44px;min-height:44px;border:0;background:none;color:var(--mut);font-size:1rem;cursor:pointer;border-radius:10px;flex:none}
+.wl .wl-ib:disabled{opacity:.35;cursor:default}
+.wl .wl-star{color:var(--warn)}
+.wl .wl-nb.has{color:var(--acc)}
+.wl .wl-sub{font-size:.75rem;color:var(--mut);padding:0 4px 2px 48px;box-sizing:border-box;max-width:9.5rem;white-space:normal}
+.wl .wl-sub.warn{color:var(--warn)}
+.wl .wl-np{font-size:.75rem;color:var(--mut);padding:0 4px 4px 48px;box-sizing:border-box;max-width:9.5rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wl .wl-bd{display:block;font-size:.75rem;font-weight:700;color:var(--warn);letter-spacing:.02em;white-space:normal;max-width:7rem;margin-left:auto;line-height:1.25}
+.wl .wl-bd[data-src=live]{color:var(--good)}
+.wl td.up{color:var(--good)}.wl td.down{color:var(--bad)}
+.wl .wl-spark polyline{stroke-width:1.5}.wl .wl-spark .up{stroke:var(--good)}.wl .wl-spark .down{stroke:var(--bad)}
+.wl .wl-ord{white-space:nowrap}
+.wl .wl-foot,.wl .wl-priv{margin-top:8px;font-size:.75rem}
+.wl .wl-priv{padding:0 2px 12px}
+.wl .wl-orow{display:flex;align-items:center;gap:6px;padding:6px 0;border-top:1px solid var(--line)}
+.wl .wl-on{flex:1;min-width:0}.wl .wl-ot{font-size:.8125rem;color:var(--mut);white-space:pre-wrap;overflow-wrap:anywhere}
+.wl a:focus-visible,.wl button:focus-visible,.wl-dlg :focus-visible,.wl-entry:focus-visible{outline:2px solid var(--lx-focus,var(--acc));outline-offset:2px}
+.wl-entry{display:inline-flex;align-items:center;min-height:44px;padding:0 4px;color:var(--acc);font-weight:600;font-size:.8125rem;text-decoration:none}
+.wl-hero{margin-top:8px;border-top:1px solid var(--line);padding-top:6px}
+.wl-hn-l{font-size:.75rem;color:var(--mut)}.wl-hn{font-size:.8125rem;white-space:pre-wrap;overflow-wrap:anywhere}
+.wl-ov{position:fixed;inset:0;z-index:70;background:rgba(0,0,0,.55);display:flex;align-items:flex-end;justify-content:center}
+.wl-dlg{background:var(--card);color:var(--fg);width:100%;max-width:520px;max-height:88vh;overflow:auto;border-radius:16px 16px 0 0;padding:6px 16px calc(16px + var(--sab,0px));box-shadow:0 -8px 30px rgba(0,0,0,.4)}
+.wl-dh{display:flex;align-items:center;justify-content:space-between;gap:8px;position:sticky;top:0;background:var(--card);padding:6px 0}
+.wl-dh h2{font-size:1.0625rem}
+.wl-x{min-height:44px;min-width:64px;border:1px solid var(--line2);border-radius:99px;background:var(--card2);color:var(--fg);font:inherit;font-weight:600;cursor:pointer}
+.wl-db .mut.small,.wl-db .small{font-size:.75rem}
+.wl-cols{border:0;margin:0;padding:0}
+.wl-ck{display:flex;align-items:center;gap:12px;min-height:44px;border-top:1px solid var(--line);cursor:pointer}
+.wl-ck input{width:22px;height:22px;accent-color:var(--acc)}
+.wl-nl{display:block;font-weight:600;font-size:.8125rem;margin:10px 0 6px}
+.wl-ta{width:100%;min-height:96px;padding:10px;border-radius:10px;border:1px solid var(--line2);background:var(--bg);color:var(--fg);font:inherit;font-size:.9375rem;resize:vertical}
+.wl-ta.mono{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.8125rem}
+.wl-cnt{text-align:right;margin-top:2px}
+.wl-btns{display:flex;gap:8px;margin-top:8px}
+.wl-btns button.pri{width:auto;flex:1;margin:0}
+.wl-del{flex:none;min-height:46px;padding:0 16px;border-radius:10px;border:1px solid var(--bad);background:none;color:var(--bad);font:inherit;font-weight:700;cursor:pointer}
+.wl-del:disabled{opacity:.4;cursor:default}
+.wl-res{font-weight:700;margin-top:6px;font-size:.875rem}
+.wl-msg{margin-top:4px}
+@media (prefers-reduced-motion:reduce){.wl *,.wl-ov *{transition:none!important;animation:none!important}}
 
 #stale{display:none!important}
 .oldish{background:#7a5a12;color:var(--fg)}
@@ -2081,7 +2165,7 @@ html[data-priv="1"] .hm-cell .hm-f{filter:none}
     if (!soft && !SNAP && !view.children.length) skeleton();
     pages[t](arg).then(function (h) {
       var y = soft ? window.scrollY : 0;
-      view.innerHTML = h; wire(t); wireSide(view); if (window.AwayNews && typeof window.AwayNews.after === 'function') { try { window.AwayNews.after(view, t, arg, SNAP); } catch (e) { } } if (window.AwayPrices && typeof window.AwayPrices.after === 'function') { try { window.AwayPrices.after(view, t, arg, SNAP); } catch (e) { } } if (window.AwayAlerts && typeof window.AwayAlerts.after === 'function') { try { window.AwayAlerts.after(view, t, arg, SNAP); } catch (e) { } } view.classList.remove('in'); void view.offsetWidth; if (!soft) view.classList.add('in');
+      view.innerHTML = h; wire(t); wireSide(view); if (window.AwayNews && typeof window.AwayNews.after === 'function') { try { window.AwayNews.after(view, t, arg, SNAP); } catch (e) { } } if (window.AwayPrices && typeof window.AwayPrices.after === 'function') { try { window.AwayPrices.after(view, t, arg, SNAP); } catch (e) { } } if (window.AwayAlerts && typeof window.AwayAlerts.after === 'function') { try { window.AwayAlerts.after(view, t, arg, SNAP); } catch (e) { } } if (window.AwayB2 && typeof window.AwayB2.after === 'function') { try { window.AwayB2.after(view, t, arg, SNAP); } catch (e) { } } view.classList.remove('in'); void view.offsetWidth; if (!soft) view.classList.add('in');
       window.scrollTo(0, soft ? y : 0);
       get('freshness').then(function (fr) {
         lanSummary(fr);
@@ -5749,7 +5833,11 @@ html[data-priv="1"] .hm-cell .hm-f{filter:none}
     EDGAR: ['SEC EDGAR filings', 'sec.gov', 'ED', 'Official'], BLS: ['Bureau of Labor Statistics', 'bls.gov', 'BLS', 'Official'],
     CFTC: ['CFTC', 'cftc.gov', 'CFTC', 'Official'], CSL: ['CryptoSlate', 'cryptoslate.com', 'CS', 'Aggregator'],
     KRK: ['Kraken status', 'status.kraken.com', 'KS', 'Official'], BTCM: ['Bitcoin Magazine', 'bitcoinmagazine.com', 'BM', 'Blog'],
-    CT: ['Cointelegraph', 'cointelegraph.com', 'CT', 'Blog'] };
+    CT: ['Cointelegraph', 'cointelegraph.com', 'CT', 'Blog'],
+    // phase 2 (11-21 news2, all OFF on the PC by default; known here so an enabled one is shown, an unknown code is still dropped)
+    SECL: ['SEC litigation releases', 'sec.gov', 'SL', 'Official'], ECB: ['European Central Bank', 'ecb.europa.eu', 'ECB', 'Official'],
+    BEA: ['Bureau of Economic Analysis', 'bea.gov', 'BEA', 'Official'], NQH: ['Nasdaq trade halts', 'nasdaqtrader.com', 'NH', 'Official'],
+    CBS: ['Coinbase status', 'status.coinbase.com', 'CB', 'Official'] };
   // EDGAR filings: fixed forms and the fixed watch list (CIK -> ticker); a ticker is accepted ONLY when it is the watch-list one
   // (11-21 j: XOM left out, its CIK is unverified; same list as news_sources.EDGAR_WATCH)
   var FORMS = ['10-K', '10-K/A', '10-Q', '10-Q/A', '8-K', '8-K/A', 'S-1', 'S-1/A'];
@@ -5760,8 +5848,9 @@ html[data-priv="1"] .hm-cell .hm-f{filter:none}
     '0001633917': 'PYPL', '0000886982': 'GS', '0000070858': 'BAC', '0001512673': 'XYZ', '0001507605': 'MARA',
     '0001167419': 'RIOT' };
   // market groups for the Stocks / Crypto / Macro filter (same rules as news_sources.CRYPTO_SOURCES / MACRO_SOURCES)
-  var CRYPTO_SRC = ['BTCM', 'CSL', 'CT', 'KRK'];
-  var MACRO_SRC = ['BLS', 'FED'];
+  var CRYPTO_SRC = ['BTCM', 'CBS', 'CSL', 'CT', 'KRK'];
+  var MACRO_SRC = ['BEA', 'BLS', 'ECB', 'FED'];
+  var STOCK_SRC = ['EDGAR', 'NQH'];
   var MARKETS = { stocks: 'Stocks', crypto: 'Crypto', macro: 'Macro' };
   var COINS = ['ADA', 'ATOM', 'AVAX', 'BCH', 'BTC', 'DOGE', 'DOT', 'ETH', 'LINK', 'LTC', 'SOL', 'TON', 'TRX', 'UNI', 'USDC', 'USDT', 'XLM', 'XMR', 'XRP'];
   var TOPICS = { regulation: 'Regulation', etf: 'ETF', hack: 'Hack / exploit', exchange: 'Exchange', macro: 'Macro', stablecoin: 'Stablecoin', maintenance: 'Maintenance' };
@@ -5808,7 +5897,7 @@ html[data-priv="1"] .hm-cell .hm-f{filter:none}
   function tierOf(it) { return SRC[it.src][3]; }
   // -> {stocks, crypto, macro} flags for one item (fixed rules, keyword tags are not predictions)
   function mk(it) {
-    return { stocks: it.src === 'EDGAR', crypto: it.coins.length > 0 || CRYPTO_SRC.indexOf(it.src) >= 0 || it.tags.indexOf('stablecoin') >= 0,
+    return { stocks: STOCK_SRC.indexOf(it.src) >= 0, crypto: it.coins.length > 0 || CRYPTO_SRC.indexOf(it.src) >= 0 || it.tags.indexOf('stablecoin') >= 0,
       macro: it.tags.indexOf('macro') >= 0 || MACRO_SRC.indexOf(it.src) >= 0 };
   }
   AN.markets = mk;
@@ -6031,823 +6120,1292 @@ html[data-priv="1"] .hm-cell .hm-f{filter:none}
 })();
 
 /* ---- liveprices.js ---- */
-/* liveprices.js - AwayPrices 1.0.0 (DEV COPY 11-21, NOT published; the CSP change is a roa-judge gate).
-   Live prices for the coins on screen (Markets rows: on-screen, held and watchlist coins; the coin screen #chart/SYM) and an order
-   book card on the coin screen, read straight from Kraken's PUBLIC REST API by the phone:
-     GET https://api.kraken.com/0/public/Ticker?pair=A,B,C     (one batched request, every TICKER_MS while the screen is visible)
-     GET https://api.kraken.com/0/public/Depth?pair=X&count=25 (only while the order book card is open and visible)
-   Nothing else. The base address is a BUILD-TIME constant (build_site.py): 'https://api.kraken.com' for the published site, '' (module
-   off, no request at all) for the 127.0.0.1 test builds of the other suites. The two exact paths are also the only Kraken entries in the
-   page CSP connect-src, so every private API path (and any other host) is refused by the browser even if this file had a bug.
-   Rules:
-   - No headers, no credentials ('omit'), no referrer, no redirects, no cookies; GET only. Nothing about the user is sent.
-   - Pair names come ONLY from the app's own market.enc pair list (allowlist built from SNAP.market universe+stats). Kraken's response
-     can never add a pair, a key, a route or markup: keys not requested are ignored, every number is validated (decimal string or
-     finite number, inside sane bounds), every node is built with createElement + textContent (no HTML strings in this file).
-   - Response size is capped while reading (TICKER_CAP / DEPTH_CAP); a bigger body is cancelled and counted as a failure.
-   - Back-off on errors (doubling, jitter, x4 base for HTTP 429 / Kraken rate errors); after MAX_FAIL failures in a row the poller
-     stops and the screen falls back to the market file (relay snapshot) prices with a visible DELAYED badge. Tap the badge to retry.
-   - Polls only while the page is visible (visibilitychange pauses at once) and the screen that needs the data is open.
-   - Display only: no order, no key, no storage beyond one device preference (ui_lpbook = order book card open), no alert evaluation.
-   - 11-21 alerts DEV COPY: AP.onTick(fn) hands each ticker result (copies of the quotes + LIVE/DELAYED mode) to app/livealerts.js,
-     and AP.extraSyms (set by livealerts.js) adds the coins of armed price alerts to the SAME batched request, only on screens that
-     already poll. No new request, path or host. */
 (function () {
-  'use strict';
-  var G = typeof window !== 'undefined' ? window : globalThis;
-  var AP = G.AwayPrices = G.AwayPrices || {};
-  AP.version = '1.0.0';
-  var BASE = 'https://api.kraken.com';                       // build-time constant (build_site.py); never changed at run time
-  var TICKER = BASE + '/0/public/Ticker', DEPTH = BASE + '/0/public/Depth';
-  var ON = BASE === 'https://api.kraken.com';
-  var TICKER_MS = 7000, DEPTH_MS = 4000, MIN_GAP_T = 5000, MIN_GAP_D = 3000, STALE_MS = 30000, MAX_FAIL = 5, MAX_BACKOFF = 120000;
-  var RATE_MULT = 4, TIMEOUT_MS = 8000, TICKER_CAP = 256 * 1024, DEPTH_CAP = 96 * 1024, MAX_PAIRS = 40, BOOK_N = 25, LADDER_N = 10;
-  var PRICE_MAX = 1e10, QTY_MAX = 1e15;
-  AP.enabled = ON;
-  AP.cfg = { TICKER_MS: TICKER_MS, DEPTH_MS: DEPTH_MS, STALE_MS: STALE_MS, MAX_FAIL: MAX_FAIL, MAX_PAIRS: MAX_PAIRS, TICKER_CAP: TICKER_CAP, DEPTH_CAP: DEPTH_CAP };
-
-  // ------------------------------------------------------------------ pure helpers (unit-tested in Node: tests/liveprices_unit.cjs)
-  var DEC = /^\d{1,13}(\.\d{1,14})?$/;
-  function num(v, max, allowZero) {            // Kraken sends decimal strings; a finite JSON number is accepted too. Else null.
-    var n;
-    if (typeof v === 'string') { if (v.length > 30 || !DEC.test(v)) return null; n = Number(v); }
-    else if (typeof v === 'number') n = v;
-    else return null;
-    if (!isFinite(n) || n < 0 || n > max) return null;
-    if (n === 0 && !allowZero) return null;
-    return n;
-  }
-  function isN(v) { return typeof v === 'number' && isFinite(v); }
-  function grp(v, dp) { return v.toLocaleString('en-US', { minimumFractionDigits: dp, maximumFractionDigits: dp }); }
-  function fmtPrice(v) { if (!isN(v)) return '-'; var a = Math.abs(v); return a >= 1000 ? grp(v, 2) : a >= 1 ? grp(v, a >= 100 ? 2 : 3) : String(parseFloat(v.toPrecision(5))); }   // = shell price()
-  function fmtDec(v, dp) { return isN(v) ? grp(v, Math.max(0, Math.min(10, dp | 0))) : '-'; }
-  function fmtQty(v) { if (!isN(v)) return '-'; return v >= 1e6 ? (v / 1e6).toFixed(2) + 'M' : v >= 1e4 ? (v / 1e3).toFixed(1) + 'K' : String(parseFloat(v.toPrecision(5))); }
-  function fmtUsd(v) { if (!isN(v)) return '-'; var a = Math.abs(v); return '$' + (a >= 1e9 ? (v / 1e9).toFixed(2) + 'B' : a >= 1e6 ? (v / 1e6).toFixed(2) + 'M' : a >= 1e3 ? (v / 1e3).toFixed(1) + 'K' : v.toFixed(0)); }
-  function fmtSpr(p) { return !isN(p) ? '-' : (p >= 0.01 ? p.toFixed(3) : String(parseFloat(p.toPrecision(2)))) + '%'; }   // tiny BTC spreads keep 2 significant digits
-  function fmtAge(ms) { var s = Math.max(0, Math.round(ms / 1000)); return s < 60 ? s + ' s' : s < 3600 ? Math.round(s / 60) + ' min' : s < 172800 ? Math.round(s / 3600) + ' h' : Math.round(s / 86400) + ' d'; }
-  function own(o, k) { return Object.prototype.hasOwnProperty.call(o, k); }
-  function plain(o) { return !!o && typeof o === 'object' && !Array.isArray(o); }
-
-  // allowlist from the app's own market file (schema market/1): USD pairs that are online, same symbol rule as the shell
-  // (static/app.js fromMarket1: ws base, XBT -> BTC, XDG -> DOGE). Never built from a Kraken response.
-  var PAIR_RE = /^[A-Z0-9]{2,20}$/, WS_RE = /^[A-Z0-9]{1,15}\/USD$/, SYM_RE = /^[A-Z0-9]{1,15}$/;
-  function rowsOf(t) { if (!t || !Array.isArray(t.cols) || !Array.isArray(t.rows)) return []; return t.rows.slice(0, 5000).map(function (r) { var o = {}; t.cols.forEach(function (c, i) { o[c] = Array.isArray(r) ? r[i] : undefined; }); return o; }); }
-  function buildAllowlist(m) {
-    var out = { bySym: {}, byKey: {}, n: 0 };
-    if (!plain(m) || m.schema !== 'market/1') return out;
-    var uni = {}; rowsOf(m.universe).forEach(function (u) { if (typeof u.pair === 'string') uni[u.pair] = u; });
-    rowsOf(m.stats).forEach(function (s) {
-      var u = uni[s.pair]; if (!u || out.n >= 1000) return;
-      if (!PAIR_RE.test(s.pair) || (u.status && u.status !== 'online') || (u.quote !== 'ZUSD' && u.quote !== 'USD') || typeof u.ws !== 'string' || !WS_RE.test(u.ws)) return;
-      var sym = u.ws.split('/')[0].replace(/^XBT$/, 'BTC').replace(/^XDG$/, 'DOGE');
-      if (!SYM_RE.test(sym) || own(out.bySym, sym)) return;
-      var alt = typeof u.alt === 'string' && PAIR_RE.test(u.alt) ? u.alt : null;
-      out.bySym[sym] = { sym: sym, pair: s.pair, alt: alt, ws: u.ws, pdec: isN(u.pdec) && u.pdec >= 0 && u.pdec <= 12 ? u.pdec : 5, ldec: isN(u.ldec) && u.ldec >= 0 && u.ldec <= 12 ? u.ldec : 8 };
-      out.byKey[s.pair] = sym; if (alt) out.byKey[alt] = sym;
-      out.n++;
-    });
-    return out;
-  }
-  // Kraken envelope {"error":[...],"result":{...}} -> {ok, result} | {ok:false, kind}
-  function envelope(text) {
-    var j; try { j = JSON.parse(text); } catch (e) { return { ok: false, kind: 'parse' }; }
-    if (!plain(j)) return { ok: false, kind: 'shape' };
-    if (own(j, 'error')) {
-      if (!Array.isArray(j.error)) return { ok: false, kind: 'shape' };
-      if (j.error.length) {
-        var msg = j.error.slice(0, 5).map(function (x) { return typeof x === 'string' ? x.slice(0, 120) : '?'; }).join('; ');
-        return { ok: false, kind: /rate limit|too many requests|throttl/i.test(msg) ? 'rate' : 'api', msg: msg };
-      }
-    }
-    if (!plain(j.result)) return { ok: false, kind: 'shape' };
-    return { ok: true, result: j.result };
-  }
-  function parseTicker(text, wantSyms, allow) {
-    var e = envelope(text); if (!e.ok) return e;
-    var want = {}; (wantSyms || []).forEach(function (s) { want[s] = true; });
-    var quotes = {}, extra = 0, bad = 0, keys = Object.keys(e.result).slice(0, 600);
-    keys.forEach(function (k) {
-      var sym = own(allow.byKey, k) ? allow.byKey[k] : null;
-      if (!sym || !want[sym]) { extra++; return; }
-      var t = e.result[k];
-      if (!plain(t) || !Array.isArray(t.c)) { bad++; return; }
-      var last = num(t.c[0], PRICE_MAX), bid = Array.isArray(t.b) ? num(t.b[0], PRICE_MAX) : null, ask = Array.isArray(t.a) ? num(t.a[0], PRICE_MAX) : null;
-      if (last === null) { bad++; return; }
-      if (bid !== null && ask !== null && (bid > ask * 1.5 || ask > bid * 3)) { bid = null; ask = null; }     // nonsense quote: keep last only
-      quotes[sym] = { last: last, bid: bid, ask: ask, h24: Array.isArray(t.h) ? num(t.h[1], PRICE_MAX) : null, l24: Array.isArray(t.l) ? num(t.l[1], PRICE_MAX) : null,
-        vol24: Array.isArray(t.v) ? num(t.v[1], QTY_MAX, true) : null, open: num(t.o, PRICE_MAX) };
-    });
-    if (!Object.keys(quotes).length) return { ok: false, kind: keys.length ? 'shape' : 'empty', extra: extra, bad: bad };
-    return { ok: true, quotes: quotes, extra: extra, bad: bad };
-  }
-  function levels(arr) {
-    if (!Array.isArray(arr) || arr.length > 1000) return null;
-    var out = [];
-    for (var i = 0; i < arr.length && out.length < BOOK_N; i++) {
-      var l = arr[i]; if (!Array.isArray(l) || l.length < 2) return null;
-      var p = num(l[0], PRICE_MAX), q = num(l[1], QTY_MAX);
-      if (p === null || q === null) return null;
-      out.push([p, q]);
-    }
-    return out;
-  }
-  function bookStats(bids, asks) {
-    var bb = bids.length ? bids[0][0] : null, ba = asks.length ? asks[0][0] : null;
-    var mid = bb !== null && ba !== null ? (bb + ba) / 2 : null, crossed = bb !== null && ba !== null && bb >= ba;
-    var bq = 0, aq = 0, bu = 0, au = 0;
-    bids.forEach(function (l) { bq += l[1]; bu += l[0] * l[1]; }); asks.forEach(function (l) { aq += l[1]; au += l[0] * l[1]; });
-    return { bid: bb, ask: ba, mid: mid, crossed: crossed, spread: mid !== null && !crossed ? ba - bb : null, spreadPct: mid && !crossed ? (ba - bb) / mid * 100 : null,
-      bidQty: bq, askQty: aq, bidUsd: bu, askUsd: au, imbalance: bu + au > 0 ? (bu - au) / (bu + au) : null };
-  }
-  function parseDepth(text, sym, allow) {
-    var e = envelope(text); if (!e.ok) return e;
-    var info = allow.bySym[sym]; if (!info) return { ok: false, kind: 'pair' };
-    var k = own(e.result, info.pair) ? info.pair : info.alt && own(e.result, info.alt) ? info.alt : null;
-    if (!k || !plain(e.result[k])) return { ok: false, kind: 'shape' };
-    var bids = levels(e.result[k].bids), asks = levels(e.result[k].asks);
-    if (!bids || !asks || (!bids.length && !asks.length)) return { ok: false, kind: 'shape' };
-    bids.sort(function (a, b) { return b[0] - a[0]; }); asks.sort(function (a, b) { return a[0] - b[0]; });
-    var st = bookStats(bids, asks);
-    var ref = st.mid !== null ? st.mid : bids.length ? bids[0][0] : asks[0][0];
-    if (bids.concat(asks).some(function (l) { return l[0] < ref * 0.5 || l[0] > ref * 2; })) return { ok: false, kind: 'shape' };   // a level absurdly far away
-    return { ok: true, bids: bids, asks: asks, stats: st };
-  }
-  // exact request URLs: only the two compiled paths, only allow-listed pair keys
-  function tickerUrl(syms, allow) {
-    var ks = []; syms.forEach(function (s) { var i = allow.bySym[s]; if (i && ks.indexOf(i.pair) < 0 && ks.length < MAX_PAIRS) ks.push(i.pair); });
-    return ks.length ? TICKER + '?pair=' + ks.join(',') : null;
-  }
-  function depthUrl(sym, allow) { var i = allow.bySym[sym]; return i ? DEPTH + '?pair=' + i.pair + '&count=' + BOOK_N : null; }
-  function urlOk(u) {
-    if (typeof u !== 'string') return false;
-    if (u.indexOf(TICKER + '?pair=') === 0) return /^[A-Z0-9]{2,20}(,[A-Z0-9]{2,20}){0,39}$/.test(u.slice(TICKER.length + 6));
-    if (u.indexOf(DEPTH + '?pair=') === 0) return /^[A-Z0-9]{2,20}&count=25$/.test(u.slice(DEPTH.length + 6));
-    return false;
-  }
-  // read a fetch Response with a hard byte cap (the body is cancelled past the cap)
-  function readCapped(r, cap) {
-    if (r.status === 429) return Promise.resolve({ ok: false, kind: 'rate' });
-    if (!r.ok) return Promise.resolve({ ok: false, kind: 'http', status: r.status });
-    var cl = r.headers && r.headers.get ? Number(r.headers.get('content-length')) : NaN;
-    if (isN(cl) && cl > cap) { try { r.body && r.body.cancel && r.body.cancel(); } catch (e) { } return Promise.resolve({ ok: false, kind: 'size' }); }
-    if (r.body && typeof r.body.getReader === 'function' && typeof TextDecoder !== 'undefined') {
-      var rd = r.body.getReader(), dec = new TextDecoder('utf-8'), parts = [], n = 0;
-      var pump = function () {
-        return rd.read().then(function (x) {
-          if (x.done) { parts.push(dec.decode()); return { ok: true, text: parts.join('') }; }
-          n += x.value.byteLength;
-          if (n > cap) { try { rd.cancel(); } catch (e) { } return { ok: false, kind: 'size' }; }
-          parts.push(dec.decode(x.value, { stream: true })); return pump();
-        });
-      };
-      return pump();
-    }
-    return r.text().then(function (t) { return t.length > cap ? { ok: false, kind: 'size' } : { ok: true, text: t }; });
-  }
-  var stats = { ticker: 0, depth: 0, refused: 0, last: null };
-  function kget(u, cap, fetchFn) {
-    if (!ON || !urlOk(u)) { stats.refused++; return Promise.resolve({ ok: false, kind: 'refused' }); }
-    var f = fetchFn || (typeof fetch === 'function' ? fetch : null); if (!f) return Promise.resolve({ ok: false, kind: 'net' });
-    var ac = typeof AbortController === 'function' ? new AbortController() : null, to = null;
-    if (ac) to = setTimeout(function () { try { ac.abort(); } catch (e) { } }, TIMEOUT_MS);
-    if (u.indexOf(TICKER) === 0) stats.ticker++; else stats.depth++;
-    stats.last = u;
-    return Promise.resolve().then(function () {
-      return f(u, { method: 'GET', credentials: 'omit', referrerPolicy: 'no-referrer', redirect: 'error', mode: 'cors', signal: ac ? ac.signal : undefined });
-    }).then(function (r) { return readCapped(r, cap); }, function () { return { ok: false, kind: 'net' }; })
-      .then(function (x) { if (to) clearTimeout(to); return x; }, function () { if (to) clearTimeout(to); return { ok: false, kind: 'net' }; });
-  }
-
-  // poller: one request in flight at most, never closer than minGap, pauses while not visible / not wanted, back-off, stop after maxFail
-  function Poller(o) {
-    var self = this, timer = null, inflight = false, lastReq = -1e15;
-    var clock = o.now || function () { return Date.now(); }, st = o.setTimeout || setTimeout, ct = o.clearTimeout || clearTimeout;
-    var rnd = o.random || Math.random;
-    self.state = 'idle'; self.fails = 0; self.lastOk = 0; self.lastKind = null; self.nextDelay = null; self.requests = 0;
-    function set(s) { if (self.state !== s) { self.state = s; if (o.onState) o.onState(s, self); } }
-    function clear() { if (timer !== null) { ct(timer); timer = null; } }
-    function schedule(ms) { clear(); self.nextDelay = ms; timer = st(tick, Math.max(0, ms)); }
-    function tick() {
-      timer = null;
-      if (self.state === 'idle' || self.state === 'stopped') return;
-      if (!o.wanted()) { set('paused'); return; }
-      if (inflight) return;
-      var gap = clock() - lastReq; if (gap < o.minGap) { schedule(o.minGap - gap); return; }
-      inflight = true; lastReq = clock(); self.requests++;
-      Promise.resolve().then(o.fetchOnce).then(function (r) { return r || { ok: false, kind: 'net' }; }, function () { return { ok: false, kind: 'net' }; }).then(function (r) {
-        inflight = false;
-        if (self.state === 'idle' || self.state === 'stopped') return;
-        if (r.ok) { self.fails = 0; self.lastOk = clock(); self.lastKind = null; set('running'); if (o.onData) o.onData(r, self); schedule(o.interval); return; }
-        self.fails++; self.lastKind = r.kind || 'net';
-        if (self.fails >= o.maxFail) { clear(); set('stopped'); if (o.onData) o.onData(r, self); return; }
-        var base = r.kind === 'rate' ? o.interval * RATE_MULT : o.interval;
-        var d = Math.min(o.maxBackoff, base * Math.pow(2, self.fails - 1)); d = Math.round(d * (1 + 0.25 * rnd()));
-        set('backoff'); if (o.onData) o.onData(r, self); schedule(d);
-      });
-    }
-    self.start = function () { if (self.state === 'stopped') return; if (self.state === 'idle' || self.state === 'paused') { set('running'); schedule(0); } };
-    self.stop = function () { clear(); set('idle'); };
-    self.pause = function () { clear(); if (self.state !== 'idle' && self.state !== 'stopped') set('paused'); };
-    self.resume = function () {         // visible / wanted again: fetch now unless the last answer is younger than the interval
-      if (self.state !== 'paused') return;
-      set('running'); var age = clock() - self.lastOk; schedule(self.lastOk && age < o.interval ? o.interval - age : 0);
-    };
-    self.retry = function () { clear(); self.fails = 0; set('running'); schedule(0); };
-    self.kick = function () { if (self.state === 'running' && timer === null && !inflight) schedule(0); };
-  }
-
-  AP._core = { num: num, buildAllowlist: buildAllowlist, envelope: envelope, parseTicker: parseTicker, parseDepth: parseDepth, bookStats: bookStats,
-    tickerUrl: tickerUrl, depthUrl: depthUrl, urlOk: urlOk, readCapped: readCapped, kget: kget, Poller: Poller, fmtPrice: fmtPrice, fmtAge: fmtAge, fmtSpr: fmtSpr,
-    stats: stats, TICKER: TICKER, DEPTH: DEPTH };
-
-  if (typeof document === 'undefined' || !ON) {                // Node unit tests, or the module compiled off (test builds): no DOM work
-    AP.after = function () { }; AP.status = function () { return { enabled: ON, state: 'off' }; }; AP.onTick = function () { }; AP.quote = function () { return null; };
-    return;
-  }
-
-  // ------------------------------------------------------------------ DOM layer
-  var allow = { bySym: {}, byKey: {}, n: 0 }, allowSrc = null, snapRef = null, quotes = {}, shown = {}, route = { t: null, arg: null };
-  var book = { sym: null, data: null, at: 0, open: false }, ageTimer = null;
-  var reduce = G.matchMedia ? G.matchMedia('(prefers-reduced-motion: reduce)') : null;
-  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
-  function visible() { return !document.hidden; }
-  function pref(k, v) { try { if (v === undefined) return localStorage.getItem('ui_' + k); localStorage.setItem('ui_' + k, v); } catch (e) { } return null; }
-  function watchList() { try { var v = JSON.parse(localStorage.getItem('ui_watch') || '[]'); return Array.isArray(v) ? v.filter(function (s) { return typeof s === 'string'; }) : []; } catch (e) { return []; } }
-  function marketAsof() { var m = snapRef && snapRef.market; return m && isN(m.asof) ? m.asof * 1000 : null; }
-  function routeNow() { var h = (location.hash || '#home').slice(1).split('/'); return { t: h[0] || 'home', arg: h[1] ? safeDec(h[1]) : null }; }
-  function safeDec(s) { try { return decodeURIComponent(s); } catch (e) { return null; } }
-  function rows() { return Array.prototype.slice.call(document.querySelectorAll('#view a.tick.mk[href^="#chart/"]')); }
-  function rowSym(a) { var s = safeDec(a.getAttribute('href').slice(7)); return s && SYM_RE.test(s) ? s : null; }
-  function heroPrice() { return document.querySelector('#view .card.hero .big.num'); }
-
-  function wantedSyms() {
-    var r = routeNow(), out = [], add = function (s) { if (s && allow.bySym[s] && out.indexOf(s) < 0 && out.length < MAX_PAIRS) out.push(s); };
-    if (r.t === 'chart' && r.arg && heroPrice()) { add(r.arg); extra().forEach(add); }
-    if (r.t === 'markets') {
-      var all = rows(), w = watchList(), vh = G.innerHeight || 844, held = [], watch = [], vis = [];
-      all.forEach(function (a) {
-        var s = rowSym(a); if (!s) return;
-        if (a.querySelector('.badge.held')) held.push(s);
-        if (w.indexOf(s) >= 0) watch.push(s);
-        var b = a.getBoundingClientRect(); if (b.bottom > -vh * 0.5 && b.top < vh * 1.5) vis.push(s);
-      });
-      if (all.length) held.concat(watch, extra(), vis).forEach(add);
-    }
-    return out;
-  }
-  // coins of armed price alerts (app/livealerts.js), only appended on screens that already poll; never more than MAX_PAIRS in total
-  function extra() { var x = []; try { x = typeof AP.extraSyms === 'function' ? AP.extraSyms() : []; } catch (e) { x = []; } return Array.isArray(x) ? x.filter(function (s) { return typeof s === 'string' && SYM_RE.test(s); }).slice(0, 20) : []; }
-  // tick subscribers (app/livealerts.js): each gets copies only, after every ticker answer or state change; errors are contained
-  var subs = [];
-  AP.onTick = function (fn) { if (typeof fn === 'function' && subs.length < 4) subs.push(fn); };
-  function emit() {
-    if (!subs.length) return;
-    var q = {}; Object.keys(quotes).forEach(function (s) { var v = quotes[s]; q[s] = { last: v.last, bid: v.bid, ask: v.ask, t: v.t }; });
-    var info = { mode: tickerMode(), state: tPoll.state, lastOk: tPoll.lastOk, asked: tickerSyms.slice(), quotes: q };
-    subs.forEach(function (fn) { try { fn(info); } catch (e) { } });
-  }
-  AP.quote = function (sym) { var q = own(quotes, sym) ? quotes[sym] : null; return q && tickerMode() === 'live' && Date.now() - q.t < STALE_MS ? { last: q.last, t: q.t } : null; };
-  function tickerWanted() { return visible() && wantedSyms().length > 0; }
-
-  var tickerSyms = [];
-  var tPoll = new Poller({ interval: TICKER_MS, minGap: MIN_GAP_T, maxFail: MAX_FAIL, maxBackoff: MAX_BACKOFF, wanted: tickerWanted,
-    fetchOnce: function () {
-      tickerSyms = wantedSyms(); var u = tickerUrl(tickerSyms, allow); if (!u) return { ok: false, kind: 'empty' };
-      var asked = tickerSyms.slice();
-      return kget(u, TICKER_CAP).then(function (x) { return x.ok ? parseTicker(x.text, asked, allow) : x; });
-    },
-    onData: function (r) { if (r.ok) { var now = Date.now(); Object.keys(r.quotes).forEach(function (s) { r.quotes[s].t = now; quotes[s] = r.quotes[s]; }); } paint(true); emit(); },
-    onState: function () { paint(false); emit(); } });
-  var dPoll = new Poller({ interval: DEPTH_MS, minGap: MIN_GAP_D, maxFail: MAX_FAIL, maxBackoff: MAX_BACKOFF,
-    wanted: function () { var r = routeNow(); return visible() && book.open && r.t === 'chart' && r.arg === book.sym && !!document.querySelector('#view .lp-book'); },
-    fetchOnce: function () {
-      var sym = book.sym, u = depthUrl(sym, allow); if (!u) return { ok: false, kind: 'pair' };
-      return kget(u, DEPTH_CAP).then(function (x) { return x.ok ? parseDepth(x.text, sym, allow) : x; }).then(function (r) { if (r.ok) r.sym = sym; return r; });
-    },
-    onData: function (r) { if (r.ok && r.sym === book.sym) { book.data = r; book.at = Date.now(); } paintBook(); },
-    onState: function () { paintBook(); } });
-
-  // status of one quote / the ticker as a whole: live | stale | delayed (market file)
-  function tickerMode() {
-    if (tPoll.state === 'stopped') return 'delayed';
-    var fresh = tPoll.lastOk && Date.now() - tPoll.lastOk < STALE_MS;
-    return fresh ? 'live' : tPoll.lastOk ? 'stale' : 'wait';
-  }
-  function chipText(mode, lastOk) {
-    if (mode === 'live') return ['LIVE', fmtAge(Date.now() - lastOk)];
-    if (mode === 'stale') return ['DELAYED', fmtAge(Date.now() - lastOk) + ' old'];
-    if (mode === 'wait') return ['LIVE', 'connecting'];
-    var ma = marketAsof(); return ['DELAYED', ma ? 'market file ' + fmtAge(Date.now() - ma) : 'market file'];
-  }
-  function chip(kind) {
-    var b = el('button', 'lp-chip'); b.type = 'button'; b.dataset.lpChip = kind; b.setAttribute('aria-live', 'off');   // age ticks every second: never announced
-    var dot = el('span', 'lp-dot'); dot.setAttribute('aria-hidden', 'true');
-    b.appendChild(dot); b.appendChild(el('span', 'lp-st')); b.appendChild(el('span', 'lp-age'));
-    b.addEventListener('click', function () {
-      var p = kind === 'book' ? dPoll : tPoll;
-      if (p.state === 'stopped' || p.state === 'backoff') p.retry(); else p.kick();
-    });
-    return b;
-  }
-  function setChip(b, mode, lastOk, poll) {
-    var t = chipText(mode, lastOk); b.dataset.state = mode === 'wait' ? 'live' : mode;
-    b.querySelector('.lp-st').textContent = t[0]; b.querySelector('.lp-age').textContent = t[1];
-    var tail = mode === 'delayed' ? (poll.state === 'stopped' ? 'Live prices stopped after ' + MAX_FAIL + ' failed tries; showing the market file. Tap to retry.' : 'Showing the market file.') :
-      mode === 'stale' ? 'Last live price is ' + t[1] + '; retrying.' : mode === 'wait' ? 'Fetching live prices.' : 'Updated ' + t[1] + ' ago from Kraken public prices.';
-    b.setAttribute('aria-label', t[0] + ' prices. ' + tail);
-  }
-  // remember the shell's own text once, so DELAYED can always restore the market-file value
-  function snapText(e) { if (e.dataset.lpSnap === undefined) e.dataset.lpSnap = e.textContent; return e.dataset.lpSnap; }
-  function flash(e, dir) {
-    e.classList.remove('lp-up', 'lp-down'); if (!dir) return;
-    void e.offsetWidth; e.classList.add(dir > 0 ? 'lp-up' : 'lp-down');
-    setTimeout(function () { e.classList.remove('lp-up', 'lp-down'); }, reduce && reduce.matches ? 700 : 900);
-  }
-  function setPrice(e, sym, mode, animate) {
-    snapText(e); e.setAttribute('aria-live', 'off');              // #view is aria-live=polite: a ticking price must not be announced
-    var q = quotes[sym];
-    if (!q || mode === 'delayed' || mode === 'wait') { e.textContent = e.dataset.lpSnap; e.classList.remove('lp-live', 'lp-stale', 'lp-up', 'lp-down'); delete shown[sym + '|' + (e.dataset.lpK || '')]; return; }
-    var key = sym + '|' + (e.dataset.lpK || ''), prev = shown[key];
-    e.textContent = fmtPrice(q.last); e.classList.add('lp-live'); e.classList.toggle('lp-stale', mode === 'stale');
-    if (animate && isN(prev) && prev !== q.last) flash(e, q.last > prev ? 1 : -1);
-    shown[key] = q.last;
-  }
-  function paint(animate) {
-    var mode = tickerMode(), r = routeNow();
-    if (r.t === 'markets') rows().forEach(function (a) { var s = rowSym(a), p = a.querySelector('.pr .p'); if (s && p) { p.dataset.lpK = 'mk'; setPrice(p, s, mode, animate); } });
-    if (r.t === 'chart' && r.arg) {
-      var h = heroPrice(); if (h) { h.dataset.lpK = 'hero'; setPrice(h, r.arg, mode, animate); }
-      var qd = document.querySelector('#view .lp-quote'); if (qd) paintQuote(qd, r.arg, mode);
-    }
-    Array.prototype.forEach.call(document.querySelectorAll('#view [data-lp-chip="ticker"]'), function (b) { setChip(b, mode, tPoll.lastOk, tPoll); });
-    document.body.dataset.lp = mode + ':' + tPoll.state;
-    ensureAgeTimer();
-  }
-  function paintQuote(box, sym, mode) {
-    var q = quotes[sym], i = allow.bySym[sym], live = q && (mode === 'live' || mode === 'stale');
-    var bid = box.querySelector('[data-lp="bid"]'), ask = box.querySelector('[data-lp="ask"]'), sp = box.querySelector('[data-lp="spr"]');
-    bid.textContent = live && isN(q.bid) ? fmtDec(q.bid, i ? i.pdec : 2) : '-';
-    ask.textContent = live && isN(q.ask) ? fmtDec(q.ask, i ? i.pdec : 2) : '-';
-    sp.textContent = live && isN(q.bid) && isN(q.ask) && q.ask >= q.bid ? fmtSpr((q.ask - q.bid) / ((q.ask + q.bid) / 2) * 100) : '-';
-  }
-  function ensureAgeTimer() {
-    var need = visible() && !!document.querySelector('#view [data-lp-chip]');
-    if (need && !ageTimer) ageTimer = setInterval(function () {
-      if (!visible() || !document.querySelector('#view [data-lp-chip]')) { clearInterval(ageTimer); ageTimer = null; return; }
-      var m = tickerMode(); Array.prototype.forEach.call(document.querySelectorAll('#view [data-lp-chip="ticker"]'), function (b) { setChip(b, m, tPoll.lastOk, tPoll); });
-      if (m !== (document.body.dataset.lp || '').split(':')[0]) paint(false);
-      var bm = bookMode(); Array.prototype.forEach.call(document.querySelectorAll('#view [data-lp-chip="book"]'), function (b) { setChip(b, bm, book.at, dPoll); });
-      var src = document.querySelector('#view .lp-bsrc'); if (src && bm !== 'delayed' && book.at) src.textContent = 'Kraken public order book, top ' + BOOK_N + ' levels each side · updated ' + fmtAge(Date.now() - book.at) + ' ago';
-    }, 1000);
-    if (!need && ageTimer) { clearInterval(ageTimer); ageTimer = null; }
-  }
-
-  // ---- Markets: chip row under the "N of M pairs" caption
-  function mountMarkets(view) {
-    if (view.querySelector('.lp-bar')) return;
-    var cap = null; Array.prototype.some.call(view.querySelectorAll('.row.small'), function (r) { if (/pairs/.test(r.textContent)) { cap = r; return true; } return false; });
-    if (!cap || !view.querySelector('a.tick.mk')) return;
-    var bar = el('div', 'lp-bar'); bar.appendChild(chip('ticker'));
-    bar.appendChild(el('span', 'lp-note', 'Kraken public prices for held, starred and on-screen coins'));
-    cap.parentNode.insertBefore(bar, cap.nextSibling);
-  }
-  // ---- coin screen: live quote row in the hero + order book card after it
-  function kvCell(label, key) { var d = el('div'); d.appendChild(el('div', 'lbl', label)); var b = el('b', 'num'); b.dataset.lp = key; b.textContent = '-'; d.appendChild(b); return d; }
-  function mountChart(view, sym) {
-    var hero = view.querySelector('.card.hero'); if (!hero || !allow.bySym[sym]) return;
-    if (!hero.querySelector('.lp-quote')) {
-      var q = el('div', 'lp-quote'); q.appendChild(chip('ticker'));
-      var kv = el('div', 'lp-qkv'); kv.appendChild(kvCell('Bid', 'bid')); kv.appendChild(kvCell('Ask', 'ask')); kv.appendChild(kvCell('Spread', 'spr')); q.appendChild(kv);
-      var first = hero.firstElementChild;          // the shell's title/price/star row; the quote row goes right under it
-      if (first && first.nextSibling) hero.insertBefore(q, first.nextSibling); else hero.appendChild(q);
-    }
-    if (view.querySelector('.lp-book')) return;
-    if (book.sym !== sym) { book.sym = sym; book.data = null; book.at = 0; dPoll.stop(); }
-    book.open = pref('lpbook') === '1';
-    var c = el('section', 'card lp-book'); c.setAttribute('aria-label', 'Order book for ' + sym);
-    var hd = el('div', 'lp-bh'); hd.appendChild(el('div', 'lbl', 'Order book')); hd.appendChild(chip('book')); c.appendChild(hd);
-    var tg = el('button', 'lp-btoggle'); tg.type = 'button'; tg.setAttribute('aria-controls', 'lp-bbody');
-    c.appendChild(tg);
-    var body = el('div', 'lp-bbody'); body.id = 'lp-bbody';
-    var st = el('div', 'kv lp-bstats'); st.appendChild(kvCell('Best bid', 'bbid')); st.appendChild(kvCell('Best ask', 'bask')); st.appendChild(kvCell('Spread', 'bspr')); st.appendChild(kvCell('Imbalance', 'bimb'));
-    body.appendChild(st);
-    var ib = el('div', 'lp-imb'); ib.setAttribute('aria-hidden', 'true'); ib.appendChild(el('i', 'lp-imb-b')); ib.appendChild(el('i', 'lp-imb-a')); body.appendChild(ib);
-    var cv = el('canvas', 'lp-depth'); cv.setAttribute('role', 'img'); cv.setAttribute('aria-label', 'Depth chart'); body.appendChild(cv);
-    var lad = el('div', 'lp-ladder');
-    ['Bids', 'Asks'].forEach(function (n) { var col = el('div', 'lp-col lp-' + n.toLowerCase()); var h = el('div', 'lp-lh'); h.appendChild(el('span', null, n === 'Bids' ? 'Bid' : 'Ask')); h.appendChild(el('span', null, 'Size')); col.appendChild(h); lad.appendChild(col); });
-    body.appendChild(lad);
-    body.appendChild(el('div', 'mut small lp-bsrc', ''));
-    c.appendChild(body);
-    tg.addEventListener('click', function () { book.open = !book.open; pref('lpbook', book.open ? '1' : '0'); if (book.open) { if (dPoll.state === 'stopped') dPoll.retry(); else if (dPoll.state === 'idle') dPoll.start(); else dPoll.resume(); } else dPoll.pause(); paintBook(); });
-    hero.parentNode.insertBefore(c, hero.nextSibling);
-    paintBook();
-  }
-  function bookMode() { if (dPoll.state === 'stopped') return 'delayed'; if (!book.at) return 'wait'; return Date.now() - book.at < STALE_MS ? 'live' : 'stale'; }
-  function fileDepth(sym) {        // market.enc depth table (+-1% / +-2% USD depth) for the DELAYED fallback
-    var m = snapRef && snapRef.market, i = allow.bySym[sym]; if (!m || !i) return null;
-    var hit = null; rowsOf(m.depth).some(function (d) { if (d.pair === i.pair) { hit = d; return true; } return false; });
-    if (!hit) return null;
-    var v = function (x) { return num(x, 1e14, true); };
-    return { b1: v(hit.bid1pct_usd), a1: v(hit.ask1pct_usd), b2: v(hit.bid2pct_usd), a2: v(hit.ask2pct_usd) };
-  }
-  function paintBook() {
-    var c = document.querySelector('#view .lp-book'); if (!c) return;
-    var tg = c.querySelector('.lp-btoggle'), body = c.querySelector('.lp-bbody'), mode = bookMode(), sym = book.sym, i = allow.bySym[sym] || { pdec: 2 };
-    tg.textContent = book.open ? 'Hide order book' : 'Show order book (top ' + BOOK_N + ' levels)';
-    tg.setAttribute('aria-expanded', String(book.open)); body.hidden = !book.open;
-    Array.prototype.forEach.call(c.querySelectorAll('[data-lp-chip="book"]'), function (b) { b.hidden = !book.open; setChip(b, mode, book.at, dPoll); });
-    c.dataset.lpState = book.open ? mode + ':' + dPoll.state : 'closed';
-    if (!book.open) return;
-    var set = function (k, t, cls) { var e = c.querySelector('[data-lp="' + k + '"]'); e.textContent = t; e.className = 'num' + (cls ? ' ' + cls : ''); };
-    var lad = c.querySelector('.lp-ladder'), src = c.querySelector('.lp-bsrc'), cv = c.querySelector('.lp-depth'), imb = c.querySelector('.lp-imb');
-    var d = book.data && (mode === 'live' || mode === 'stale') ? book.data : null;
-    Array.prototype.forEach.call(lad.querySelectorAll('.lp-lr'), function (r) { r.parentNode.removeChild(r); });
-    if (!d) {
-      set('bbid', '-'); set('bask', '-'); set('bspr', '-'); set('bimb', '-'); cv.hidden = true; imb.hidden = true; lad.hidden = true; c.querySelector('.lp-bstats').hidden = true;
-      var fd = fileDepth(sym);
-      src.textContent = mode === 'wait' ? 'Loading the Kraken public order book...' :
-        'Live order book unavailable. Market file depth' + (fd ? ': within 1% bids ' + fmtUsd(fd.b1) + ' / asks ' + fmtUsd(fd.a1) + ', within 2% bids ' + fmtUsd(fd.b2) + ' / asks ' + fmtUsd(fd.a2) : ': not in the file for this coin') +
-        (marketAsof() ? ' (' + fmtAge(Date.now() - marketAsof()) + ' old)' : '') + '.';
-      return;
-    }
-    var s = d.stats; lad.hidden = false; c.querySelector('.lp-bstats').hidden = false;
-    set('bbid', fmtDec(s.bid, i.pdec), 'good'); set('bask', fmtDec(s.ask, i.pdec), 'bad');
-    set('bspr', s.crossed ? 'crossed' : isN(s.spreadPct) ? fmtSpr(s.spreadPct) : '-');
-    set('bimb', isN(s.imbalance) ? (s.imbalance >= 0 ? '+' : '') + Math.round(s.imbalance * 100) + '% ' + (s.imbalance >= 0 ? 'bids' : 'asks') : '-', isN(s.imbalance) ? (s.imbalance >= 0 ? 'good' : 'bad') : '');
-    imb.hidden = !isN(s.imbalance);
-    if (isN(s.imbalance)) { var bw = Math.round((s.imbalance + 1) * 50); imb.querySelector('.lp-imb-b').style.width = bw + '%'; imb.querySelector('.lp-imb-a').style.width = (100 - bw) + '%'; }
-    var mx = 0; d.bids.slice(0, LADDER_N).concat(d.asks.slice(0, LADDER_N)).forEach(function (l) { if (l[1] > mx) mx = l[1]; });
-    [['bids', d.bids], ['asks', d.asks]].forEach(function (p) {
-      var col = lad.querySelector('.lp-' + p[0]);
-      p[1].slice(0, LADDER_N).forEach(function (l) {
-        var r = el('div', 'lp-lr'); var bar = el('i', 'lp-lbar'); bar.style.width = (mx ? Math.max(2, Math.round(l[1] / mx * 100)) : 0) + '%'; bar.setAttribute('aria-hidden', 'true');
-        r.appendChild(bar); r.appendChild(el('span', 'num', fmtDec(l[0], i.pdec))); r.appendChild(el('span', 'num', fmtQty(l[1]))); col.appendChild(r);
-      });
-    });
-    cv.hidden = false; drawDepth(cv, d, i);
-    src.textContent = 'Kraken public order book, top ' + BOOK_N + ' levels each side · updated ' + fmtAge(Date.now() - book.at) + ' ago';
-    ensureAgeTimer();
-  }
-  function cssVar(n, d) { try { var v = getComputedStyle(document.documentElement).getPropertyValue(n).trim(); return v || d; } catch (e) { return d; } }
-  function drawDepth(cv, d, info) {
-    var w = Math.max(200, Math.min(800, cv.parentNode.clientWidth || 340)), h = 150, dpr = Math.min(3, G.devicePixelRatio || 1);
-    cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); cv.style.width = w + 'px'; cv.style.height = h + 'px';
-    var g = cv.getContext && cv.getContext('2d'); if (!g) return;
-    g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, w, h);
-    var s = d.stats; if (!isN(s.mid)) return;
-    var lo = d.bids.length ? d.bids[d.bids.length - 1][0] : s.mid, hi = d.asks.length ? d.asks[d.asks.length - 1][0] : s.mid;
-    var r = Math.max(s.mid - lo, hi - s.mid, s.mid * 1e-4), x0 = s.mid - r, x1 = s.mid + r;
-    var cb = [], ca = [], acc = 0; d.bids.forEach(function (l) { acc += l[1]; cb.push([l[0], acc]); }); acc = 0; d.asks.forEach(function (l) { acc += l[1]; ca.push([l[0], acc]); });
-    var ymax = Math.max(cb.length ? cb[cb.length - 1][1] : 0, ca.length ? ca[ca.length - 1][1] : 0) || 1, top = 8, bot = h - 20;
-    var X = function (p) { return (p - x0) / (x1 - x0) * w; }, Y = function (q) { return bot - q / ymax * (bot - top); };
-    function side(pts, start, col) {
-      if (!pts.length) return;
-      g.beginPath(); g.moveTo(X(start), bot); var y = bot;
-      pts.forEach(function (p) { g.lineTo(X(p[0]), y); y = Y(p[1]); g.lineTo(X(p[0]), y); });
-      g.lineTo(X(pts[pts.length - 1][0]), bot); g.closePath();
-      g.globalAlpha = 0.25; g.fillStyle = col; g.fill(); g.globalAlpha = 1; g.strokeStyle = col; g.lineWidth = 1.5; g.stroke();
-    }
-    side(cb, s.bid, cssVar('--good', '#2fd37a')); side(ca, s.ask, cssVar('--bad', '#ff5a5a'));
-    g.strokeStyle = cssVar('--line2', '#2c3843'); g.lineWidth = 1; g.beginPath(); g.moveTo(X(s.mid), top); g.lineTo(X(s.mid), bot); g.stroke();
-    g.fillStyle = cssVar('--mut', '#8c9bab'); g.font = '11px system-ui, sans-serif'; g.textBaseline = 'top';
-    g.textAlign = 'left'; g.fillText(fmtDec(x0, info.pdec), 2, bot + 5); g.textAlign = 'center'; g.fillText(fmtDec(s.mid, info.pdec), w / 2, bot + 5); g.textAlign = 'right'; g.fillText(fmtDec(x1, info.pdec), w - 2, bot + 5);
-    cv.setAttribute('aria-label', 'Depth chart: ' + fmtQty(cb.length ? cb[cb.length - 1][1] : 0) + ' bid and ' + fmtQty(ca.length ? ca[ca.length - 1][1] : 0) + ' ask size in the top ' + BOOK_N + ' levels around ' + fmtDec(s.mid, info.pdec));
-  }
-
-  // ---- shell hook (build_site.py LIVE_PATCHES): after every shell page is drawn
-  AP.after = function (view, t, arg, snap) {
-    snapRef = snap || G.__SNAPSHOT__ || null;
-    var m = snapRef && snapRef.market; if (m && m !== allowSrc) { allow = buildAllowlist(m); allowSrc = m; }
-    route = { t: t, arg: arg };
-    if (!allow.n) { tPoll.pause(); dPoll.pause(); return; }
-    if (t === 'markets') mountMarkets(view);
-    if (t === 'chart' && arg) mountChart(view, arg);
-    paint(false);
-    sync();
-  };
-  function sync() {           // start / pause both pollers for the current screen
-    if (tickerWanted()) { if (tPoll.state === 'paused') tPoll.resume(); else tPoll.start(); } else tPoll.pause();
-    var r = routeNow();
-    if (visible() && book.open && r.t === 'chart' && r.arg === book.sym && document.querySelector('#view .lp-book')) { if (dPoll.state === 'paused') dPoll.resume(); else dPoll.start(); }
-    else dPoll.pause();
-    ensureAgeTimer();
-  }
-  document.addEventListener('visibilitychange', function () { if (document.hidden) { tPoll.pause(); dPoll.pause(); ensureAgeTimer(); } else { paint(false); paintBook(); sync(); } });
-  G.addEventListener('hashchange', function () { setTimeout(sync, 0); });
-  G.addEventListener('scroll', function () { if (routeNow().t === 'markets') { clearTimeout(AP._sc); AP._sc = setTimeout(function () { tPoll.kick(); }, 400); } }, { passive: true });
-  AP.status = function () { return { enabled: ON, ticker: tPoll.state, tickerFails: tPoll.fails, tickerMode: tickerMode(), lastOk: tPoll.lastOk, book: dPoll.state, bookFails: dPoll.fails, bookMode: bookMode(), bookSym: book.sym, bookOpen: book.open, pairs: allow.n, asked: tickerSyms.slice(), stats: { ticker: stats.ticker, depth: stats.depth, refused: stats.refused } }; };
+'use strict';
+var G = typeof window !== 'undefined' ? window : globalThis;
+var AP = G.AwayPrices = G.AwayPrices || {};
+AP.version = '1.0.0';
+var BASE = 'https://api.kraken.com';                       // build-time constant (build_site.py); never changed at run time
+var TICKER = BASE + '/0/public/Ticker', DEPTH = BASE + '/0/public/Depth';
+var ON = BASE === 'https://api.kraken.com';
+var TICKER_MS = 7000, DEPTH_MS = 4000, MIN_GAP_T = 5000, MIN_GAP_D = 3000, STALE_MS = 30000, MAX_FAIL = 5, MAX_BACKOFF = 120000;
+var RATE_MULT = 4, TIMEOUT_MS = 8000, TICKER_CAP = 256 * 1024, DEPTH_CAP = 96 * 1024, MAX_PAIRS = 40, BOOK_N = 25, LADDER_N = 10;
+var PRICE_MAX = 1e10, QTY_MAX = 1e15;
+AP.enabled = ON;
+AP.cfg = { TICKER_MS: TICKER_MS, DEPTH_MS: DEPTH_MS, STALE_MS: STALE_MS, MAX_FAIL: MAX_FAIL, MAX_PAIRS: MAX_PAIRS, TICKER_CAP: TICKER_CAP, DEPTH_CAP: DEPTH_CAP };
+var DEC = /^\d{1,13}(\.\d{1,14})?$/;
+function num(v, max, allowZero) {            // Kraken sends decimal strings; a finite JSON number is accepted too. Else null.
+var n;
+if (typeof v === 'string') { if (v.length > 30 || !DEC.test(v)) return null; n = Number(v); }
+else if (typeof v === 'number') n = v;
+else return null;
+if (!isFinite(n) || n < 0 || n > max) return null;
+if (n === 0 && !allowZero) return null;
+return n;
+}
+function isN(v) { return typeof v === 'number' && isFinite(v); }
+function grp(v, dp) { return v.toLocaleString('en-US', { minimumFractionDigits: dp, maximumFractionDigits: dp }); }
+function fmtPrice(v) { if (!isN(v)) return '-'; var a = Math.abs(v); return a >= 1000 ? grp(v, 2) : a >= 1 ? grp(v, a >= 100 ? 2 : 3) : String(parseFloat(v.toPrecision(5))); }   // = shell price()
+function fmtDec(v, dp) { return isN(v) ? grp(v, Math.max(0, Math.min(10, dp | 0))) : '-'; }
+function fmtQty(v) { if (!isN(v)) return '-'; return v >= 1e6 ? (v / 1e6).toFixed(2) + 'M' : v >= 1e4 ? (v / 1e3).toFixed(1) + 'K' : String(parseFloat(v.toPrecision(5))); }
+function fmtUsd(v) { if (!isN(v)) return '-'; var a = Math.abs(v); return '$' + (a >= 1e9 ? (v / 1e9).toFixed(2) + 'B' : a >= 1e6 ? (v / 1e6).toFixed(2) + 'M' : a >= 1e3 ? (v / 1e3).toFixed(1) + 'K' : v.toFixed(0)); }
+function fmtSpr(p) { return !isN(p) ? '-' : (p >= 0.01 ? p.toFixed(3) : String(parseFloat(p.toPrecision(2)))) + '%'; }   // tiny BTC spreads keep 2 significant digits
+function fmtAge(ms) { var s = Math.max(0, Math.round(ms / 1000)); return s < 60 ? s + ' s' : s < 3600 ? Math.round(s / 60) + ' min' : s < 172800 ? Math.round(s / 3600) + ' h' : Math.round(s / 86400) + ' d'; }
+function own(o, k) { return Object.prototype.hasOwnProperty.call(o, k); }
+function plain(o) { return !!o && typeof o === 'object' && !Array.isArray(o); }
+var PAIR_RE = /^[A-Z0-9]{2,20}$/, WS_RE = /^[A-Z0-9]{1,15}\/USD$/, SYM_RE = /^[A-Z0-9]{1,15}$/;
+function rowsOf(t) { if (!t || !Array.isArray(t.cols) || !Array.isArray(t.rows)) return []; return t.rows.slice(0, 5000).map(function (r) { var o = {}; t.cols.forEach(function (c, i) { o[c] = Array.isArray(r) ? r[i] : undefined; }); return o; }); }
+function buildAllowlist(m) {
+var out = { bySym: {}, byKey: {}, n: 0 };
+if (!plain(m) || m.schema !== 'market/1') return out;
+var uni = {}; rowsOf(m.universe).forEach(function (u) { if (typeof u.pair === 'string') uni[u.pair] = u; });
+rowsOf(m.stats).forEach(function (s) {
+var u = uni[s.pair]; if (!u || out.n >= 1000) return;
+if (!PAIR_RE.test(s.pair) || (u.status && u.status !== 'online') || (u.quote !== 'ZUSD' && u.quote !== 'USD') || typeof u.ws !== 'string' || !WS_RE.test(u.ws)) return;
+var sym = u.ws.split('/')[0].replace(/^XBT$/, 'BTC').replace(/^XDG$/, 'DOGE');
+if (!SYM_RE.test(sym) || own(out.bySym, sym)) return;
+var alt = typeof u.alt === 'string' && PAIR_RE.test(u.alt) ? u.alt : null;
+out.bySym[sym] = { sym: sym, pair: s.pair, alt: alt, ws: u.ws, pdec: isN(u.pdec) && u.pdec >= 0 && u.pdec <= 12 ? u.pdec : 5, ldec: isN(u.ldec) && u.ldec >= 0 && u.ldec <= 12 ? u.ldec : 8 };
+out.byKey[s.pair] = sym; if (alt) out.byKey[alt] = sym;
+out.n++;
+});
+return out;
+}
+function envelope(text) {
+var j; try { j = JSON.parse(text); } catch (e) { return { ok: false, kind: 'parse' }; }
+if (!plain(j)) return { ok: false, kind: 'shape' };
+if (own(j, 'error')) {
+if (!Array.isArray(j.error)) return { ok: false, kind: 'shape' };
+if (j.error.length) {
+var msg = j.error.slice(0, 5).map(function (x) { return typeof x === 'string' ? x.slice(0, 120) : '?'; }).join('; ');
+return { ok: false, kind: /rate limit|too many requests|throttl/i.test(msg) ? 'rate' : 'api', msg: msg };
+}
+}
+if (!plain(j.result)) return { ok: false, kind: 'shape' };
+return { ok: true, result: j.result };
+}
+function parseTicker(text, wantSyms, allow) {
+var e = envelope(text); if (!e.ok) return e;
+var want = {}; (wantSyms || []).forEach(function (s) { want[s] = true; });
+var quotes = {}, extra = 0, bad = 0, keys = Object.keys(e.result).slice(0, 600);
+keys.forEach(function (k) {
+var sym = own(allow.byKey, k) ? allow.byKey[k] : null;
+if (!sym || !want[sym]) { extra++; return; }
+var t = e.result[k];
+if (!plain(t) || !Array.isArray(t.c)) { bad++; return; }
+var last = num(t.c[0], PRICE_MAX), bid = Array.isArray(t.b) ? num(t.b[0], PRICE_MAX) : null, ask = Array.isArray(t.a) ? num(t.a[0], PRICE_MAX) : null;
+if (last === null) { bad++; return; }
+if (bid !== null && ask !== null && (bid > ask * 1.5 || ask > bid * 3)) { bid = null; ask = null; }     // nonsense quote: keep last only
+quotes[sym] = { last: last, bid: bid, ask: ask, h24: Array.isArray(t.h) ? num(t.h[1], PRICE_MAX) : null, l24: Array.isArray(t.l) ? num(t.l[1], PRICE_MAX) : null,
+vol24: Array.isArray(t.v) ? num(t.v[1], QTY_MAX, true) : null, open: num(t.o, PRICE_MAX) };
+});
+if (!Object.keys(quotes).length) return { ok: false, kind: keys.length ? 'shape' : 'empty', extra: extra, bad: bad };
+return { ok: true, quotes: quotes, extra: extra, bad: bad };
+}
+function levels(arr) {
+if (!Array.isArray(arr) || arr.length > 1000) return null;
+var out = [];
+for (var i = 0; i < arr.length && out.length < BOOK_N; i++) {
+var l = arr[i]; if (!Array.isArray(l) || l.length < 2) return null;
+var p = num(l[0], PRICE_MAX), q = num(l[1], QTY_MAX);
+if (p === null || q === null) return null;
+out.push([p, q]);
+}
+return out;
+}
+function bookStats(bids, asks) {
+var bb = bids.length ? bids[0][0] : null, ba = asks.length ? asks[0][0] : null;
+var mid = bb !== null && ba !== null ? (bb + ba) / 2 : null, crossed = bb !== null && ba !== null && bb >= ba;
+var bq = 0, aq = 0, bu = 0, au = 0;
+bids.forEach(function (l) { bq += l[1]; bu += l[0] * l[1]; }); asks.forEach(function (l) { aq += l[1]; au += l[0] * l[1]; });
+return { bid: bb, ask: ba, mid: mid, crossed: crossed, spread: mid !== null && !crossed ? ba - bb : null, spreadPct: mid && !crossed ? (ba - bb) / mid * 100 : null,
+bidQty: bq, askQty: aq, bidUsd: bu, askUsd: au, imbalance: bu + au > 0 ? (bu - au) / (bu + au) : null };
+}
+function parseDepth(text, sym, allow) {
+var e = envelope(text); if (!e.ok) return e;
+var info = allow.bySym[sym]; if (!info) return { ok: false, kind: 'pair' };
+var k = own(e.result, info.pair) ? info.pair : info.alt && own(e.result, info.alt) ? info.alt : null;
+if (!k || !plain(e.result[k])) return { ok: false, kind: 'shape' };
+var bids = levels(e.result[k].bids), asks = levels(e.result[k].asks);
+if (!bids || !asks || (!bids.length && !asks.length)) return { ok: false, kind: 'shape' };
+bids.sort(function (a, b) { return b[0] - a[0]; }); asks.sort(function (a, b) { return a[0] - b[0]; });
+var st = bookStats(bids, asks);
+var ref = st.mid !== null ? st.mid : bids.length ? bids[0][0] : asks[0][0];
+if (bids.concat(asks).some(function (l) { return l[0] < ref * 0.5 || l[0] > ref * 2; })) return { ok: false, kind: 'shape' };   // a level absurdly far away
+return { ok: true, bids: bids, asks: asks, stats: st };
+}
+function tickerUrl(syms, allow) {
+var ks = []; syms.forEach(function (s) { var i = allow.bySym[s]; if (i && ks.indexOf(i.pair) < 0 && ks.length < MAX_PAIRS) ks.push(i.pair); });
+return ks.length ? TICKER + '?pair=' + ks.join(',') : null;
+}
+function depthUrl(sym, allow) { var i = allow.bySym[sym]; return i ? DEPTH + '?pair=' + i.pair + '&count=' + BOOK_N : null; }
+function urlOk(u) {
+if (typeof u !== 'string') return false;
+if (u.indexOf(TICKER + '?pair=') === 0) return /^[A-Z0-9]{2,20}(,[A-Z0-9]{2,20}){0,39}$/.test(u.slice(TICKER.length + 6));
+if (u.indexOf(DEPTH + '?pair=') === 0) return /^[A-Z0-9]{2,20}&count=25$/.test(u.slice(DEPTH.length + 6));
+return false;
+}
+function readCapped(r, cap) {
+if (r.status === 429) return Promise.resolve({ ok: false, kind: 'rate' });
+if (!r.ok) return Promise.resolve({ ok: false, kind: 'http', status: r.status });
+var cl = r.headers && r.headers.get ? Number(r.headers.get('content-length')) : NaN;
+if (isN(cl) && cl > cap) { try { r.body && r.body.cancel && r.body.cancel(); } catch (e) { } return Promise.resolve({ ok: false, kind: 'size' }); }
+if (r.body && typeof r.body.getReader === 'function' && typeof TextDecoder !== 'undefined') {
+var rd = r.body.getReader(), dec = new TextDecoder('utf-8'), parts = [], n = 0;
+var pump = function () {
+return rd.read().then(function (x) {
+if (x.done) { parts.push(dec.decode()); return { ok: true, text: parts.join('') }; }
+n += x.value.byteLength;
+if (n > cap) { try { rd.cancel(); } catch (e) { } return { ok: false, kind: 'size' }; }
+parts.push(dec.decode(x.value, { stream: true })); return pump();
+});
+};
+return pump();
+}
+return r.text().then(function (t) { return t.length > cap ? { ok: false, kind: 'size' } : { ok: true, text: t }; });
+}
+var stats = { ticker: 0, depth: 0, refused: 0, last: null };
+function kget(u, cap, fetchFn) {
+if (!ON || !urlOk(u)) { stats.refused++; return Promise.resolve({ ok: false, kind: 'refused' }); }
+var f = fetchFn || (typeof fetch === 'function' ? fetch : null); if (!f) return Promise.resolve({ ok: false, kind: 'net' });
+var ac = typeof AbortController === 'function' ? new AbortController() : null, to = null;
+if (ac) to = setTimeout(function () { try { ac.abort(); } catch (e) { } }, TIMEOUT_MS);
+if (u.indexOf(TICKER) === 0) stats.ticker++; else stats.depth++;
+stats.last = u;
+return Promise.resolve().then(function () {
+return f(u, { method: 'GET', credentials: 'omit', referrerPolicy: 'no-referrer', redirect: 'error', mode: 'cors', signal: ac ? ac.signal : undefined });
+}).then(function (r) { return readCapped(r, cap); }, function () { return { ok: false, kind: 'net' }; })
+.then(function (x) { if (to) clearTimeout(to); return x; }, function () { if (to) clearTimeout(to); return { ok: false, kind: 'net' }; });
+}
+function Poller(o) {
+var self = this, timer = null, inflight = false, lastReq = -1e15;
+var clock = o.now || function () { return Date.now(); }, st = o.setTimeout || setTimeout, ct = o.clearTimeout || clearTimeout;
+var rnd = o.random || Math.random;
+self.state = 'idle'; self.fails = 0; self.lastOk = 0; self.lastKind = null; self.nextDelay = null; self.requests = 0;
+function set(s) { if (self.state !== s) { self.state = s; if (o.onState) o.onState(s, self); } }
+function clear() { if (timer !== null) { ct(timer); timer = null; } }
+function schedule(ms) { clear(); self.nextDelay = ms; timer = st(tick, Math.max(0, ms)); }
+function tick() {
+timer = null;
+if (self.state === 'idle' || self.state === 'stopped') return;
+if (!o.wanted()) { set('paused'); return; }
+if (inflight) return;
+var gap = clock() - lastReq; if (gap < o.minGap) { schedule(o.minGap - gap); return; }
+inflight = true; lastReq = clock(); self.requests++;
+Promise.resolve().then(o.fetchOnce).then(function (r) { return r || { ok: false, kind: 'net' }; }, function () { return { ok: false, kind: 'net' }; }).then(function (r) {
+inflight = false;
+if (self.state === 'idle' || self.state === 'stopped') return;
+if (r.ok) { self.fails = 0; self.lastOk = clock(); self.lastKind = null; set('running'); if (o.onData) o.onData(r, self); schedule(o.interval); return; }
+self.fails++; self.lastKind = r.kind || 'net';
+if (self.fails >= o.maxFail) { clear(); set('stopped'); if (o.onData) o.onData(r, self); return; }
+var base = r.kind === 'rate' ? o.interval * RATE_MULT : o.interval;
+var d = Math.min(o.maxBackoff, base * Math.pow(2, self.fails - 1)); d = Math.round(d * (1 + 0.25 * rnd()));
+set('backoff'); if (o.onData) o.onData(r, self); schedule(d);
+});
+}
+self.start = function () { if (self.state === 'stopped') return; if (self.state === 'idle' || self.state === 'paused') { set('running'); schedule(0); } };
+self.stop = function () { clear(); set('idle'); };
+self.pause = function () { clear(); if (self.state !== 'idle' && self.state !== 'stopped') set('paused'); };
+self.resume = function () {         // visible / wanted again: fetch now unless the last answer is younger than the interval
+if (self.state !== 'paused') return;
+set('running'); var age = clock() - self.lastOk; schedule(self.lastOk && age < o.interval ? o.interval - age : 0);
+};
+self.retry = function () { clear(); self.fails = 0; set('running'); schedule(0); };
+self.kick = function () { if (self.state === 'running' && timer === null && !inflight) schedule(0); };
+}
+AP._core = { num: num, buildAllowlist: buildAllowlist, envelope: envelope, parseTicker: parseTicker, parseDepth: parseDepth, bookStats: bookStats,
+tickerUrl: tickerUrl, depthUrl: depthUrl, urlOk: urlOk, readCapped: readCapped, kget: kget, Poller: Poller, fmtPrice: fmtPrice, fmtAge: fmtAge, fmtSpr: fmtSpr,
+stats: stats, TICKER: TICKER, DEPTH: DEPTH };
+if (typeof document === 'undefined' || !ON) {                // Node unit tests, or the module compiled off (test builds): no DOM work
+AP.after = function () { }; AP.status = function () { return { enabled: ON, state: 'off' }; }; AP.onTick = function () { }; AP.quote = function () { return null; };
+return;
+}
+var allow = { bySym: {}, byKey: {}, n: 0 }, allowSrc = null, snapRef = null, quotes = {}, shown = {}, route = { t: null, arg: null };
+var book = { sym: null, data: null, at: 0, open: false }, ageTimer = null;
+var reduce = G.matchMedia ? G.matchMedia('(prefers-reduced-motion: reduce)') : null;
+function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+function visible() { return !document.hidden; }
+function pref(k, v) { try { if (v === undefined) return localStorage.getItem('ui_' + k); localStorage.setItem('ui_' + k, v); } catch (e) { } return null; }
+function watchList() { try { var v = JSON.parse(localStorage.getItem('ui_watch') || '[]'); return Array.isArray(v) ? v.filter(function (s) { return typeof s === 'string'; }) : []; } catch (e) { return []; } }
+function marketAsof() { var m = snapRef && snapRef.market; return m && isN(m.asof) ? m.asof * 1000 : null; }
+function routeNow() { var h = (location.hash || '#home').slice(1).split('/'); return { t: h[0] || 'home', arg: h[1] ? safeDec(h[1]) : null }; }
+function safeDec(s) { try { return decodeURIComponent(s); } catch (e) { return null; } }
+function rows() { return Array.prototype.slice.call(document.querySelectorAll('#view a.tick.mk[href^="#chart/"]')); }
+function rowSym(a) { var s = safeDec(a.getAttribute('href').slice(7)); return s && SYM_RE.test(s) ? s : null; }
+function heroPrice() { return document.querySelector('#view .card.hero .big.num'); }
+function wantedSyms() {
+var r = routeNow(), out = [], add = function (s) { if (s && allow.bySym[s] && out.indexOf(s) < 0 && out.length < MAX_PAIRS) out.push(s); };
+if (r.t === 'chart' && r.arg && heroPrice()) { add(r.arg); extra().forEach(add); }
+if (r.t === 'markets') {
+var all = rows(), w = watchList(), vh = G.innerHeight || 844, held = [], watch = [], vis = [];
+all.forEach(function (a) {
+var s = rowSym(a); if (!s) return;
+if (a.querySelector('.badge.held')) held.push(s);
+if (w.indexOf(s) >= 0) watch.push(s);
+var b = a.getBoundingClientRect(); if (b.bottom > -vh * 0.5 && b.top < vh * 1.5) vis.push(s);
+});
+if (all.length) held.concat(watch, extra(), vis).forEach(add);
+}
+return out;
+}
+function extra() { var x = []; try { x = typeof AP.extraSyms === 'function' ? AP.extraSyms() : []; } catch (e) { x = []; } return Array.isArray(x) ? x.filter(function (s) { return typeof s === 'string' && SYM_RE.test(s); }).slice(0, 20) : []; }
+var subs = [];
+AP.onTick = function (fn) { if (typeof fn === 'function' && subs.length < 4) subs.push(fn); };
+function emit() {
+if (!subs.length) return;
+var q = {}; Object.keys(quotes).forEach(function (s) { var v = quotes[s]; q[s] = { last: v.last, bid: v.bid, ask: v.ask, t: v.t }; });
+var info = { mode: tickerMode(), state: tPoll.state, lastOk: tPoll.lastOk, asked: tickerSyms.slice(), quotes: q };
+subs.forEach(function (fn) { try { fn(info); } catch (e) { } });
+}
+AP.quote = function (sym) { var q = own(quotes, sym) ? quotes[sym] : null; return q && tickerMode() === 'live' && Date.now() - q.t < STALE_MS ? { last: q.last, t: q.t } : null; };
+function tickerWanted() { return visible() && wantedSyms().length > 0; }
+var tickerSyms = [];
+var tPoll = new Poller({ interval: TICKER_MS, minGap: MIN_GAP_T, maxFail: MAX_FAIL, maxBackoff: MAX_BACKOFF, wanted: tickerWanted,
+fetchOnce: function () {
+tickerSyms = wantedSyms(); var u = tickerUrl(tickerSyms, allow); if (!u) return { ok: false, kind: 'empty' };
+var asked = tickerSyms.slice();
+return kget(u, TICKER_CAP).then(function (x) { return x.ok ? parseTicker(x.text, asked, allow) : x; });
+},
+onData: function (r) { if (r.ok) { var now = Date.now(); Object.keys(r.quotes).forEach(function (s) { r.quotes[s].t = now; quotes[s] = r.quotes[s]; }); } paint(true); emit(); },
+onState: function () { paint(false); emit(); } });
+var dPoll = new Poller({ interval: DEPTH_MS, minGap: MIN_GAP_D, maxFail: MAX_FAIL, maxBackoff: MAX_BACKOFF,
+wanted: function () { var r = routeNow(); return visible() && book.open && r.t === 'chart' && r.arg === book.sym && !!document.querySelector('#view .lp-book'); },
+fetchOnce: function () {
+var sym = book.sym, u = depthUrl(sym, allow); if (!u) return { ok: false, kind: 'pair' };
+return kget(u, DEPTH_CAP).then(function (x) { return x.ok ? parseDepth(x.text, sym, allow) : x; }).then(function (r) { if (r.ok) r.sym = sym; return r; });
+},
+onData: function (r) { if (r.ok && r.sym === book.sym) { book.data = r; book.at = Date.now(); } paintBook(); },
+onState: function () { paintBook(); } });
+function tickerMode() {
+if (tPoll.state === 'stopped') return 'delayed';
+var fresh = tPoll.lastOk && Date.now() - tPoll.lastOk < STALE_MS;
+return fresh ? 'live' : tPoll.lastOk ? 'stale' : 'wait';
+}
+function chipText(mode, lastOk) {
+if (mode === 'live') return ['LIVE', fmtAge(Date.now() - lastOk)];
+if (mode === 'stale') return ['DELAYED', fmtAge(Date.now() - lastOk) + ' old'];
+if (mode === 'wait') return ['LIVE', 'connecting'];
+var ma = marketAsof(); return ['DELAYED', ma ? 'market file ' + fmtAge(Date.now() - ma) : 'market file'];
+}
+function chip(kind) {
+var b = el('button', 'lp-chip'); b.type = 'button'; b.dataset.lpChip = kind; b.setAttribute('aria-live', 'off');   // age ticks every second: never announced
+var dot = el('span', 'lp-dot'); dot.setAttribute('aria-hidden', 'true');
+b.appendChild(dot); b.appendChild(el('span', 'lp-st')); b.appendChild(el('span', 'lp-age'));
+b.addEventListener('click', function () {
+var p = kind === 'book' ? dPoll : tPoll;
+if (p.state === 'stopped' || p.state === 'backoff') p.retry(); else p.kick();
+});
+return b;
+}
+function setChip(b, mode, lastOk, poll) {
+var t = chipText(mode, lastOk); b.dataset.state = mode === 'wait' ? 'live' : mode;
+b.querySelector('.lp-st').textContent = t[0]; b.querySelector('.lp-age').textContent = t[1];
+var tail = mode === 'delayed' ? (poll.state === 'stopped' ? 'Live prices stopped after ' + MAX_FAIL + ' failed tries; showing the market file. Tap to retry.' : 'Showing the market file.') :
+mode === 'stale' ? 'Last live price is ' + t[1] + '; retrying.' : mode === 'wait' ? 'Fetching live prices.' : 'Updated ' + t[1] + ' ago from Kraken public prices.';
+b.setAttribute('aria-label', t[0] + ' prices. ' + tail);
+}
+function snapText(e) { if (e.dataset.lpSnap === undefined) e.dataset.lpSnap = e.textContent; return e.dataset.lpSnap; }
+function flash(e, dir) {
+e.classList.remove('lp-up', 'lp-down'); if (!dir) return;
+void e.offsetWidth; e.classList.add(dir > 0 ? 'lp-up' : 'lp-down');
+setTimeout(function () { e.classList.remove('lp-up', 'lp-down'); }, reduce && reduce.matches ? 700 : 900);
+}
+function setPrice(e, sym, mode, animate) {
+snapText(e); e.setAttribute('aria-live', 'off');              // #view is aria-live=polite: a ticking price must not be announced
+var q = quotes[sym];
+if (!q || mode === 'delayed' || mode === 'wait') { e.textContent = e.dataset.lpSnap; e.classList.remove('lp-live', 'lp-stale', 'lp-up', 'lp-down'); delete shown[sym + '|' + (e.dataset.lpK || '')]; return; }
+var key = sym + '|' + (e.dataset.lpK || ''), prev = shown[key];
+e.textContent = fmtPrice(q.last); e.classList.add('lp-live'); e.classList.toggle('lp-stale', mode === 'stale');
+if (animate && isN(prev) && prev !== q.last) flash(e, q.last > prev ? 1 : -1);
+shown[key] = q.last;
+}
+function paint(animate) {
+var mode = tickerMode(), r = routeNow();
+if (r.t === 'markets') rows().forEach(function (a) { var s = rowSym(a), p = a.querySelector('.pr .p'); if (s && p) { p.dataset.lpK = 'mk'; setPrice(p, s, mode, animate); } });
+if (r.t === 'chart' && r.arg) {
+var h = heroPrice(); if (h) { h.dataset.lpK = 'hero'; setPrice(h, r.arg, mode, animate); }
+var qd = document.querySelector('#view .lp-quote'); if (qd) paintQuote(qd, r.arg, mode);
+}
+Array.prototype.forEach.call(document.querySelectorAll('#view [data-lp-chip="ticker"]'), function (b) { setChip(b, mode, tPoll.lastOk, tPoll); });
+document.body.dataset.lp = mode + ':' + tPoll.state;
+ensureAgeTimer();
+}
+function paintQuote(box, sym, mode) {
+var q = quotes[sym], i = allow.bySym[sym], live = q && (mode === 'live' || mode === 'stale');
+var bid = box.querySelector('[data-lp="bid"]'), ask = box.querySelector('[data-lp="ask"]'), sp = box.querySelector('[data-lp="spr"]');
+bid.textContent = live && isN(q.bid) ? fmtDec(q.bid, i ? i.pdec : 2) : '-';
+ask.textContent = live && isN(q.ask) ? fmtDec(q.ask, i ? i.pdec : 2) : '-';
+sp.textContent = live && isN(q.bid) && isN(q.ask) && q.ask >= q.bid ? fmtSpr((q.ask - q.bid) / ((q.ask + q.bid) / 2) * 100) : '-';
+}
+function ensureAgeTimer() {
+var need = visible() && !!document.querySelector('#view [data-lp-chip]');
+if (need && !ageTimer) ageTimer = setInterval(function () {
+if (!visible() || !document.querySelector('#view [data-lp-chip]')) { clearInterval(ageTimer); ageTimer = null; return; }
+var m = tickerMode(); Array.prototype.forEach.call(document.querySelectorAll('#view [data-lp-chip="ticker"]'), function (b) { setChip(b, m, tPoll.lastOk, tPoll); });
+if (m !== (document.body.dataset.lp || '').split(':')[0]) paint(false);
+var bm = bookMode(); Array.prototype.forEach.call(document.querySelectorAll('#view [data-lp-chip="book"]'), function (b) { setChip(b, bm, book.at, dPoll); });
+var src = document.querySelector('#view .lp-bsrc'); if (src && bm !== 'delayed' && book.at) src.textContent = 'Kraken public order book, top ' + BOOK_N + ' levels each side · updated ' + fmtAge(Date.now() - book.at) + ' ago';
+}, 1000);
+if (!need && ageTimer) { clearInterval(ageTimer); ageTimer = null; }
+}
+function mountMarkets(view) {
+if (view.querySelector('.lp-bar')) return;
+var cap = null; Array.prototype.some.call(view.querySelectorAll('.row.small'), function (r) { if (/pairs/.test(r.textContent)) { cap = r; return true; } return false; });
+if (!cap || !view.querySelector('a.tick.mk')) return;
+var bar = el('div', 'lp-bar'); bar.appendChild(chip('ticker'));
+bar.appendChild(el('span', 'lp-note', 'Kraken public prices for held, starred and on-screen coins'));
+cap.parentNode.insertBefore(bar, cap.nextSibling);
+}
+function kvCell(label, key) { var d = el('div'); d.appendChild(el('div', 'lbl', label)); var b = el('b', 'num'); b.dataset.lp = key; b.textContent = '-'; d.appendChild(b); return d; }
+function mountChart(view, sym) {
+var hero = view.querySelector('.card.hero'); if (!hero || !allow.bySym[sym]) return;
+if (!hero.querySelector('.lp-quote')) {
+var q = el('div', 'lp-quote'); q.appendChild(chip('ticker'));
+var kv = el('div', 'lp-qkv'); kv.appendChild(kvCell('Bid', 'bid')); kv.appendChild(kvCell('Ask', 'ask')); kv.appendChild(kvCell('Spread', 'spr')); q.appendChild(kv);
+var first = hero.firstElementChild;          // the shell's title/price/star row; the quote row goes right under it
+if (first && first.nextSibling) hero.insertBefore(q, first.nextSibling); else hero.appendChild(q);
+}
+if (view.querySelector('.lp-book')) return;
+if (book.sym !== sym) { book.sym = sym; book.data = null; book.at = 0; dPoll.stop(); }
+book.open = pref('lpbook') === '1';
+var c = el('section', 'card lp-book'); c.setAttribute('aria-label', 'Order book for ' + sym);
+var hd = el('div', 'lp-bh'); hd.appendChild(el('div', 'lbl', 'Order book')); hd.appendChild(chip('book')); c.appendChild(hd);
+var tg = el('button', 'lp-btoggle'); tg.type = 'button'; tg.setAttribute('aria-controls', 'lp-bbody');
+c.appendChild(tg);
+var body = el('div', 'lp-bbody'); body.id = 'lp-bbody';
+var st = el('div', 'kv lp-bstats'); st.appendChild(kvCell('Best bid', 'bbid')); st.appendChild(kvCell('Best ask', 'bask')); st.appendChild(kvCell('Spread', 'bspr')); st.appendChild(kvCell('Imbalance', 'bimb'));
+body.appendChild(st);
+var ib = el('div', 'lp-imb'); ib.setAttribute('aria-hidden', 'true'); ib.appendChild(el('i', 'lp-imb-b')); ib.appendChild(el('i', 'lp-imb-a')); body.appendChild(ib);
+var cv = el('canvas', 'lp-depth'); cv.setAttribute('role', 'img'); cv.setAttribute('aria-label', 'Depth chart'); body.appendChild(cv);
+var lad = el('div', 'lp-ladder');
+['Bids', 'Asks'].forEach(function (n) { var col = el('div', 'lp-col lp-' + n.toLowerCase()); var h = el('div', 'lp-lh'); h.appendChild(el('span', null, n === 'Bids' ? 'Bid' : 'Ask')); h.appendChild(el('span', null, 'Size')); col.appendChild(h); lad.appendChild(col); });
+body.appendChild(lad);
+body.appendChild(el('div', 'mut small lp-bsrc', ''));
+c.appendChild(body);
+tg.addEventListener('click', function () { book.open = !book.open; pref('lpbook', book.open ? '1' : '0'); if (book.open) { if (dPoll.state === 'stopped') dPoll.retry(); else if (dPoll.state === 'idle') dPoll.start(); else dPoll.resume(); } else dPoll.pause(); paintBook(); });
+hero.parentNode.insertBefore(c, hero.nextSibling);
+paintBook();
+}
+function bookMode() { if (dPoll.state === 'stopped') return 'delayed'; if (!book.at) return 'wait'; return Date.now() - book.at < STALE_MS ? 'live' : 'stale'; }
+function fileDepth(sym) {        // market.enc depth table (+-1% / +-2% USD depth) for the DELAYED fallback
+var m = snapRef && snapRef.market, i = allow.bySym[sym]; if (!m || !i) return null;
+var hit = null; rowsOf(m.depth).some(function (d) { if (d.pair === i.pair) { hit = d; return true; } return false; });
+if (!hit) return null;
+var v = function (x) { return num(x, 1e14, true); };
+return { b1: v(hit.bid1pct_usd), a1: v(hit.ask1pct_usd), b2: v(hit.bid2pct_usd), a2: v(hit.ask2pct_usd) };
+}
+function paintBook() {
+var c = document.querySelector('#view .lp-book'); if (!c) return;
+var tg = c.querySelector('.lp-btoggle'), body = c.querySelector('.lp-bbody'), mode = bookMode(), sym = book.sym, i = allow.bySym[sym] || { pdec: 2 };
+tg.textContent = book.open ? 'Hide order book' : 'Show order book (top ' + BOOK_N + ' levels)';
+tg.setAttribute('aria-expanded', String(book.open)); body.hidden = !book.open;
+Array.prototype.forEach.call(c.querySelectorAll('[data-lp-chip="book"]'), function (b) { b.hidden = !book.open; setChip(b, mode, book.at, dPoll); });
+c.dataset.lpState = book.open ? mode + ':' + dPoll.state : 'closed';
+if (!book.open) return;
+var set = function (k, t, cls) { var e = c.querySelector('[data-lp="' + k + '"]'); e.textContent = t; e.className = 'num' + (cls ? ' ' + cls : ''); };
+var lad = c.querySelector('.lp-ladder'), src = c.querySelector('.lp-bsrc'), cv = c.querySelector('.lp-depth'), imb = c.querySelector('.lp-imb');
+var d = book.data && (mode === 'live' || mode === 'stale') ? book.data : null;
+Array.prototype.forEach.call(lad.querySelectorAll('.lp-lr'), function (r) { r.parentNode.removeChild(r); });
+if (!d) {
+set('bbid', '-'); set('bask', '-'); set('bspr', '-'); set('bimb', '-'); cv.hidden = true; imb.hidden = true; lad.hidden = true; c.querySelector('.lp-bstats').hidden = true;
+var fd = fileDepth(sym);
+src.textContent = mode === 'wait' ? 'Loading the Kraken public order book...' :
+'Live order book unavailable. Market file depth' + (fd ? ': within 1% bids ' + fmtUsd(fd.b1) + ' / asks ' + fmtUsd(fd.a1) + ', within 2% bids ' + fmtUsd(fd.b2) + ' / asks ' + fmtUsd(fd.a2) : ': not in the file for this coin') +
+(marketAsof() ? ' (' + fmtAge(Date.now() - marketAsof()) + ' old)' : '') + '.';
+return;
+}
+var s = d.stats; lad.hidden = false; c.querySelector('.lp-bstats').hidden = false;
+set('bbid', fmtDec(s.bid, i.pdec), 'good'); set('bask', fmtDec(s.ask, i.pdec), 'bad');
+set('bspr', s.crossed ? 'crossed' : isN(s.spreadPct) ? fmtSpr(s.spreadPct) : '-');
+set('bimb', isN(s.imbalance) ? (s.imbalance >= 0 ? '+' : '') + Math.round(s.imbalance * 100) + '% ' + (s.imbalance >= 0 ? 'bids' : 'asks') : '-', isN(s.imbalance) ? (s.imbalance >= 0 ? 'good' : 'bad') : '');
+imb.hidden = !isN(s.imbalance);
+if (isN(s.imbalance)) { var bw = Math.round((s.imbalance + 1) * 50); imb.querySelector('.lp-imb-b').style.width = bw + '%'; imb.querySelector('.lp-imb-a').style.width = (100 - bw) + '%'; }
+var mx = 0; d.bids.slice(0, LADDER_N).concat(d.asks.slice(0, LADDER_N)).forEach(function (l) { if (l[1] > mx) mx = l[1]; });
+[['bids', d.bids], ['asks', d.asks]].forEach(function (p) {
+var col = lad.querySelector('.lp-' + p[0]);
+p[1].slice(0, LADDER_N).forEach(function (l) {
+var r = el('div', 'lp-lr'); var bar = el('i', 'lp-lbar'); bar.style.width = (mx ? Math.max(2, Math.round(l[1] / mx * 100)) : 0) + '%'; bar.setAttribute('aria-hidden', 'true');
+r.appendChild(bar); r.appendChild(el('span', 'num', fmtDec(l[0], i.pdec))); r.appendChild(el('span', 'num', fmtQty(l[1]))); col.appendChild(r);
+});
+});
+cv.hidden = false; drawDepth(cv, d, i);
+src.textContent = 'Kraken public order book, top ' + BOOK_N + ' levels each side · updated ' + fmtAge(Date.now() - book.at) + ' ago';
+ensureAgeTimer();
+}
+function cssVar(n, d) { try { var v = getComputedStyle(document.documentElement).getPropertyValue(n).trim(); return v || d; } catch (e) { return d; } }
+function drawDepth(cv, d, info) {
+var w = Math.max(200, Math.min(800, cv.parentNode.clientWidth || 340)), h = 150, dpr = Math.min(3, G.devicePixelRatio || 1);
+cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); cv.style.width = w + 'px'; cv.style.height = h + 'px';
+var g = cv.getContext && cv.getContext('2d'); if (!g) return;
+g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, w, h);
+var s = d.stats; if (!isN(s.mid)) return;
+var lo = d.bids.length ? d.bids[d.bids.length - 1][0] : s.mid, hi = d.asks.length ? d.asks[d.asks.length - 1][0] : s.mid;
+var r = Math.max(s.mid - lo, hi - s.mid, s.mid * 1e-4), x0 = s.mid - r, x1 = s.mid + r;
+var cb = [], ca = [], acc = 0; d.bids.forEach(function (l) { acc += l[1]; cb.push([l[0], acc]); }); acc = 0; d.asks.forEach(function (l) { acc += l[1]; ca.push([l[0], acc]); });
+var ymax = Math.max(cb.length ? cb[cb.length - 1][1] : 0, ca.length ? ca[ca.length - 1][1] : 0) || 1, top = 8, bot = h - 20;
+var X = function (p) { return (p - x0) / (x1 - x0) * w; }, Y = function (q) { return bot - q / ymax * (bot - top); };
+function side(pts, start, col) {
+if (!pts.length) return;
+g.beginPath(); g.moveTo(X(start), bot); var y = bot;
+pts.forEach(function (p) { g.lineTo(X(p[0]), y); y = Y(p[1]); g.lineTo(X(p[0]), y); });
+g.lineTo(X(pts[pts.length - 1][0]), bot); g.closePath();
+g.globalAlpha = 0.25; g.fillStyle = col; g.fill(); g.globalAlpha = 1; g.strokeStyle = col; g.lineWidth = 1.5; g.stroke();
+}
+side(cb, s.bid, cssVar('--good', '#2fd37a')); side(ca, s.ask, cssVar('--bad', '#ff5a5a'));
+g.strokeStyle = cssVar('--line2', '#2c3843'); g.lineWidth = 1; g.beginPath(); g.moveTo(X(s.mid), top); g.lineTo(X(s.mid), bot); g.stroke();
+g.fillStyle = cssVar('--mut', '#8c9bab'); g.font = '11px system-ui, sans-serif'; g.textBaseline = 'top';
+g.textAlign = 'left'; g.fillText(fmtDec(x0, info.pdec), 2, bot + 5); g.textAlign = 'center'; g.fillText(fmtDec(s.mid, info.pdec), w / 2, bot + 5); g.textAlign = 'right'; g.fillText(fmtDec(x1, info.pdec), w - 2, bot + 5);
+cv.setAttribute('aria-label', 'Depth chart: ' + fmtQty(cb.length ? cb[cb.length - 1][1] : 0) + ' bid and ' + fmtQty(ca.length ? ca[ca.length - 1][1] : 0) + ' ask size in the top ' + BOOK_N + ' levels around ' + fmtDec(s.mid, info.pdec));
+}
+AP.after = function (view, t, arg, snap) {
+snapRef = snap || G.__SNAPSHOT__ || null;
+var m = snapRef && snapRef.market; if (m && m !== allowSrc) { allow = buildAllowlist(m); allowSrc = m; }
+route = { t: t, arg: arg };
+if (!allow.n) { tPoll.pause(); dPoll.pause(); return; }
+if (t === 'markets') mountMarkets(view);
+if (t === 'chart' && arg) mountChart(view, arg);
+paint(false);
+sync();
+};
+function sync() {           // start / pause both pollers for the current screen
+if (tickerWanted()) { if (tPoll.state === 'paused') tPoll.resume(); else tPoll.start(); } else tPoll.pause();
+var r = routeNow();
+if (visible() && book.open && r.t === 'chart' && r.arg === book.sym && document.querySelector('#view .lp-book')) { if (dPoll.state === 'paused') dPoll.resume(); else dPoll.start(); }
+else dPoll.pause();
+ensureAgeTimer();
+}
+document.addEventListener('visibilitychange', function () { if (document.hidden) { tPoll.pause(); dPoll.pause(); ensureAgeTimer(); } else { paint(false); paintBook(); sync(); } });
+G.addEventListener('hashchange', function () { setTimeout(sync, 0); });
+G.addEventListener('scroll', function () { if (routeNow().t === 'markets') { clearTimeout(AP._sc); AP._sc = setTimeout(function () { tPoll.kick(); }, 400); } }, { passive: true });
+AP.status = function () { return { enabled: ON, ticker: tPoll.state, tickerFails: tPoll.fails, tickerMode: tickerMode(), lastOk: tPoll.lastOk, book: dPoll.state, bookFails: dPoll.fails, bookMode: bookMode(), bookSym: book.sym, bookOpen: book.open, pairs: allow.n, asked: tickerSyms.slice(), stats: { ticker: stats.ticker, depth: stats.depth, refused: stats.refused } }; };
 })();
 
 /* ---- livealerts.js ---- */
-/* livealerts.js - AwayAlerts 1.0.0 (DEV COPY 11-21, NOT published).
-   Evaluates the price alerts the user set ON THIS PHONE (localStorage ui_palerts, the shell's own list: static/app.js palerts())
-   against every live Kraken tick that app/liveprices.js already fetched (AwayPrices.onTick). This file makes NO network request of
-   its own, adds no address, no key, no service worker push; it only reads the ticks liveprices.js hands it.
-   Rules (one per alert): above / below a price, or "moves +-N %" from a reference price (repeats: each hit moves the reference).
-   Above / below are one-shot (as before: hit -> done), or repeating when set with "repeat".
-   Market file (judge fix 11-21): the shell's market-load check calls _core.marketHits(): one-shot above / below only, and only when the
-   market file is <= 10 min old; such a hit is marked src 'market' and labelled "(market price HH:MMZ, not live)". Repeating alerts are
-   never fired, disarmed or cooled down by the market file.
-   Anti-spam:
-   - hysteresis: a repeating above/below alert that fired re-arms only after the price went back HYST_PCT past its level;
-   - cooldown: a repeating alert never fires again within COOLDOWN_MS of its last hit;
-   - one live evaluator per phone: a short lease in localStorage (ui_lalock) so two open tabs never both fire; at fire time the alert
-     list and the state are re-read from storage and an alert already hit by another tab is skipped;
-   - max MAX_FIRES alerts per tick (the rest wait for the next tick).
-   Bad data: only LIVE ticks are used (DELAYED / stale / connecting ticks never fire; the alert is marked "checked with delayed prices");
-   a quote older than STALE_MS is not used; NaN / Infinity / <= 0 / > 1e10 is refused; a jump of more than MAX_JUMP from the last
-   accepted live price (or more than x10 from the market-file price) must be confirmed by the next tick (within CONFIRM_PCT) first;
-   an alert whose coin is not in the tick is skipped ("no live price").
-   State: ui_lastate (per-alert armed / last hit / last live check / delayed check), written only when alerts exist. Every storage access
-   is wrapped in try/catch; with storage blocked the evaluator still works for this tab (memory only).
-   DOM: createElement / textContent only. Delivery = the shell's existing alert UI: toast banner, the hit written into ui_palerts (the
-   coin screen card and the Alerts tab show it), haptic, and a system Notification only if the user already allowed it in More. */
 (function () {
-  'use strict';
-  var G = typeof window !== 'undefined' ? window : globalThis;
-  var AA = G.AwayAlerts = G.AwayAlerts || {};
-  AA.version = '1.0.0';
-  var CFG = { HYST_PCT: 0.5, COOLDOWN_MS: 15 * 60 * 1000, STALE_MS: 30000, MAX_JUMP: 0.3, FILE_FACTOR: 10, CONFIRM_PCT: 2, LEASE_MS: 20000,
-    MAX_ALERTS: 50, MAX_FIRES: 5, PRICE_MAX: 1e10, PCT_MIN: 0.1, PCT_MAX: 50, MKT_MAX_AGE_S: 600, MKT_SKEW_S: 300 };
-  AA.cfg = CFG;
-  var SYM_RE = /^[A-Z0-9]{1,15}$/;
-  function isN(v) { return typeof v === 'number' && isFinite(v); }
-  function plain(o) { return !!o && typeof o === 'object' && !Array.isArray(o); }
-  function own(o, k) { return Object.prototype.hasOwnProperty.call(o, k); }
-  function idOf(x) { return x.sym + '|' + x.set; }
-  function goodPx(v) { return isN(v) && v > 0 && v <= CFG.PRICE_MAX; }
+'use strict';
+var G = typeof window !== 'undefined' ? window : globalThis;
+var AA = G.AwayAlerts = G.AwayAlerts || {};
+AA.version = '1.0.0';
+var CFG = { HYST_PCT: 0.5, COOLDOWN_MS: 15 * 60 * 1000, STALE_MS: 30000, MAX_JUMP: 0.3, FILE_FACTOR: 10, CONFIRM_PCT: 2, LEASE_MS: 20000,
+MAX_ALERTS: 50, MAX_FIRES: 5, PRICE_MAX: 1e10, PCT_MIN: 0.1, PCT_MAX: 50, MKT_MAX_AGE_S: 600, MKT_SKEW_S: 300 };
+AA.cfg = CFG;
+var SYM_RE = /^[A-Z0-9]{1,15}$/;
+function isN(v) { return typeof v === 'number' && isFinite(v); }
+function plain(o) { return !!o && typeof o === 'object' && !Array.isArray(o); }
+function own(o, k) { return Object.prototype.hasOwnProperty.call(o, k); }
+function idOf(x) { return x.sym + '|' + x.set; }
+function goodPx(v) { return isN(v) && v > 0 && v <= CFG.PRICE_MAX; }
+function valid(x) {
+if (!plain(x) || typeof x.sym !== 'string' || !SYM_RE.test(x.sym) || !isN(x.set)) return false;
+if (x.dir === 'above' || x.dir === 'below') return goodPx(x.px);
+if (x.dir === 'move') return isN(x.pct) && x.pct >= CFG.PCT_MIN && x.pct <= CFG.PCT_MAX && (x.ref == null || goodPx(x.ref));
+return false;
+}
+function repeats(x) { return x.dir === 'move' || x.rep === true; }
+function newState() { return { v: 1, a: {} }; }
+function cleanState(s) {
+var out = newState(); if (!plain(s) || !plain(s.a)) return out;
+Object.keys(s.a).slice(0, 200).forEach(function (k) {
+var e = s.a[k]; if (!plain(e) || typeof k !== 'string' || k.length > 40) return;
+var c = {}; ['last', 'chk', 'dly', 'miss', 'lp', 'pend', 'ref', 'qt'].forEach(function (f) { if (isN(e[f])) c[f] = e[f]; });
+c.armed = e.armed !== false; out.a[k] = c;
+});
+return out;
+}
+function acceptPx(e, px, fileLast) {
+if (!goodPx(px)) return { px: null, why: 'bad' };
+var prev = isN(e.lp) ? e.lp : null;
+var jump = prev !== null ? Math.abs(px / prev - 1) > CFG.MAX_JUMP : goodPx(fileLast) && (px > fileLast * CFG.FILE_FACTOR || px < fileLast / CFG.FILE_FACTOR);
+if (jump) {
+if (isN(e.pend) && Math.abs(px / e.pend - 1) * 100 <= CFG.CONFIRM_PCT) { e.lp = px; delete e.pend; return { px: px, why: 'confirmed' }; }
+e.pend = px; return { px: null, why: 'jump' };
+}
+delete e.pend; e.lp = px; return { px: px, why: 'ok' };
+}
+function evaluate(alerts, st, tick, now) {
+var s = cleanState(st), fires = [], changed = false, live = tick && tick.mode === 'live';
+var quotes = tick && plain(tick.quotes) ? tick.quotes : {}, asked = tick && Array.isArray(tick.asked) ? tick.asked : [];
+var list = Array.isArray(alerts) ? alerts.slice(0, CFG.MAX_ALERTS) : [], keep = {};
+list.forEach(function (x) {
+if (!valid(x)) return;
+var id = idOf(x); keep[id] = true;
+var e = s.a[id];
+if (!e) {                                     // first sight: a repeating alert already hit LIVE (another tab / reload) starts disarmed + in cooldown.
+e = s.a[id] = { armed: true }; changed = true;  // A hit without src 'live' (the market-file check, or an old round-4 build) never disarms
+if (x.hit && isN(x.hit) && x.src === 'live') { e.last = x.hit * 1000; if (x.dir !== 'move') e.armed = false; }   // or starts a cooldown.
+}
+if (!repeats(x) && x.hit) return;                                  // one-shot alert already hit: done (as before)
+var q = own(quotes, x.sym) && plain(quotes[x.sym]) ? quotes[x.sym] : null;
+var fresh = q && isN(q.t) && now - q.t >= -5000 && now - q.t < CFG.STALE_MS;
+if (!live) { if (q || asked.indexOf(x.sym) >= 0) { e.dly = now; changed = true; } return; }   // DELAYED / stale: never fire
+if (!q) { if (asked.indexOf(x.sym) >= 0) { e.miss = now; changed = true; } return; }
+if (!fresh) { e.dly = now; changed = true; return; }
+if (isN(e.qt) && e.qt === q.t) return;                             // same answer seen already (a state-change emit): no new information
+e.qt = q.t;
+var fl = null; try { fl = tick.fileLast ? tick.fileLast(x.sym) : null; } catch (er) { fl = null; }
+var a = acceptPx(e, q.last, fl); changed = true;
+if (a.px === null) return;
+var px = a.px; e.chk = now; delete e.miss;
+var cond, rearm = false;
+if (x.dir === 'above') { cond = px >= x.px; rearm = px <= x.px * (1 - CFG.HYST_PCT / 100); }
+else if (x.dir === 'below') { cond = px <= x.px; rearm = px >= x.px * (1 + CFG.HYST_PCT / 100); }
+else {
+var ref = goodPx(x.ref) ? x.ref : goodPx(e.ref) ? e.ref : null;
+if (ref === null) { e.ref = px; return; }                        // first live price becomes the reference
+cond = Math.abs(px / ref - 1) * 100 >= x.pct; rearm = true;        // the reference moves on each hit: no band needed
+}
+if (!e.armed && rearm) e.armed = true;
+if (!cond || !e.armed) return;
+if (repeats(x) && isN(e.last) && now - e.last < CFG.COOLDOWN_MS) return;   // cooldown
+if (fires.length >= CFG.MAX_FIRES) return;
+fires.push({ id: id, sym: x.sym, px: px, kind: x.dir });
+e.last = now;
+if (x.dir === 'move') { e.ref = px; e.armed = true; } else e.armed = false;
+});
+Object.keys(s.a).forEach(function (k) { if (!keep[k]) { delete s.a[k]; changed = true; } });
+return { fires: fires, st: s, changed: changed };
+}
+function applyFires(alerts, fires, nowSec, already) {
+var done = [];
+(Array.isArray(alerts) ? alerts : []).forEach(function (x) {
+if (!valid(x)) return;
+var f = null; fires.forEach(function (y) { if (y.id === idOf(x)) f = y; });
+if (!f) return;
+if (!repeats(x) && x.hit) return;                                 // another tab got there first
+if (already && already(x)) return;
+x.hit = nowSec; x.at = f.px; x.n = (isN(x.n) ? x.n : 0) + 1; x.src = 'live';
+if (x.dir === 'move') x.ref = f.px;
+done.push({ x: x, px: f.px });
+});
+return done;
+}
+function mktTag(asof) {
+if (!isN(asof) || asof < 0 || asof > 1e11) return '(market price, not live)';
+return '(market price ' + new Date(asof * 1000).toISOString().slice(11, 16) + 'Z, not live)';
+}
+function marketHits(alerts, mk, nowSec, lastOf) {
+var out = { hits: [], age: null, why: 'ok', tag: '' };
+if (!Array.isArray(alerts) || !alerts.length) { out.why = 'none'; return out; }
+var asof = plain(mk) && isN(mk.asof) ? mk.asof : null;
+if (asof === null || !isN(nowSec)) { out.why = 'no-age'; return out; }
+out.age = nowSec - asof; out.tag = mktTag(asof);
+if (out.age > CFG.MKT_MAX_AGE_S) { out.why = 'old'; return out; }
+if (out.age < -CFG.MKT_SKEW_S) { out.why = 'future'; return out; }
+alerts.slice(0, CFG.MAX_ALERTS).forEach(function (x) {
+if (!valid(x) || repeats(x) || x.hit) return;
+var last = null; try { last = typeof lastOf === 'function' ? lastOf(x.sym) : null; } catch (e) { last = null; }
+if (!goodPx(last)) return;
+if ((x.dir === 'above' && last >= x.px) || (x.dir === 'below' && last <= x.px)) { x.hit = nowSec; x.at = last; x.src = 'market'; x.mat = asof; out.hits.push(x); }
+});
+return out;
+}
+function label(x) {
+if (!plain(x)) return '-';
+var p = AP() && AP()._core ? AP()._core.fmtPrice : function (v) { return isN(v) ? String(v) : '-'; };
+if (x.dir === 'move') return 'moves ±' + (isN(x.pct) ? String(x.pct) : '-') + '%';
+return String(x.dir) + ' ' + p(x.px) + (x.rep === true ? ' (repeat)' : '');
+}
+function AP() { return G.AwayPrices || null; }
+AA._core = { valid: valid, repeats: repeats, evaluate: evaluate, applyFires: applyFires, acceptPx: acceptPx, cleanState: cleanState, label: label, idOf: idOf, marketHits: marketHits, mktTag: mktTag };
+AA.label = label;
+var ON = !!(AP() && AP().enabled === true && typeof AP().onTick === 'function') && typeof document !== 'undefined';
+AA.enabled = ON;
+AA.note = function () { return ''; };
+AA.ref = function () { return null; };
+AA.after = function () { };
+AA.status = function () { return { enabled: ON }; };
+if (!ON) return;                                   // Node, or live prices compiled off (test builds): the shell behaves as before
+var TAB = Math.random().toString(36).slice(2, 10) + Date.now().toString(36), mem = { st: newState(), alerts: null }, stats = { ticks: 0, evals: 0, fires: 0, skippedLease: 0, delayed: 0, errors: 0, lastErr: null };
+function lsGet(k) { try { return G.localStorage.getItem(k); } catch (e) { return null; } }
+function lsSet(k, v) { try { G.localStorage.setItem(k, v); return true; } catch (e) { return false; } }
+function lsDel(k) { try { G.localStorage.removeItem(k); } catch (e) { } }
+function jparse(t, d) { if (t == null) return d; try { return JSON.parse(t); } catch (e) { return d; } }
+var storeOk = (function () { try { var k = 'ui_la_probe'; G.localStorage.setItem(k, '1'); G.localStorage.removeItem(k); return true; } catch (e) { return false; } })();
+function loadAlerts() { if (!storeOk) return mem.alerts || []; var v = jparse(lsGet('ui_palerts'), []); return Array.isArray(v) ? v : []; }
+function saveAlerts(a) { if (!lsSet('ui_palerts', JSON.stringify(a.slice(0, 50)))) mem.alerts = a.slice(0, 50); }
+function loadState() { return storeOk ? cleanState(jparse(lsGet('ui_lastate'), null)) : mem.st; }
+function saveState(s) { mem.st = s; if (storeOk) lsSet('ui_lastate', JSON.stringify(s)); }
+function takeLease(now) {
+if (!storeOk) return true;
+var l = jparse(lsGet('ui_lalock'), null);
+if (plain(l) && l.id !== TAB && isN(l.exp) && l.exp > now && l.exp <= now + CFG.LEASE_MS * 2) return false;
+lsSet('ui_lalock', JSON.stringify({ id: TAB, exp: now + CFG.LEASE_MS }));
+var r = jparse(lsGet('ui_lalock'), null);
+return plain(r) && r.id === TAB;
+}
+function dropLease() { if (!storeOk) return; var l = jparse(lsGet('ui_lalock'), null); if (plain(l) && l.id === TAB) lsDel('ui_lalock'); }
+function fileLast(sym) {
+var m = G.__SNAPSHOT__ && G.__SNAPSHOT__.market; if (!m || !m.stats || !m.universe || !AP()._core) return null;
+if (!fileLast.idx || fileLast.src !== m) {
+var allow = AP()._core.buildAllowlist(m), lastCol = Array.isArray(m.stats.cols) ? m.stats.cols.indexOf('last') : -1, pc = Array.isArray(m.stats.cols) ? m.stats.cols.indexOf('pair') : -1, byPair = {};
+if (lastCol >= 0 && pc >= 0 && Array.isArray(m.stats.rows)) m.stats.rows.slice(0, 5000).forEach(function (r) { if (Array.isArray(r) && isN(r[lastCol])) byPair[r[pc]] = r[lastCol]; });
+var idx = {}; Object.keys(allow.bySym).forEach(function (s) { var v = byPair[allow.bySym[s].pair]; if (goodPx(v)) idx[s] = v; });
+fileLast.idx = idx; fileLast.src = m; fileLast.allow = allow;
+}
+return own(fileLast.idx, sym) ? fileLast.idx[sym] : null;
+}
+function inAllow(sym) { fileLast(sym); return !!(fileLast.allow && own(fileLast.allow.bySym, sym)); }
+AA.syms = function () {
+var out = []; loadAlerts().slice(0, CFG.MAX_ALERTS).forEach(function (x) { if (valid(x) && (repeats(x) || !x.hit) && out.indexOf(x.sym) < 0 && out.length < 20) out.push(x.sym); });
+return out;
+};
+var lastTick = null;
+function onTick(info) {
+try { tickBody(info); } catch (e) { stats.errors++; stats.lastErr = String(e && e.message ? e.message : e).slice(0, 120); }
+}
+function tickBody(info) {
+stats.ticks++;
+if (!plain(info)) return;
+lastTick = { mode: info.mode, at: Date.now() };
+var alerts = loadAlerts(); if (!alerts.length) return;                // no alert: nothing evaluated, nothing written
+var now = Date.now();
+if (!G.document.hidden && !takeLease(now)) { stats.skippedLease++; return; }
+if (G.document.hidden) return;
+stats.evals++; if (info.mode !== 'live') stats.delayed++;
+var r = evaluate(alerts, loadState(), { mode: info.mode, quotes: info.quotes, asked: info.asked, fileLast: fileLast }, now);
+if (r.fires.length) {
+var fresh = loadAlerts(), freshSt = loadState();               // re-read: another tab may have fired these meanwhile
+var done = applyFires(fresh, r.fires, Math.floor(now / 1000), function (x) { var e = freshSt.a[idOf(x)]; return repeats(x) && e && isN(e.last) && now - e.last < CFG.COOLDOWN_MS; });
+if (done.length) { saveAlerts(fresh); stats.fires += done.length; deliver(done); }
+}
+if (r.changed || r.fires.length) saveState(r.st);
+paintNotes();
+}
+function fmtP(v) { return AP()._core.fmtPrice(v); }
+function when(sec) { var d = new Date(sec * 1000); return isNaN(d) ? '-' : d.toISOString().slice(0, 16).replace('T', ' ') + 'Z'; }
+function hhmm(ms) { var d = new Date(ms); return isNaN(d) ? '-' : d.toISOString().slice(11, 16) + 'Z'; }
+function toast(t) {
+var d = G.document.createElement('div'); d.className = 'toast la-toast'; d.textContent = t; d.setAttribute('role', 'status');
+G.document.body.appendChild(d); setTimeout(function () { if (d.parentNode) d.parentNode.removeChild(d); }, 4000);
+}
+function deliver(done) {
+var txt = done.slice(0, 3).map(function (d) { return d.x.sym + ' ' + label(d.x) + ' at ' + fmtP(d.px); }).join('; ');
+toast((done.length > 1 ? done.length + ' price alerts hit (live): ' : 'Price alert hit (live): ') + txt + (done.length > 3 ? '; ...' : ''));
+try { if (G.navigator && G.navigator.vibrate) G.navigator.vibrate(6); } catch (e) { }
+try {
+var N = G.Notification;
+if (N && N.permission === 'granted') done.forEach(function (d) { new N(d.x.sym + ' ' + label(d.x), { body: 'live ' + fmtP(d.px) + ' (read-only alert from this phone)', tag: 'palert-' + d.x.sym }); });
+} catch (e) { }
+done.forEach(function (d) { paintHit(d.x); });
+}
+function rowsFor(id) {
+var out = [];
+Array.prototype.forEach.call(G.document.querySelectorAll('#view [data-pa-del]'), function (b) { if (b.getAttribute('data-pa-del') === id && b.parentNode) out.push(b.parentNode); });
+return out;
+}
+function paintHit(x) {
+rowsFor(idOf(x)).forEach(function (row) {
+var s = row.querySelector('.s'), n = row.querySelector('.la-n');
+if (row.classList.contains('fill')) {
+var side = row.querySelector('.side'); if (side) { side.classList.add(x.dir === 'below' ? 'sell' : 'buy'); }
+if (s) { s.textContent = 'HIT ' + when(x.hit) + ' at ' + fmtP(x.at); }
+} else {
+row.classList.remove('info'); row.classList.add('warning');
+var sev = row.querySelector('.sev'); if (sev) { sev.textContent = 'hit'; sev.classList.remove('info'); sev.classList.add('warning'); }
+if (s) { s.textContent = 'hit ' + when(x.hit) + ' at ' + fmtP(x.at); }
+}
+if (s) { if (!n) { n = G.document.createElement('span'); n.className = 'la-n'; n.setAttribute('data-la', idOf(x)); } s.appendChild(n); }
+});
+}
+function noteFor(x, st) {
+if (!valid(x)) return '';
+var e = (st || loadState()).a[idOf(x)] || {}, parts = [];
+if (repeats(x)) {
+var p = x.dir === 'move' ? 'repeats from ' + (goodPx(x.ref) ? fmtP(x.ref) : goodPx(e.ref) ? fmtP(e.ref) : 'the first live price') : 'repeats';
+if (isN(x.n) && x.n > 0) p += ', ' + x.n + (x.n > 1 ? ' hits' : ' hit');
+if (isN(e.last) && Date.now() - e.last < CFG.COOLDOWN_MS) p += ', quiet until ' + hhmm(e.last + CFG.COOLDOWN_MS);
+else if (e.armed === false && x.dir !== 'move') p += ', re-arms ' + (x.dir === 'above' ? 'below ' : 'above ') + fmtP(x.px * (x.dir === 'above' ? 1 - CFG.HYST_PCT / 100 : 1 + CFG.HYST_PCT / 100));
+parts.push(p);
+} else if (x.hit) return x.src === 'live' ? ' · live price' : '';
+if (!inAllow(x.sym)) parts.push('no live price for this coin');
+else if (isN(e.dly) && (!isN(e.chk) || e.dly > e.chk)) parts.push('checked with delayed prices ' + hhmm(e.dly) + ', not fired on them');
+else if (isN(e.chk)) parts.push('checked live ' + hhmm(e.chk));
+return parts.length ? ' · ' + parts.join(' · ') : '';
+}
+AA.note = function (x) { try { return noteFor(x); } catch (e) { return ''; } };
+function paintNotes() {
+var a = loadAlerts(), st = loadState(), by = {}; a.forEach(function (x) { if (valid(x)) by[idOf(x)] = x; });
+Array.prototype.forEach.call(G.document.querySelectorAll('#view .la-n[data-la]'), function (n) { var x = by[n.getAttribute('data-la')]; n.textContent = x ? noteFor(x, st) : ''; });
+}
+AA.ref = function (sym) {
+try { var q = AP().quote ? AP().quote(sym) : null; return q && goodPx(q.last) ? q.last : null; } catch (e) { return null; }
+};
+AA.after = function (view, t) {
+if (t !== 'chart' && t !== 'alerts') return;
+Array.prototype.forEach.call(view.querySelectorAll('form[data-pa-form]'), function (f) {
+var sel = f.querySelector('select[name=dir]'), inp = f.querySelector('input[name=px]'); if (!sel || !inp || sel.dataset.la) return;
+sel.dataset.la = '1'; var ph = inp.getAttribute('placeholder') || 'price';
+var sync = function () { var mv = sel.value === 'move'; inp.setAttribute('placeholder', mv ? '% move, e.g. 5' : ph); inp.setAttribute('aria-label', mv ? 'Alert move in percent' : 'Alert price'); };
+sel.addEventListener('change', sync); sync();
+});
+paintNotes();
+};
+AA.status = function () { return { enabled: ON, tab: TAB, storage: storeOk, lastTick: lastTick, stats: { ticks: stats.ticks, evals: stats.evals, fires: stats.fires, skippedLease: stats.skippedLease, delayed: stats.delayed, errors: stats.errors, lastErr: stats.lastErr } }; };
+AP().onTick(onTick);
+AP().extraSyms = AA.syms;
+G.document.addEventListener('visibilitychange', function () { if (G.document.hidden) dropLease(); });
+G.addEventListener('pagehide', dropLease);
+})();
 
-  // ------------------------------------------------------------------ pure core (Node unit tests: tests/livealerts_unit.cjs)
-  function valid(x) {
-    if (!plain(x) || typeof x.sym !== 'string' || !SYM_RE.test(x.sym) || !isN(x.set)) return false;
-    if (x.dir === 'above' || x.dir === 'below') return goodPx(x.px);
-    if (x.dir === 'move') return isN(x.pct) && x.pct >= CFG.PCT_MIN && x.pct <= CFG.PCT_MAX && (x.ref == null || goodPx(x.ref));
-    return false;
-  }
-  function repeats(x) { return x.dir === 'move' || x.rep === true; }
-  function newState() { return { v: 1, a: {} }; }
-  function cleanState(s) {
-    var out = newState(); if (!plain(s) || !plain(s.a)) return out;
-    Object.keys(s.a).slice(0, 200).forEach(function (k) {
-      var e = s.a[k]; if (!plain(e) || typeof k !== 'string' || k.length > 40) return;
-      var c = {}; ['last', 'chk', 'dly', 'miss', 'lp', 'pend', 'ref', 'qt'].forEach(function (f) { if (isN(e[f])) c[f] = e[f]; });
-      c.armed = e.armed !== false; out.a[k] = c;
-    });
-    return out;
-  }
-  // one live price for one alert: accepted value or null (and why). Mutates e (lp / pend).
-  function acceptPx(e, px, fileLast) {
-    if (!goodPx(px)) return { px: null, why: 'bad' };
-    var prev = isN(e.lp) ? e.lp : null;
-    var jump = prev !== null ? Math.abs(px / prev - 1) > CFG.MAX_JUMP : goodPx(fileLast) && (px > fileLast * CFG.FILE_FACTOR || px < fileLast / CFG.FILE_FACTOR);
-    if (jump) {
-      if (isN(e.pend) && Math.abs(px / e.pend - 1) * 100 <= CFG.CONFIRM_PCT) { e.lp = px; delete e.pend; return { px: px, why: 'confirmed' }; }
-      e.pend = px; return { px: null, why: 'jump' };
-    }
-    delete e.pend; e.lp = px; return { px: px, why: 'ok' };
-  }
-  // tick = { mode: 'live'|'stale'|'delayed'|'wait', quotes: {SYM: {last, t}}, asked: [SYM], fileLast: function(sym) }
-  // returns { fires: [{ id, sym, px, kind }], st, changed } ; never throws on bad input
-  function evaluate(alerts, st, tick, now) {
-    var s = cleanState(st), fires = [], changed = false, live = tick && tick.mode === 'live';
-    var quotes = tick && plain(tick.quotes) ? tick.quotes : {}, asked = tick && Array.isArray(tick.asked) ? tick.asked : [];
-    var list = Array.isArray(alerts) ? alerts.slice(0, CFG.MAX_ALERTS) : [], keep = {};
-    list.forEach(function (x) {
-      if (!valid(x)) return;
-      var id = idOf(x); keep[id] = true;
-      var e = s.a[id];
-      if (!e) {                                     // first sight: a repeating alert already hit LIVE (another tab / reload) starts disarmed + in cooldown.
-        e = s.a[id] = { armed: true }; changed = true;  // A hit without src 'live' (the market-file check, or an old round-4 build) never disarms
-        if (x.hit && isN(x.hit) && x.src === 'live') { e.last = x.hit * 1000; if (x.dir !== 'move') e.armed = false; }   // or starts a cooldown.
-      }
-      if (!repeats(x) && x.hit) return;                                  // one-shot alert already hit: done (as before)
-      var q = own(quotes, x.sym) && plain(quotes[x.sym]) ? quotes[x.sym] : null;
-      var fresh = q && isN(q.t) && now - q.t >= -5000 && now - q.t < CFG.STALE_MS;
-      if (!live) { if (q || asked.indexOf(x.sym) >= 0) { e.dly = now; changed = true; } return; }   // DELAYED / stale: never fire
-      if (!q) { if (asked.indexOf(x.sym) >= 0) { e.miss = now; changed = true; } return; }
-      if (!fresh) { e.dly = now; changed = true; return; }
-      if (isN(e.qt) && e.qt === q.t) return;                             // same answer seen already (a state-change emit): no new information
-      e.qt = q.t;
-      var fl = null; try { fl = tick.fileLast ? tick.fileLast(x.sym) : null; } catch (er) { fl = null; }
-      var a = acceptPx(e, q.last, fl); changed = true;
-      if (a.px === null) return;
-      var px = a.px; e.chk = now; delete e.miss;
-      var cond, rearm = false;
-      if (x.dir === 'above') { cond = px >= x.px; rearm = px <= x.px * (1 - CFG.HYST_PCT / 100); }
-      else if (x.dir === 'below') { cond = px <= x.px; rearm = px >= x.px * (1 + CFG.HYST_PCT / 100); }
-      else {
-        var ref = goodPx(x.ref) ? x.ref : goodPx(e.ref) ? e.ref : null;
-        if (ref === null) { e.ref = px; return; }                        // first live price becomes the reference
-        cond = Math.abs(px / ref - 1) * 100 >= x.pct; rearm = true;        // the reference moves on each hit: no band needed
-      }
-      if (!e.armed && rearm) e.armed = true;
-      if (!cond || !e.armed) return;
-      if (repeats(x) && isN(e.last) && now - e.last < CFG.COOLDOWN_MS) return;   // cooldown
-      if (fires.length >= CFG.MAX_FIRES) return;
-      fires.push({ id: id, sym: x.sym, px: px, kind: x.dir });
-      e.last = now;
-      if (x.dir === 'move') { e.ref = px; e.armed = true; } else e.armed = false;
-    });
-    Object.keys(s.a).forEach(function (k) { if (!keep[k]) { delete s.a[k]; changed = true; } });
-    return { fires: fires, st: s, changed: changed };
-  }
-  // apply fires to the stored alert list (fresh copy from storage): one-shot -> hit; move -> hit + new reference; counts n
-  function applyFires(alerts, fires, nowSec, already) {
-    var done = [];
-    (Array.isArray(alerts) ? alerts : []).forEach(function (x) {
-      if (!valid(x)) return;
-      var f = null; fires.forEach(function (y) { if (y.id === idOf(x)) f = y; });
-      if (!f) return;
-      if (!repeats(x) && x.hit) return;                                 // another tab got there first
-      if (already && already(x)) return;
-      x.hit = nowSec; x.at = f.px; x.n = (isN(x.n) ? x.n : 0) + 1; x.src = 'live';
-      if (x.dir === 'move') x.ref = f.px;
-      done.push({ x: x, px: f.px });
-    });
-    return done;
-  }
-  // market-file check (static/app.js checkPriceAlerts, patched by build_site.py ALERT_PATCHES to call this): runs when the phone loads
-  // market prices. It fires ONLY one-shot above / below alerts, ONLY when the market file is at most MKT_MAX_AGE_S old (its Ticker time
-  // m.asof, not the download time; up to MKT_SKEW_S in the future is tolerated for clock skew); unknown age = too old. Repeating and
-  // "moves" alerts are never touched by it (they fire on live prices only, so the market file can never disarm or cool them down).
-  // Each hit is marked src 'market' + mat (the market price time) so every screen labels it "(market price HH:MMZ, not live)".
-  // lastOf(sym) -> the market-file last price or null. Mutates the hit alerts in place; returns { hits, age, why, tag }.
-  function mktTag(asof) {
-    if (!isN(asof) || asof < 0 || asof > 1e11) return '(market price, not live)';
-    return '(market price ' + new Date(asof * 1000).toISOString().slice(11, 16) + 'Z, not live)';
-  }
-  function marketHits(alerts, mk, nowSec, lastOf) {
-    var out = { hits: [], age: null, why: 'ok', tag: '' };
-    if (!Array.isArray(alerts) || !alerts.length) { out.why = 'none'; return out; }
-    var asof = plain(mk) && isN(mk.asof) ? mk.asof : null;
-    if (asof === null || !isN(nowSec)) { out.why = 'no-age'; return out; }
-    out.age = nowSec - asof; out.tag = mktTag(asof);
-    if (out.age > CFG.MKT_MAX_AGE_S) { out.why = 'old'; return out; }
-    if (out.age < -CFG.MKT_SKEW_S) { out.why = 'future'; return out; }
-    alerts.slice(0, CFG.MAX_ALERTS).forEach(function (x) {
-      if (!valid(x) || repeats(x) || x.hit) return;
-      var last = null; try { last = typeof lastOf === 'function' ? lastOf(x.sym) : null; } catch (e) { last = null; }
-      if (!goodPx(last)) return;
-      if ((x.dir === 'above' && last >= x.px) || (x.dir === 'below' && last <= x.px)) { x.hit = nowSec; x.at = last; x.src = 'market'; x.mat = asof; out.hits.push(x); }
-    });
-    return out;
-  }
-  function label(x) {
-    if (!plain(x)) return '-';
-    var p = AP() && AP()._core ? AP()._core.fmtPrice : function (v) { return isN(v) ? String(v) : '-'; };
-    if (x.dir === 'move') return 'moves ±' + (isN(x.pct) ? String(x.pct) : '-') + '%';
-    return String(x.dir) + ' ' + p(x.px) + (x.rep === true ? ' (repeat)' : '');
-  }
-  function AP() { return G.AwayPrices || null; }
-  AA._core = { valid: valid, repeats: repeats, evaluate: evaluate, applyFires: applyFires, acceptPx: acceptPx, cleanState: cleanState, label: label, idOf: idOf, marketHits: marketHits, mktTag: mktTag };
-  AA.label = label;
+/* ---- trust.js ---- */
+(function () {
+'use strict';
+var G = typeof window !== 'undefined' ? window : globalThis;
+var VERSION = '1.0.0', BUILD = 'batch2a 2026-11-21';
+var CFG = { SNAP_OLD_S: 90 * 60, SNAP_STALE_S: 26 * 3600, MKT_OLD_S: 30 * 60, MKT_VOLD_S: 6 * 3600, CLOCK_SKEW_S: 300, TICK_MS: 15000 };
+var DASH = '–';
+var ROUTES = /^(home|portfolio|pos|positions|position|trades|orders|activity|markets|chart|watch)$/;
+function isN(v) { return typeof v === 'number' && isFinite(v); }
+function numOr(v) { return isN(v) ? v : null; }
+function str(v, re) { return typeof v === 'string' && (!re || re.test(v)) ? v : null; }
+function ageText(s) {
+if (!isN(s) || s < 0) return null;
+s = Math.round(s);
+return s < 60 ? s + ' s' : s < 90 * 60 ? Math.round(s / 60) + ' min' : s < 48 * 3600 ? Math.round(s / 3600) + ' h' : Math.round(s / 86400) + ' d';
+}
+function ageLong(s) { var t = ageText(s); return t ? t.replace(/ s$/, ' seconds').replace(/ min$/, ' minutes').replace(/ h$/, ' hours').replace(/ d$/, ' days').replace(/^1 (\w+)s$/, '1 $1') : null; }
+function utc(sec) { return isN(sec) && sec > 0 && sec < 1e11 ? new Date(sec * 1000).toISOString().slice(0, 16).replace('T', ' ') + ' UTC' : null; }
+var RANK = { ok: 0, info: 0, warn: 1, bad: 2 };
+function worse(a, b) { return (RANK[b] || 0) > (RANK[a] || 0) ? b : a; }
+var BOT_STATES = { fresh: ['OK', 'ok'], stale: ['BOT STALE', 'warn'], 'not-reporting': ['NOT REPORTING', 'bad'], 'no-run-yet': ['NO RUN YET', 'warn'] };
+function trustModel(i) {
+i = i && typeof i === 'object' ? i : {};
+var now = numOr(i.now), snapTs = numOr(i.snapTs), mAsof = numOr(i.marketAsof), lastOk = numOr(i.lastOk);
+var parts = [], rows = [], sr = [], lvl = 'ok', clock = false;
+var hasSnap = snapTs !== null && snapTs > 0, src = str(i.src, /^(net|saved|file)$/);
+var mode = !hasSnap ? ['OFFLINE', 'bad', 'no data on this phone yet'] : i.paper === true ? ['PAPER', 'ok', 'Paper account, simulated money'] : i.dummy === true ? ['DUMMY', 'warn', 'Dummy test data, not the bot'] : ['SNAPSHOT', 'warn', 'Snapshot, not the paper bot format'];
+parts.push({ k: 'mode', text: '', word: mode[0], lvl: mode[1] }); sr.push(mode[2]); lvl = worse(lvl, mode[1]);
+if (hasSnap && src === 'saved') { parts.push({ k: 'net', text: '', word: 'OFFLINE', lvl: 'warn' }); sr.push('offline, showing the copy saved on this phone'); lvl = worse(lvl, 'warn'); }
+var bw, bl, btxt, bage = hasSnap && now !== null ? now - snapTs : null, st = str(i.state);
+if (!hasSnap) { bw = 'no data'; bl = 'bad'; btxt = 'bot'; sr.push('no bot report on this phone'); }
+else if (bage === null) { bw = DASH; bl = 'warn'; btxt = 'bot age unknown'; sr.push('bot report age unknown'); }
+else if (bage < -CFG.CLOCK_SKEW_S) { bw = 'clock?'; bl = 'warn'; btxt = 'bot'; clock = true; sr.push('bot report time is ahead of the phone clock, check the phone date'); }
+else {
+var a = Math.max(0, bage), at = ageText(a);
+bw = a > CFG.SNAP_STALE_S ? 'STALE' : a > CFG.SNAP_OLD_S ? 'OLD' : 'OK'; bl = bw === 'STALE' ? 'bad' : bw === 'OLD' ? 'warn' : 'ok';
+btxt = src === 'saved' ? 'bot saved copy, ' + at + ' old' : 'bot ' + at + ' ago';
+sr.push((src === 'saved' ? 'saved copy of the bot report, ' : 'bot report ') + ageLong(a) + ' old' + (bw === 'OK' ? '' : ', ' + bw));
+}
+if (hasSnap && i.paper === true && st && Object.prototype.hasOwnProperty.call(BOT_STATES, st) && st !== 'fresh') {
+var bs = BOT_STATES[st]; bl = worse(bl, bs[1]); if (bw === 'OK') bw = bs[0]; else bw = bw + ', ' + bs[0];
+sr.push(st === 'not-reporting' ? 'bot not reporting' : st === 'no-run-yet' ? 'bot has no run yet' : 'bot heartbeat stale');
+}
+parts.push({ k: 'bot', text: btxt, word: bw, lvl: bl }); lvl = worse(lvl, bl);
+var mw, ml, mtxt, mage = mAsof !== null && mAsof > 0 && now !== null ? now - mAsof : null;
+if (mAsof === null || mAsof <= 0) { mw = 'not loaded'; ml = 'warn'; mtxt = 'market file:'; sr.push('market file not loaded'); }
+else if (mage === null) { mw = DASH; ml = 'warn'; mtxt = 'market file age unknown'; sr.push('market file age unknown'); }
+else if (mage < -CFG.CLOCK_SKEW_S) { mw = 'clock?'; ml = 'warn'; mtxt = 'market file'; clock = true; sr.push('market file time is ahead of the phone clock'); }
+else {
+var ma = Math.max(0, mage);
+mw = ma > CFG.MKT_VOLD_S ? 'VERY OLD' : ma > CFG.MKT_OLD_S ? 'OLD' : 'OK'; ml = mw === 'OK' ? 'ok' : mw === 'OLD' ? 'warn' : 'bad';
+mtxt = 'market file ' + ageText(ma); sr.push('market file ' + ageLong(ma) + ' old' + (mw === 'OK' ? '' : ', ' + mw));
+}
+parts.push({ k: 'market', text: mtxt, word: mw, lvl: ml }); lvl = worse(lvl, ml);
+var tm = str(i.tickerMode, /^(live|stale|delayed|wait)$/), pw, pl, ptxt, page = lastOk !== null && lastOk > 0 && now !== null ? now - lastOk / 1000 : null;
+var mfile = mw === 'not loaded' ? 'market file not loaded' : mw === 'clock?' ? 'market file clock?' : mage === null ? 'market file' : 'market file ' + ageText(Math.max(0, mage)) + (mw === 'OK' ? '' : ' old');
+if (i.pricesOn !== true) { pw = 'market file only'; pl = 'info'; ptxt = 'prices:'; sr.push('live prices are off in this build, prices come from the market file'); }
+else if (tm === 'live' && page !== null && page >= -CFG.CLOCK_SKEW_S) { pw = 'LIVE'; pl = 'ok'; ptxt = 'prices'; sr.push('live prices live, updated ' + (ageLong(Math.max(0, page)) || 'just now') + ' ago'); }
+else { pw = 'DELAYED'; pl = mw === 'OK' ? 'warn' : ml === 'bad' ? 'bad' : 'warn'; ptxt = 'prices'; sr.push('live prices delayed, showing the ' + mfile); }
+var ptail = pw === 'LIVE' ? ageText(Math.max(0, page)) : pw === 'DELAYED' ? mfile : '';
+parts.push({ k: 'prices', text: ptxt, word: pw, tail: ptail, lvl: pl }); lvl = worse(lvl, pl);
+var hb = numOr(i.hbAge);
+rows.push({ k: 'paper', label: 'Paper snapshot', lvl: bl, value: !hasSnap ? 'no data on this phone' : [bage === null ? 'age ' + DASH : bage < -CFG.CLOCK_SKEW_S ? 'clock?' : ageText(Math.max(0, bage)) + ' old',
+'as of ' + (utc(snapTs) || DASH), 'bot state ' + (st || DASH), 'heartbeat at upload ' + (hb !== null && hb >= 0 ? ageText(hb) : DASH), src === 'saved' ? 'saved copy (offline)' : src === 'file' ? 'imported file' : 'downloaded'].join(' · ') });
+rows.push({ k: 'market', label: 'Market file', lvl: ml, value: mw === 'not loaded' ? 'not loaded' : [mage === null ? 'age ' + DASH : mage < -CFG.CLOCK_SKEW_S ? 'clock?' : ageText(Math.max(0, mage)) + ' old', 'as of ' + (utc(mAsof) || DASH), 'Kraken public prices'].join(' · ') });
+rows.push({ k: 'prices', label: 'Live prices', lvl: pl, value: i.pricesOn !== true ? 'off in this build: market file only' : pw === 'LIVE' ? 'LIVE · last tick ' + ageText(Math.max(0, page)) + ' ago' : 'DELAYED (' + (tm || 'not started') + ') · last tick ' + (page !== null && page >= 0 ? ageText(page) + ' ago' : DASH) + ' · showing the ' + mfile });
+var ex = i.live === 'ok' ? 'live verified' : i.shadow === true ? 'shadow' : 'not enabled';
+rows.push({ k: 'exec', label: 'Live executor', lvl: 'info', value: ex });
+if (clock) sr.push('Phone clock is behind the snapshot time');
+var ah = isN(i.alertsHit) && i.alertsHit > 0 ? Math.min(999, Math.floor(i.alertsHit)) : 0;
+return { parts: parts, rows: rows, lvl: lvl, sr: sr.join(', '), clock: clock, alertsHit: ah, exec: ex };
+}
+function partText(p) { return [p.text, p.word, p.tail].filter(function (x) { return typeof x === 'string' && x; }).join(' '); }
+function showOn(route, side, hasShadow) {
+var t = String(route || 'home').replace(/^#/, '').split('/')[0] || 'home';
+if (!ROUTES.test(t)) return false;
+if (t === 'home' && side === 'live' && hasShadow) return false;     // Live side (shadow / executor) has its own banners
+return true;
+}
+var api = { version: VERSION, build: BUILD, cfg: CFG, _core: { trustModel: trustModel, ageText: ageText, partText: partText, showOn: showOn, utc: utc } };
+G.AwayTrust = api;
+var B2 = G.AwayB2 = G.AwayB2 || { hooks: [] };
+B2.after = function (view, t, arg, snap) { (B2.hooks || []).slice(0, 8).forEach(function (fn) { try { fn(view, t, arg, snap); } catch (e) { } }); };
+if (typeof module !== 'undefined' && module.exports) module.exports = api;
+if (typeof document === 'undefined') return;
+function lsGet(k) { try { return G.localStorage.getItem(k); } catch (e) { return null; } }
+function lsSet(k, v) { try { G.localStorage.setItem(k, v); } catch (e) { } }
+function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+function alertsHit() { try { var v = JSON.parse(lsGet('ui_palerts') || '[]'); return Array.isArray(v) ? v.filter(function (x) { return x && typeof x === 'object' && x.hit; }).length : 0; } catch (e) { return 0; } }
+function inputs() {
+var S = G.__SNAPSHOT__ || null, raw = S && S.raw ? S.raw : null, P = G.AwayPrices, st = null, live = null;
+try { st = P && typeof P.status === 'function' ? P.status() : null; } catch (e) { st = null; }
+try { live = G.__AWAY_LIVE__ && typeof G.__AWAY_LIVE__.status === 'function' ? G.__AWAY_LIVE__.status().state : null; } catch (e) { live = null; }
+var fr = raw && raw.freshness && typeof raw.freshness === 'object' ? raw.freshness : null;
+var hb = raw && raw.data && raw.data.health && typeof raw.data.health === 'object' ? raw.data.health.heartbeat_age_s : fr ? fr.heartbeat_age_s : null;
+return { now: Date.now() / 1000, snapTs: S && S.ts, paper: !!(S && S.paper), dummy: !!(S && S.dummy), state: S && S.paper ? S.paper.state : fr ? fr.state : null, hbAge: hb,
+src: document.body ? document.body.dataset.src : null, marketAsof: S && S.market ? S.market.asof : null,
+pricesOn: !!(P && P.enabled === true && st && st.enabled === true), tickerMode: st ? st.tickerMode : null, lastOk: st ? st.lastOk : null,
+live: live, shadow: !!(raw && raw.data && raw.data.shadow), alertsHit: alertsHit() };
+}
+var box = null, sum = null, det = null, srLive = null, lastWords = '', timer = null;
+function ensure() {
+if (box && box.isConnected) return true;
+var strip = document.getElementById('strip'); if (!strip || !strip.parentNode) return false;
+box = el('div', 'tr'); box.id = 'trust';
+sum = el('button', 'tr-sum'); sum.type = 'button'; sum.id = 'trustsum'; sum.setAttribute('aria-controls', 'trustdet');
+det = el('div', 'tr-det'); det.id = 'trustdet';
+srLive = el('span', 'sr'); srLive.setAttribute('aria-live', 'polite'); srLive.setAttribute('role', 'status');
+box.appendChild(sum); box.appendChild(det); box.appendChild(srLive);
+strip.parentNode.insertBefore(box, strip.nextSibling);
+sum.addEventListener('click', function () { var open = det.hidden; det.hidden = !open; lsSet('ui_trust_open', open ? '1' : '0'); sum.setAttribute('aria-expanded', String(open)); });
+det.hidden = lsGet('ui_trust_open') !== '1';
+return true;
+}
+function paint() {
+var hash = (G.location && G.location.hash || '#home').slice(1);
+var side = lsGet('ui_side') === 'live' ? 'live' : 'paper', hasSh = !!(G.AwayShadow && typeof G.AwayShadow.render === 'function');
+var S = G.__SNAPSHOT__;
+if (!ensure()) return;
+var on = showOn(hash, side, hasSh) && !!S && (S.ts > 0 || (document.body && document.body.dataset.away));
+box.hidden = !on; document.body.dataset.trust = on ? 'on' : 'off';
+if (!on) return;
+var m = trustModel(inputs());
+sum.textContent = '';
+m.parts.forEach(function (p, n) {
+if (n) { var sp = el('span', 'tr-sep', '|'); sp.setAttribute('aria-hidden', 'true'); sum.appendChild(sp); }
+var s = el('span', 'tr-p'); s.dataset.k = p.k; s.dataset.lvl = p.lvl;
+if (p.text) s.appendChild(document.createTextNode(p.text + ' '));
+s.appendChild(el('b', null, p.word));
+if (p.tail) s.appendChild(document.createTextNode(' ' + p.tail));
+sum.appendChild(s);
+});
+var chev = el('span', 'tr-chev', det.hidden ? '▾' : '▴'); chev.setAttribute('aria-hidden', 'true'); sum.appendChild(chev);
+sum.setAttribute('aria-expanded', String(!det.hidden));
+sum.setAttribute('aria-label', 'Data age: ' + m.sr + '. Tap for details');
+box.dataset.lvl = m.lvl;
+det.textContent = '';
+var tb = el('div', 'tr-rows'); tb.setAttribute('role', 'table'); tb.setAttribute('aria-label', 'Where each number comes from and how old it is');
+m.rows.forEach(function (r) {
+var row = el('div', 'tr-row'); row.setAttribute('role', 'row'); row.dataset.k = r.k; row.dataset.lvl = r.lvl;
+var a = el('span', 'tr-l', r.label); a.setAttribute('role', 'rowheader'); var b = el('span', 'tr-v', r.value); b.setAttribute('role', 'cell');
+row.appendChild(a); row.appendChild(b); tb.appendChild(row);
+});
+det.appendChild(tb);
+if (m.alertsHit) { var ln = el('a', 'tr-link', 'Price alerts hit: ' + m.alertsHit); ln.href = '#alerts'; det.appendChild(ln); }
+var foot = el('div', 'tr-foot', 'Read-only. Ages tick every 15 s while this page is open. App module build: ' + BUILD + ' (trust ' + VERSION + ').');
+det.appendChild(foot);
+var words = m.parts.map(function (p) { return p.k + ':' + p.word; }).join('|');
+if (lastWords && words !== lastWords) srLive.textContent = 'Data age changed: ' + m.parts.map(partText).join(', ');
+lastWords = words;
+document.body.dataset.trustLvl = m.lvl;
+}
+function start() { if (!timer && !document.hidden) timer = setInterval(function () { if (document.hidden) { stop(); return; } safePaint(); }, CFG.TICK_MS); }
+function stop() { if (timer) { clearInterval(timer); timer = null; } }
+function safePaint() { try { paint(); } catch (e) { } }
+api.paint = safePaint;
+api.model = function () { return trustModel(inputs()); };
+api.status = function () { try { return { model: trustModel(inputs()), timer: !!timer, shown: !!(box && !box.hidden) }; } catch (e) { return { error: String(e && e.message) }; } };
+B2.hooks.push(function () { safePaint(); });
+G.addEventListener('hashchange', function () { setTimeout(safePaint, 0); });
+document.addEventListener('visibilitychange', function () { if (document.hidden) stop(); else { safePaint(); start(); } });
+try { if (G.AwayPrices && typeof G.AwayPrices.onTick === 'function') G.AwayPrices.onTick(function () { if (box && !box.hidden) safePaint(); }); } catch (e) { }
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { safePaint(); start(); }); else { safePaint(); start(); }
+})();
 
-  var ON = !!(AP() && AP().enabled === true && typeof AP().onTick === 'function') && typeof document !== 'undefined';
-  AA.enabled = ON;
-  AA.note = function () { return ''; };
-  AA.ref = function () { return null; };
-  AA.after = function () { };
-  AA.status = function () { return { enabled: ON }; };
-  if (!ON) return;                                   // Node, or live prices compiled off (test builds): the shell behaves as before
-
-  // ------------------------------------------------------------------ browser layer
-  var TAB = Math.random().toString(36).slice(2, 10) + Date.now().toString(36), mem = { st: newState(), alerts: null }, stats = { ticks: 0, evals: 0, fires: 0, skippedLease: 0, delayed: 0, errors: 0, lastErr: null };
-  function lsGet(k) { try { return G.localStorage.getItem(k); } catch (e) { return null; } }
-  function lsSet(k, v) { try { G.localStorage.setItem(k, v); return true; } catch (e) { return false; } }
-  function lsDel(k) { try { G.localStorage.removeItem(k); } catch (e) { } }
-  function jparse(t, d) { if (t == null) return d; try { return JSON.parse(t); } catch (e) { return d; } }
-  var storeOk = (function () { try { var k = 'ui_la_probe'; G.localStorage.setItem(k, '1'); G.localStorage.removeItem(k); return true; } catch (e) { return false; } })();
-  function loadAlerts() { if (!storeOk) return mem.alerts || []; var v = jparse(lsGet('ui_palerts'), []); return Array.isArray(v) ? v : []; }
-  function saveAlerts(a) { if (!lsSet('ui_palerts', JSON.stringify(a.slice(0, 50)))) mem.alerts = a.slice(0, 50); }
-  function loadState() { return storeOk ? cleanState(jparse(lsGet('ui_lastate'), null)) : mem.st; }
-  function saveState(s) { mem.st = s; if (storeOk) lsSet('ui_lastate', JSON.stringify(s)); }
-  // lease: only one tab evaluates; renewed every tick, released when hidden / closed
-  function takeLease(now) {
-    if (!storeOk) return true;
-    var l = jparse(lsGet('ui_lalock'), null);
-    if (plain(l) && l.id !== TAB && isN(l.exp) && l.exp > now && l.exp <= now + CFG.LEASE_MS * 2) return false;
-    lsSet('ui_lalock', JSON.stringify({ id: TAB, exp: now + CFG.LEASE_MS }));
-    var r = jparse(lsGet('ui_lalock'), null);
-    return plain(r) && r.id === TAB;
-  }
-  function dropLease() { if (!storeOk) return; var l = jparse(lsGet('ui_lalock'), null); if (plain(l) && l.id === TAB) lsDel('ui_lalock'); }
-  function fileLast(sym) {
-    var m = G.__SNAPSHOT__ && G.__SNAPSHOT__.market; if (!m || !m.stats || !m.universe || !AP()._core) return null;
-    if (!fileLast.idx || fileLast.src !== m) {
-      var allow = AP()._core.buildAllowlist(m), lastCol = Array.isArray(m.stats.cols) ? m.stats.cols.indexOf('last') : -1, pc = Array.isArray(m.stats.cols) ? m.stats.cols.indexOf('pair') : -1, byPair = {};
-      if (lastCol >= 0 && pc >= 0 && Array.isArray(m.stats.rows)) m.stats.rows.slice(0, 5000).forEach(function (r) { if (Array.isArray(r) && isN(r[lastCol])) byPair[r[pc]] = r[lastCol]; });
-      var idx = {}; Object.keys(allow.bySym).forEach(function (s) { var v = byPair[allow.bySym[s].pair]; if (goodPx(v)) idx[s] = v; });
-      fileLast.idx = idx; fileLast.src = m; fileLast.allow = allow;
-    }
-    return own(fileLast.idx, sym) ? fileLast.idx[sym] : null;
-  }
-  function inAllow(sym) { fileLast(sym); return !!(fileLast.allow && own(fileLast.allow.bySym, sym)); }
-  // symbols liveprices.js should add to its batch (only on screens where it already polls): coins of alerts that can still fire
-  AA.syms = function () {
-    var out = []; loadAlerts().slice(0, CFG.MAX_ALERTS).forEach(function (x) { if (valid(x) && (repeats(x) || !x.hit) && out.indexOf(x.sym) < 0 && out.length < 20) out.push(x.sym); });
-    return out;
-  };
-  var lastTick = null;
-  function onTick(info) {
-    try { tickBody(info); } catch (e) { stats.errors++; stats.lastErr = String(e && e.message ? e.message : e).slice(0, 120); }
-  }
-  function tickBody(info) {
-    stats.ticks++;
-    if (!plain(info)) return;
-    lastTick = { mode: info.mode, at: Date.now() };
-    var alerts = loadAlerts(); if (!alerts.length) return;                // no alert: nothing evaluated, nothing written
-    var now = Date.now();
-    if (!G.document.hidden && !takeLease(now)) { stats.skippedLease++; return; }
-    if (G.document.hidden) return;
-    stats.evals++; if (info.mode !== 'live') stats.delayed++;
-    var r = evaluate(alerts, loadState(), { mode: info.mode, quotes: info.quotes, asked: info.asked, fileLast: fileLast }, now);
-    if (r.fires.length) {
-      var fresh = loadAlerts(), freshSt = loadState();               // re-read: another tab may have fired these meanwhile
-      var done = applyFires(fresh, r.fires, Math.floor(now / 1000), function (x) { var e = freshSt.a[idOf(x)]; return repeats(x) && e && isN(e.last) && now - e.last < CFG.COOLDOWN_MS; });
-      if (done.length) { saveAlerts(fresh); stats.fires += done.length; deliver(done); }
-    }
-    if (r.changed || r.fires.length) saveState(r.st);
-    paintNotes();
-  }
-  // ---- delivery through the shell's alert UI
-  function fmtP(v) { return AP()._core.fmtPrice(v); }
-  function when(sec) { var d = new Date(sec * 1000); return isNaN(d) ? '-' : d.toISOString().slice(0, 16).replace('T', ' ') + 'Z'; }
-  function hhmm(ms) { var d = new Date(ms); return isNaN(d) ? '-' : d.toISOString().slice(11, 16) + 'Z'; }
-  function toast(t) {
-    var d = G.document.createElement('div'); d.className = 'toast la-toast'; d.textContent = t; d.setAttribute('role', 'status');
-    G.document.body.appendChild(d); setTimeout(function () { if (d.parentNode) d.parentNode.removeChild(d); }, 4000);
-  }
-  function deliver(done) {
-    var txt = done.slice(0, 3).map(function (d) { return d.x.sym + ' ' + label(d.x) + ' at ' + fmtP(d.px); }).join('; ');
-    toast((done.length > 1 ? done.length + ' price alerts hit (live): ' : 'Price alert hit (live): ') + txt + (done.length > 3 ? '; ...' : ''));
-    try { if (G.navigator && G.navigator.vibrate) G.navigator.vibrate(6); } catch (e) { }
-    try {
-      var N = G.Notification;
-      if (N && N.permission === 'granted') done.forEach(function (d) { new N(d.x.sym + ' ' + label(d.x), { body: 'live ' + fmtP(d.px) + ' (read-only alert from this phone)', tag: 'palert-' + d.x.sym }); });
-    } catch (e) { }
-    done.forEach(function (d) { paintHit(d.x); });
-  }
-  // rows the shell drew for this alert (coin card .fill rows and Alerts tab .alert rows) carry data-pa-del="SYM|set"
-  function rowsFor(id) {
-    var out = [];
-    Array.prototype.forEach.call(G.document.querySelectorAll('#view [data-pa-del]'), function (b) { if (b.getAttribute('data-pa-del') === id && b.parentNode) out.push(b.parentNode); });
-    return out;
-  }
-  function paintHit(x) {
-    rowsFor(idOf(x)).forEach(function (row) {
-      var s = row.querySelector('.s'), n = row.querySelector('.la-n');
-      if (row.classList.contains('fill')) {
-        var side = row.querySelector('.side'); if (side) { side.classList.add(x.dir === 'below' ? 'sell' : 'buy'); }
-        if (s) { s.textContent = 'HIT ' + when(x.hit) + ' at ' + fmtP(x.at); }
-      } else {
-        row.classList.remove('info'); row.classList.add('warning');
-        var sev = row.querySelector('.sev'); if (sev) { sev.textContent = 'hit'; sev.classList.remove('info'); sev.classList.add('warning'); }
-        if (s) { s.textContent = 'hit ' + when(x.hit) + ' at ' + fmtP(x.at); }
-      }
-      if (s) { if (!n) { n = G.document.createElement('span'); n.className = 'la-n'; n.setAttribute('data-la', idOf(x)); } s.appendChild(n); }
-    });
-  }
-  // the short status tail after each alert row: live check / delayed check / repeat info
-  function noteFor(x, st) {
-    if (!valid(x)) return '';
-    var e = (st || loadState()).a[idOf(x)] || {}, parts = [];
-    if (repeats(x)) {
-      var p = x.dir === 'move' ? 'repeats from ' + (goodPx(x.ref) ? fmtP(x.ref) : goodPx(e.ref) ? fmtP(e.ref) : 'the first live price') : 'repeats';
-      if (isN(x.n) && x.n > 0) p += ', ' + x.n + (x.n > 1 ? ' hits' : ' hit');
-      if (isN(e.last) && Date.now() - e.last < CFG.COOLDOWN_MS) p += ', quiet until ' + hhmm(e.last + CFG.COOLDOWN_MS);
-      else if (e.armed === false && x.dir !== 'move') p += ', re-arms ' + (x.dir === 'above' ? 'below ' : 'above ') + fmtP(x.px * (x.dir === 'above' ? 1 - CFG.HYST_PCT / 100 : 1 + CFG.HYST_PCT / 100));
-      parts.push(p);
-    } else if (x.hit) return x.src === 'live' ? ' · live price' : '';
-    if (!inAllow(x.sym)) parts.push('no live price for this coin');
-    else if (isN(e.dly) && (!isN(e.chk) || e.dly > e.chk)) parts.push('checked with delayed prices ' + hhmm(e.dly) + ', not fired on them');
-    else if (isN(e.chk)) parts.push('checked live ' + hhmm(e.chk));
-    return parts.length ? ' · ' + parts.join(' · ') : '';
-  }
-  AA.note = function (x) { try { return noteFor(x); } catch (e) { return ''; } };
-  function paintNotes() {
-    var a = loadAlerts(), st = loadState(), by = {}; a.forEach(function (x) { if (valid(x)) by[idOf(x)] = x; });
-    Array.prototype.forEach.call(G.document.querySelectorAll('#view .la-n[data-la]'), function (n) { var x = by[n.getAttribute('data-la')]; n.textContent = x ? noteFor(x, st) : ''; });
-  }
-  // reference price for a new "moves +-N %" alert: the live price if it is LIVE right now, else null (the shell uses the market file)
-  AA.ref = function (sym) {
-    try { var q = AP().quote ? AP().quote(sym) : null; return q && goodPx(q.last) ? q.last : null; } catch (e) { return null; }
-  };
-  // form helper on the coin screen: the number box means percent for "Moves +-%"
-  AA.after = function (view, t) {
-    if (t !== 'chart' && t !== 'alerts') return;
-    Array.prototype.forEach.call(view.querySelectorAll('form[data-pa-form]'), function (f) {
-      var sel = f.querySelector('select[name=dir]'), inp = f.querySelector('input[name=px]'); if (!sel || !inp || sel.dataset.la) return;
-      sel.dataset.la = '1'; var ph = inp.getAttribute('placeholder') || 'price';
-      var sync = function () { var mv = sel.value === 'move'; inp.setAttribute('placeholder', mv ? '% move, e.g. 5' : ph); inp.setAttribute('aria-label', mv ? 'Alert move in percent' : 'Alert price'); };
-      sel.addEventListener('change', sync); sync();
-    });
-    paintNotes();
-  };
-  AA.status = function () { return { enabled: ON, tab: TAB, storage: storeOk, lastTick: lastTick, stats: { ticks: stats.ticks, evals: stats.evals, fires: stats.fires, skippedLease: stats.skippedLease, delayed: stats.delayed, errors: stats.errors, lastErr: stats.lastErr } }; };
-  AP().onTick(onTick);
-  AP().extraSyms = AA.syms;
-  G.document.addEventListener('visibilitychange', function () { if (G.document.hidden) dropLease(); });
-  G.addEventListener('pagehide', dropLease);
+/* ---- watch.js ---- */
+(function () {
+'use strict';
+var G = typeof window !== 'undefined' ? window : globalThis;
+var VERSION = '1.0.0';
+var DASH = '–', SYM_RE = /^[A-Z0-9]{1,15}$/;
+var CAP = { SYMS: 100, NOTES: 100, NOTE: 280, BYTES: 40000, IMPORT_LINES: 10000 };
+var COLS = [['price', 'Price'], ['chg24', '24h'], ['chg7d', '7d'], ['chg30d', '30d'], ['vol', '24h volume'], ['spread', 'Spread'],
+['volat', 'Volatility 30d'], ['depth', 'Depth ±1%'], ['badge', 'Held / candidate'], ['spark', '30d chart']];
+var COLK = {}; COLS.forEach(function (c) { COLK[c[0]] = c[1]; });
+var SORTABLE = { sym: 1, price: 1, chg24: 1, chg7d: 1, chg30d: 1, vol: 1, spread: 1, volat: 1, depth: 1, manual: 1 };
+var DEF_COLS = ['price', 'chg24', 'chg7d', 'vol', 'spread', 'spark'];
+function isN(v) { return typeof v === 'number' && isFinite(v); }
+function plain(o) { return !!o && typeof o === 'object' && !Array.isArray(o); }
+function own(o, k) { return Object.prototype.hasOwnProperty.call(o, k); }
+function normSym(s) {
+if (typeof s !== 'string') return null;
+var t = s.trim().toUpperCase().replace(/\/(USD|ZUSD)$/, '');
+if (t === 'XBT') t = 'BTC'; else if (t === 'XDG') t = 'DOGE';
+return SYM_RE.test(t) ? t : null;
+}
+function cleanNote(t) {
+if (typeof t !== 'string') return '';
+return t.replace(/\r\n?/g, '\n').replace(/[\u0000-\u0009\u000b-\u001f\u007f-\u009f\u2028\u2029]/g, ' ').replace(/\n{3,}/g, '\n\n').trim().slice(0, CAP.NOTE);
+}
+function defaults() { return { v: 1, cols: DEF_COLS.slice(), sort: { k: 'manual', dir: 'asc' }, manual: [], notes: {} }; }
+function cleanWl2(v) {
+if (typeof v === 'string') { try { v = JSON.parse(v); } catch (e) { v = null; } }
+var d = defaults();
+if (!plain(v) || v.v !== 1) return d;
+if (Array.isArray(v.cols)) { var cs = []; v.cols.slice(0, 40).forEach(function (c) { if (typeof c === 'string' && own(COLK, c) && cs.indexOf(c) < 0) cs.push(c); }); if (cs.length) d.cols = cs; }
+if (plain(v.sort) && typeof v.sort.k === 'string' && own(SORTABLE, v.sort.k)) d.sort = { k: v.sort.k, dir: v.sort.dir === 'desc' ? 'desc' : 'asc' };
+if (Array.isArray(v.manual)) v.manual.slice(0, 1000).forEach(function (s) { if (typeof s === 'string' && SYM_RE.test(s) && d.manual.indexOf(s) < 0 && d.manual.length < CAP.SYMS) d.manual.push(s); });
+if (plain(v.notes)) {
+var list = [];
+Object.keys(v.notes).slice(0, 2000).forEach(function (k) { var n = v.notes[k]; if (!SYM_RE.test(k) || !plain(n)) return; var t = cleanNote(n.t); if (!t) return; list.push([k, t, isN(n.u) && n.u > 0 ? Math.floor(n.u) : 0]); });
+list.sort(function (a, b) { return b[2] - a[2]; });
+list.slice(0, CAP.NOTES).forEach(function (x) { d.notes[x[0]] = { t: x[1], u: x[2] }; });
+}
+fitBytes(d);
+return d;
+}
+function fitBytes(d) {
+var keys = Object.keys(d.notes).sort(function (a, b) { return d.notes[a].u - d.notes[b].u; });
+while (JSON.stringify(d).length > CAP.BYTES && keys.length) delete d.notes[keys.shift()];
+return d;
+}
+function watchSyms(w) { var out = []; (Array.isArray(w) ? w : []).forEach(function (s) { if (typeof s === 'string' && SYM_RE.test(s) && out.indexOf(s) < 0) out.push(s); }); return out; }
+function ordered(syms, manual) {
+var out = [], set = {}; syms.forEach(function (s) { set[s] = 1; });
+(manual || []).forEach(function (s) { if (set[s] && out.indexOf(s) < 0) out.push(s); });
+syms.forEach(function (s) { if (out.indexOf(s) < 0) out.push(s); });
+return out;
+}
+function move(list, sym, delta) {
+var a = list.slice(), i = a.indexOf(sym), j = i + delta;
+if (i < 0 || j < 0 || j >= a.length) return a;
+a[i] = a[j]; a[j] = sym; return a;
+}
+function sortVal(r, k) { if (k === 'sym') return r.sym; var v = r[k]; return isN(v) ? v : null; }
+function sortRows(rows, k, dir) {
+var a = rows.map(function (r, i) { return [r, i]; }), d = dir === 'desc' ? -1 : 1;
+if (k === 'manual' || !own(SORTABLE, k)) return rows.slice();
+a.sort(function (x, y) {
+var p = sortVal(x[0], k), q = sortVal(y[0], k);
+if (p === null && q === null) return x[1] - y[1];
+if (p === null) return 1; if (q === null) return -1;
+var c = k === 'sym' ? (p < q ? -1 : p > q ? 1 : 0) : p - q;
+return c ? c * d : x[1] - y[1];
+});
+return a.map(function (x) { return x[0]; });
+}
+function oneLine(t) { return String(t || '').replace(/[\t\r\n]+/g, ' ').trim(); }
+function exportText(syms, notes) { return syms.map(function (s) { var n = notes && own(notes, s) ? oneLine(notes[s].t) : ''; return s + (n ? '\t' + n : ''); }).join('\n'); }
+function parseImport(text, watch, notes, now) {
+var w = Array.isArray(watch) ? watch.slice() : [], n = {}, r = { added: 0, updated: 0, ignored: 0, unchanged: 0 };
+Object.keys(plain(notes) ? notes : {}).forEach(function (k) { n[k] = notes[k]; });
+var have = watchSyms(w), lines = String(typeof text === 'string' ? text : '').split(/\r\n|\r|\n/);
+if (lines.length > CAP.IMPORT_LINES) { r.ignored += lines.length - CAP.IMPORT_LINES; lines = lines.slice(0, CAP.IMPORT_LINES); }
+lines.forEach(function (ln) {
+var t = ln.trim(); if (!t) return;
+var m = /^([^\t,\s]+)\s*(?:\t|,|\s)\s*([\s\S]*)$/.exec(t), sym = normSym(m ? m[1] : t), note = cleanNote(m ? m[2] : '');
+if (!sym) { r.ignored++; return; }
+var isNew = have.indexOf(sym) < 0;
+if (isNew) {
+if (have.length >= CAP.SYMS) { r.ignored++; return; }
+w.push(sym); have.push(sym); r.added++;
+}
+if (note && (!own(n, sym) || n[sym].t !== note)) {
+if (!own(n, sym) && Object.keys(n).length >= CAP.NOTES) { if (!isNew) r.ignored++; return; }
+n[sym] = { t: note, u: isN(now) ? Math.floor(now) : 0 }; if (!isNew) r.updated++;
+} else if (!isNew) r.unchanged++;
+});
+return { watch: w, notes: n, added: r.added, updated: r.updated, ignored: r.ignored, unchanged: r.unchanged };
+}
+function rowsOf(t) { if (!t || !Array.isArray(t.cols) || !Array.isArray(t.rows)) return []; return t.rows.slice(0, 5000).map(function (r) { var o = {}; t.cols.forEach(function (c, i) { o[c] = Array.isArray(r) ? r[i] : undefined; }); return o; }); }
+function fileExtras(m) {
+var out = {}; if (!plain(m) || m.schema !== 'market/1') return out;
+var uni = {}, dep = {}; rowsOf(m.universe).forEach(function (u) { if (typeof u.pair === 'string') uni[u.pair] = u; });
+rowsOf(m.depth).forEach(function (d) { if (typeof d.pair === 'string') dep[d.pair] = d; });
+rowsOf(m.stats).forEach(function (s) {
+var u = uni[s.pair]; if (!u || typeof u.ws !== 'string' || (u.status && u.status !== 'online')) return;
+var sym = u.ws.split('/')[0].replace(/^XBT$/, 'BTC').replace(/^XDG$/, 'DOGE'); if (!SYM_RE.test(sym) || own(out, sym)) return;
+var d = dep[s.pair], b1 = d && isN(d.bid1pct_usd) ? d.bid1pct_usd : null, a1 = d && isN(d.ask1pct_usd) ? d.ask1pct_usd : null;
+out[sym] = { pair: s.pair, volat: isN(s.volat30) ? s.volat30 * 100 : null, depth: b1 !== null && a1 !== null ? Math.min(b1, a1) : null };
+});
+return out;
+}
+function makeRow(sym, coin, ext, q, note) {
+var c = plain(coin) ? coin : null, live = plain(q) && isN(q.last) && q.last > 0;
+var px = live ? q.last : c && isN(c.last) ? c.last : null;
+return { sym: sym, inFile: !!c, price: px, src: px === null ? null : live ? 'live' : 'file',
+chg24: c && isN(c.chg24_pct) ? c.chg24_pct : null, chg7d: c && isN(c.chg7d_pct) ? c.chg7d_pct : null, chg30d: c && isN(c.chg30d_pct) ? c.chg30d_pct : null,
+vol: c && isN(c.vol24_usd) ? c.vol24_usd : null, spread: c && isN(c.spread_pct) ? c.spread_pct * 100 : null,
+volat: ext && isN(ext.volat) ? ext.volat : null, depth: ext && isN(ext.depth) ? ext.depth : null,
+held: !!(c && c.held), cand: !!(c && c.candidate), spark: c && Array.isArray(c.spark) ? c.spark.filter(isN).slice(-30) : [], note: note || '' };
+}
+function grp(v, dp) { return v.toLocaleString('en-US', { minimumFractionDigits: dp, maximumFractionDigits: dp }); }
+function fPrice(v) { if (!isN(v)) return DASH; var P = G.AwayPrices && G.AwayPrices._core && G.AwayPrices._core.fmtPrice; if (typeof P === 'function') { try { return P(v); } catch (e) { } } var a = Math.abs(v); return a >= 1000 ? grp(v, 2) : a >= 1 ? grp(v, a >= 100 ? 2 : 3) : String(parseFloat(v.toPrecision(5))); }
+function fPct(v, dp) { if (!isN(v)) return DASH; var t = Math.abs(v).toFixed(dp == null ? 2 : dp); return (Number(t) === 0 ? '' : v > 0 ? '+' : '-') + t + '%'; }
+function fUsd(v) { if (!isN(v)) return DASH; var a = Math.abs(v); return '$' + (a >= 1e9 ? (v / 1e9).toFixed(2) + 'B' : a >= 1e6 ? (v / 1e6).toFixed(2) + 'M' : a >= 1e3 ? (v / 1e3).toFixed(1) + 'K' : v.toFixed(0)); }
+function fBps(v) { return isN(v) ? (v >= 100 ? v.toFixed(0) : v.toFixed(1)) + ' bps' : DASH; }
+function cell(r, k) {
+switch (k) {
+case 'price': return fPrice(r.price);
+case 'chg24': case 'chg7d': case 'chg30d': return fPct(r[k], k === 'chg24' ? 2 : 1);
+case 'vol': case 'depth': return fUsd(r[k]);
+case 'spread': return fBps(r.spread);
+case 'volat': return isN(r.volat) ? r.volat.toFixed(0) + '%' : DASH;
+case 'badge': return r.held ? 'HELD' : r.cand ? 'CANDIDATE' : DASH;
+}
+return '';
+}
+function badgeText(mp) {
+var mage = mp && typeof mp.text === 'string' && /^market file \d/.test(mp.text) ? mp.text.slice(12) : null;
+return mage ? 'DELAYED market file ' + mage.replace(/ /g, '') + ' old' : 'DELAYED';
+}
+var core = { normSym: normSym, cleanNote: cleanNote, cleanWl2: cleanWl2, defaults: defaults, fitBytes: fitBytes, watchSyms: watchSyms, ordered: ordered, move: move,
+sortRows: sortRows, exportText: exportText, parseImport: parseImport, fileExtras: fileExtras, makeRow: makeRow, cell: cell, fPct: fPct, fUsd: fUsd, fBps: fBps, fPrice: fPrice,
+badgeText: badgeText };
+var api = { version: VERSION, cap: CAP, cols: COLS, _core: core };
+G.AwayWatch = api;
+if (typeof module !== 'undefined' && module.exports) module.exports = api;
+if (typeof document === 'undefined') return;
+var mem = { blocked: false, watch: null, wl2: null }, ui = { reorder: false, view: null, ctx: null };
+function lsGet(k) { try { return G.localStorage.getItem(k); } catch (e) { mem.blocked = true; return null; } }
+function lsSet(k, v) { try { G.localStorage.setItem(k, v); return true; } catch (e) { return false; } }
+(function () { try { G.localStorage.getItem('ui_watch'); } catch (e) { mem.blocked = true; } })();
+function loadWatch() { if (mem.blocked && mem.watch) return mem.watch.slice(); var t = lsGet('ui_watch'), v = null; try { v = JSON.parse(t || '[]'); } catch (e) { v = []; } return Array.isArray(v) ? v : []; }
+function loadWl2() { if (mem.wl2) return cleanWl2(mem.wl2); return cleanWl2(lsGet('ui_wl2')); }
+function saveWatch(w) { mem.watch = w.slice(); if (mem.blocked) return true; if (lsSet('ui_watch', JSON.stringify(w))) { return true; } toast('Could not save (storage full)'); return false; }
+function saveWl2(st) {
+fitBytes(st); var j = JSON.stringify(st);
+if (mem.blocked) { mem.wl2 = JSON.parse(j); return true; }
+if (j.length > CAP.BYTES) { toast('Could not save (over the 40 KB limit)'); mem.wl2 = JSON.parse(j); return false; }
+if (lsSet('ui_wl2', j)) { mem.wl2 = null; return true; }
+mem.wl2 = JSON.parse(j); toast('Could not save (storage full)'); return false;
+}
+function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+function btn(cls, text, label) { var b = el('button', cls, text); b.type = 'button'; if (label) b.setAttribute('aria-label', label); return b; }
+function toast(t) { var d = el('div', 'toast', t); d.setAttribute('role', 'status'); document.body.appendChild(d); setTimeout(function () { if (d.parentNode) d.parentNode.removeChild(d); }, 1800); }
+function haptic() { try { if (navigator.vibrate) navigator.vibrate(6); } catch (e) { } }
+function trust() { try { return G.AwayTrust && typeof G.AwayTrust.model === 'function' ? G.AwayTrust.model() : null; } catch (e) { return null; } }
+function quote(sym) { try { return G.AwayPrices && typeof G.AwayPrices.quote === 'function' ? G.AwayPrices.quote(sym) : null; } catch (e) { return null; } }
+var SVGNS = 'http://www.w3.org/2000/svg';
+function spark(vals) {
+var w = 60, h = 22, s = document.createElementNS(SVGNS, 'svg'); s.setAttribute('viewBox', '0 0 ' + w + ' ' + h); s.setAttribute('width', w); s.setAttribute('height', h); s.setAttribute('aria-hidden', 'true'); s.setAttribute('class', 'wl-spark');
+if (vals.length < 2) return s;
+var lo = Math.min.apply(null, vals), hi = Math.max.apply(null, vals), pts = vals.map(function (v, i) { return (i / (vals.length - 1) * (w - 2) + 1).toFixed(1) + ',' + (hi === lo ? h / 2 : h - 2 - (v - lo) / (hi - lo) * (h - 4)).toFixed(1); });
+var p = document.createElementNS(SVGNS, 'polyline'); p.setAttribute('points', pts.join(' ')); p.setAttribute('fill', 'none'); p.setAttribute('class', vals[vals.length - 1] >= vals[0] ? 'up' : 'down');
+s.appendChild(p); return s;
+}
+var dlg = null;
+function closeDlg() { if (!dlg) return; var d = dlg; dlg = null; if (d.ov.parentNode) d.ov.parentNode.removeChild(d.ov); document.removeEventListener('keydown', d.key, true); try { if (d.back && d.back.isConnected) d.back.focus(); } catch (e) { } }
+function openDlg(title, fill) {
+closeDlg();
+var ov = el('div', 'wl-ov'), box = el('div', 'wl-dlg'), id = 'wl-dlg-t'; box.setAttribute('role', 'dialog'); box.setAttribute('aria-modal', 'true'); box.setAttribute('aria-labelledby', id);
+var hd = el('div', 'wl-dh'), h = el('h2', null, title); h.id = id; var x = btn('wl-x', 'Close', 'Close ' + title); x.addEventListener('click', closeDlg);
+hd.appendChild(h); hd.appendChild(x); box.appendChild(hd);
+var body = el('div', 'wl-db'); box.appendChild(body); ov.appendChild(box);
+ov.addEventListener('click', function (e) { if (e.target === ov) closeDlg(); });
+var key = function (e) {
+if (e.key === 'Escape') { e.preventDefault(); closeDlg(); return; }
+if (e.key !== 'Tab') return;
+var f = Array.prototype.filter.call(box.querySelectorAll('button,textarea,input,a[href],select'), function (n) { return !n.disabled && n.offsetParent !== null; });
+if (!f.length) return; var a = f[0], z = f[f.length - 1];
+if (e.shiftKey && document.activeElement === a) { e.preventDefault(); z.focus(); } else if (!e.shiftKey && document.activeElement === z) { e.preventDefault(); a.focus(); }
+};
+dlg = { ov: ov, key: key, back: document.activeElement };
+document.addEventListener('keydown', key, true);
+fill(body);
+document.body.appendChild(ov);
+var first = body.querySelector('textarea,input,button') || x; try { first.focus(); } catch (e) { }
+return body;
+}
+G.addEventListener('hashchange', closeDlg);
+function columnsDlg() {
+openDlg('Columns', function (b) {
+var st = loadWl2(); b.appendChild(el('p', 'mut small', 'Shown after the coin name. Wide tables scroll sideways; the coin column stays put.'));
+var fs = el('fieldset', 'wl-cols'); var lg = el('legend', 'sr', 'Columns to show'); fs.appendChild(lg);
+COLS.forEach(function (c) {
+var lab = el('label', 'wl-ck'), cb = el('input'); cb.type = 'checkbox'; cb.value = c[0]; cb.checked = st.cols.indexOf(c[0]) >= 0; cb.dataset.col = c[0];
+cb.addEventListener('change', function () {
+var s = loadWl2(), on = Array.prototype.filter.call(fs.querySelectorAll('input'), function (i) { return i.checked; }).map(function (i) { return i.value; });
+if (!on.length) { cb.checked = true; toast('Keep at least one column'); return; }
+s.cols = COLS.map(function (x) { return x[0]; }).filter(function (k) { return on.indexOf(k) >= 0; }); saveWl2(s); redraw();
+});
+lab.appendChild(cb); lab.appendChild(el('span', null, c[1])); fs.appendChild(lab);
+});
+b.appendChild(fs);
+});
+}
+function noteDlg(sym) {
+openDlg('Note for ' + sym, function (b) {
+var st = loadWl2(), cur = own(st.notes, sym) ? st.notes[sym].t : '';
+var lab = el('label', 'wl-nl', 'Note for ' + sym + ' (saved on this phone only)'); lab.htmlFor = 'wl-note';
+var ta = el('textarea', 'wl-ta'); ta.id = 'wl-note'; ta.maxLength = CAP.NOTE; ta.rows = 5; ta.value = cur; ta.setAttribute('aria-describedby', 'wl-ncount wl-nhelp');
+var cnt = el('div', 'mut small wl-cnt'); cnt.id = 'wl-ncount'; var upd = function () { cnt.textContent = ta.value.length + ' / ' + CAP.NOTE + ' characters'; }; ta.addEventListener('input', upd); upd();
+var help = el('div', 'mut small', 'Notes stay on this phone only. They are not part of the bot or any report.'); help.id = 'wl-nhelp';
+var row = el('div', 'wl-btns'), sv = btn('pri', 'Save note'), del = btn('wl-del', 'Delete note');
+sv.addEventListener('click', function () {
+var s = loadWl2(), t = cleanNote(ta.value);
+if (!t) { delete s.notes[sym]; } else {
+if (!own(s.notes, sym) && Object.keys(s.notes).length >= CAP.NOTES) { toast('Note limit reached (100 notes): delete one first'); return; }
+s.notes[sym] = { t: t, u: Math.floor(Date.now() / 1000) };
+}
+if (saveWl2(s)) toast(t ? 'Note saved on this phone' : 'Note removed'); haptic(); closeDlg(); redraw();
+});
+del.disabled = !cur;
+del.addEventListener('click', function () { var s = loadWl2(); delete s.notes[sym]; saveWl2(s); toast('Note deleted'); haptic(); closeDlg(); redraw(); });
+row.appendChild(sv); row.appendChild(del);
+b.appendChild(lab); b.appendChild(ta); b.appendChild(cnt); b.appendChild(help); b.appendChild(row);
+});
+}
+function exportDlg() {
+openDlg('Export / Import', function (b) {
+var st = loadWl2(), syms = ordered(watchSyms(loadWatch()), st.manual), txt = exportText(syms, st.notes);
+var l1 = el('label', 'wl-nl', 'Your watchlist as text (one coin per line, TAB, note)'); l1.htmlFor = 'wl-exp';
+var ex = el('textarea', 'wl-ta mono'); ex.id = 'wl-exp'; ex.readOnly = true; ex.rows = 5; ex.value = txt;
+var cp = btn('pri', 'Copy'), msg = el('div', 'mut small wl-msg'); msg.setAttribute('role', 'status');
+cp.addEventListener('click', function () {
+var done = function (ok) { msg.textContent = ok ? 'Copied ' + syms.length + ' lines.' : 'Text selected: use the phone’s Copy.'; };
+try { if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') { navigator.clipboard.writeText(ex.value).then(function () { done(true); }, function () { ex.focus(); ex.select(); done(false); }); return; } } catch (e) { }
+ex.focus(); ex.select(); done(false);
+});
+var l2 = el('label', 'wl-nl', 'Import (merges: adds coins and notes, never deletes)'); l2.htmlFor = 'wl-imp';
+var im = el('textarea', 'wl-ta mono'); im.id = 'wl-imp'; im.rows = 5; im.placeholder = 'SOL\tbreakout watch\nETH';
+var go = btn('pri', 'Import'), res = el('div', 'wl-res'); res.setAttribute('role', 'status');
+go.addEventListener('click', function () {
+var s = loadWl2(), r = parseImport(im.value, loadWatch(), s.notes, Date.now() / 1000);
+s.notes = r.notes; saveWatch(r.watch); saveWl2(s);
+res.textContent = r.added + ' added, ' + r.updated + ' updated, ' + r.ignored + ' ignored' + (r.unchanged ? ' (' + r.unchanged + ' already there)' : '');
+haptic(); redraw();
+});
+var r1 = el('div', 'wl-btns'); r1.appendChild(cp); var r2 = el('div', 'wl-btns'); r2.appendChild(go);
+b.appendChild(l1); b.appendChild(ex); b.appendChild(r1); b.appendChild(msg); b.appendChild(l2); b.appendChild(im); b.appendChild(r2); b.appendChild(res);
+b.appendChild(el('div', 'mut small', 'Notes stay on this phone only. They are not part of the bot or any report.'));
+});
+}
+function render(view, arg, ctx) {
+ui.view = view; ui.ctx = ctx;
+var mk = ctx && typeof ctx.market === 'function' ? ctx.market() : Promise.resolve(null);
+return Promise.resolve(mk).then(function (m) { draw(view, m); }, function () { draw(view, null); });
+}
+function redraw() { if (ui.view && ui.view.isConnected && /^#watch(\/|$)/.test(location.hash)) render(ui.view, null, ui.ctx); }
+function draw(view, m) {
+var st = loadWl2(), wraw = loadWatch(), all = ordered(watchSyms(wraw), st.manual), syms = all.slice(0, CAP.SYMS);
+var coins = {}; (m && Array.isArray(m.coins) ? m.coins : []).forEach(function (c) { if (c && typeof c.sym === 'string' && !own(coins, c.sym)) coins[c.sym] = c; });
+var S = G.__SNAPSHOT__, ext = fileExtras(S && S.market), tm = trust();
+var rows = syms.map(function (s) { return makeRow(s, coins[s] || null, ext[s] || null, quote(s), own(st.notes, s) ? st.notes[s].t : ''); });
+var sorted = sortRows(rows, st.sort.k, st.sort.dir);
+ui.shown = sorted.map(function (r) { return r.sym; });
+view.textContent = '';
+var root = el('div', 'wl'); view.appendChild(root);
+var cr = el('div', 'crumbs'), bk = el('a', 'back', '‹ Markets'); bk.href = '#markets'; cr.appendChild(bk); root.appendChild(cr);
+var card = el('section', 'card wl-card'); card.setAttribute('aria-labelledby', 'wl-h'); root.appendChild(card);
+var hd = el('div', 'wl-hd'), h = el('h2', 'wl-h', 'Watchlist'); h.id = 'wl-h'; hd.appendChild(h);
+hd.appendChild(el('span', 'mut small', syms.length + (syms.length === 1 ? ' coin' : ' coins'))); card.appendChild(hd);
+var pp = tm ? tm.parts.filter(function (p) { return p.k === 'prices'; })[0] : null, mp = tm ? tm.parts.filter(function (p) { return p.k === 'market'; })[0] : null;
+var src = el('div', 'wl-src'); src.dataset.lvl = mp ? mp.lvl : 'warn';
+var mage = mp && /^market file \d/.test(mp.text) ? mp.text.slice(12) : null, mok = !!(mp && mp.word === 'OK');
+var mtxt = !mp ? 'market file age unknown' : mp.word === 'not loaded' ? 'market file not loaded' : mage ? 'market file, ' + mage + ' old' : 'market file, age ' + mp.word;
+src.textContent = 'Prices: ' + (pp && pp.word === 'LIVE' ? 'LIVE where marked, else ' : '') + mtxt + (mp && !mok && mp.word !== 'not loaded' ? ' (' + mp.word + ')' : '') + '. 24h / 7d / 30d % from market file.';
+card.appendChild(src);
+ui.badge = badgeText(mp);
+if (mem.blocked) { var nb = el('div', 'wl-warn', 'Storage is blocked in this browser: changes are kept for this session only, not saved on this phone.'); nb.setAttribute('role', 'note'); card.appendChild(nb); }
+if (mp && !mok) { var wb = el('div', 'wl-warn', 'prices: ' + mtxt + ' - DELAYED, numbers below are not live.'); card.appendChild(wb); }
+var tb = el('div', 'wl-tools');
+var bc = btn('wl-tb', 'Columns'); bc.setAttribute('aria-haspopup', 'dialog'); bc.addEventListener('click', columnsDlg);
+var bo = btn('wl-tb' + (ui.reorder ? ' on' : ''), 'Manual order'); bo.setAttribute('aria-pressed', String(ui.reorder));
+bo.addEventListener('click', function () { ui.reorder = !ui.reorder; if (ui.reorder) { var s = loadWl2(); s.manual = ordered(watchSyms(loadWatch()), ui.shown || s.manual).slice(0, CAP.SYMS); s.sort = { k: 'manual', dir: 'asc' }; saveWl2(s); } redraw(); });
+var be = btn('wl-tb', 'Export / Import'); be.setAttribute('aria-haspopup', 'dialog'); be.addEventListener('click', exportDlg);
+tb.appendChild(bc); tb.appendChild(bo); tb.appendChild(be); card.appendChild(tb);
+if (!syms.length) {
+var em = el('div', 'empty'); em.appendChild(el('b', null, 'No coins yet')); var t = el('div', 'mut small'); t.appendChild(document.createTextNode('Star coins on ')); var a = el('a', 'acc', 'Markets'); a.href = '#markets'; t.appendChild(a); t.appendChild(document.createTextNode(' (☆) or import a list.')); em.appendChild(t); card.appendChild(em);
+} else card.appendChild(table(sorted, st));
+if (all.length > CAP.SYMS) card.appendChild(el('div', 'mut small', (all.length - CAP.SYMS) + ' more starred coins are not shown (limit ' + CAP.SYMS + ').'));
+card.appendChild(el('div', 'mut small wl-foot', 'LIVE = Kraken public price under 30 s old. DELAYED = market file price. Display only: nothing here places an order.'));
+var orphan = Object.keys(st.notes).filter(function (s) { return all.indexOf(s) < 0; }).sort();
+if (orphan.length) {
+var oc = el('section', 'card wl-orph'); oc.setAttribute('aria-labelledby', 'wl-oh'); var oh = el('h2', 'wl-h', 'Notes without a coin'); oh.id = 'wl-oh'; oc.appendChild(oh);
+oc.appendChild(el('div', 'mut small', 'These coins were removed from the watchlist; their notes are kept.'));
+orphan.forEach(function (s) {
+var r = el('div', 'wl-orow'); var nm = el('div', 'wl-on'); nm.appendChild(el('b', null, s)); nm.appendChild(el('div', 'wl-ot', st.notes[s].t)); r.appendChild(nm);
+var ad = btn('wl-ib', '☆', 'Add ' + s + ' back to the watchlist'); ad.addEventListener('click', function () { var w = loadWatch(); if (watchSyms(w).length >= CAP.SYMS) { toast('Watchlist limit reached (100)'); return; } if (w.indexOf(s) < 0) w.push(s); saveWatch(w); haptic(); redraw(); });
+var dl = btn('wl-ib', '✕', 'Delete the note for ' + s); dl.addEventListener('click', function () { var x = loadWl2(); delete x.notes[s]; saveWl2(x); toast('Note deleted'); redraw(); });
+r.appendChild(ad); r.appendChild(dl); oc.appendChild(r);
+});
+root.appendChild(oc);
+}
+root.appendChild(el('div', 'mut small wl-priv', 'Notes stay on this phone only. They are not part of the bot or any report.'));
+document.body.dataset.wl = syms.length + ':' + st.sort.k + ':' + st.sort.dir + (mem.blocked ? ':mem' : '');
+}
+function table(rows, st) {
+var wrap = el('div', 'wl-scroll'); wrap.setAttribute('tabindex', '0'); wrap.setAttribute('aria-label', 'Watchlist table, scrolls sideways');
+var t = el('table', 'wl-t'); t.setAttribute('role', 'table');
+var cap = el('caption', 'sr', 'Watchlist: ' + rows.length + ' coins. Sorted by ' + (st.sort.k === 'manual' ? 'your order' : (COLK[st.sort.k] || 'coin') + (st.sort.dir === 'desc' ? ', high to low' : ', low to high')) + '.'); t.appendChild(cap);
+var thead = el('thead'), tr = el('tr');
+var head = function (k, label) {
+var th = el('th'); th.scope = 'col'; th.dataset.k = k;
+var sortable = own(SORTABLE, k) && k !== 'manual';
+th.setAttribute('aria-sort', st.sort.k === k ? (st.sort.dir === 'desc' ? 'descending' : 'ascending') : 'none');
+if (!sortable) { th.textContent = label; return th; }
+var b = btn('wl-sb', label + (st.sort.k === k ? (st.sort.dir === 'desc' ? ' ▼' : ' ▲') : ''), 'Sort by ' + label + (st.sort.k === k ? (st.sort.dir === 'desc' ? ', now high to low' : ', now low to high') : ''));
+b.addEventListener('click', function () { var s = loadWl2(); if (s.sort.k === k) s.sort.dir = s.sort.dir === 'desc' ? 'asc' : 'desc'; else s.sort = { k: k, dir: k === 'sym' ? 'asc' : 'desc' }; ui.reorder = false; saveWl2(s); haptic(); redraw(); });
+th.appendChild(b); return th;
+};
+tr.appendChild(head('sym', 'Coin'));
+st.cols.forEach(function (k) { tr.appendChild(head(k, COLK[k])); });
+if (ui.reorder) { var to = el('th', null, 'Order'); to.scope = 'col'; tr.appendChild(to); }
+thead.appendChild(tr); t.appendChild(thead);
+var tbody = el('tbody');
+rows.forEach(function (r, i) {
+var row = el('tr'); row.dataset.sym = r.sym;
+var th = el('th', 'wl-c0'); th.scope = 'row';
+var top = el('div', 'wl-c0t');
+var star = btn('wl-ib wl-star', '★', 'Remove ' + r.sym + ' from watchlist'); star.setAttribute('aria-pressed', 'true');
+star.addEventListener('click', function () { var w = loadWatch().filter(function (s) { return s !== r.sym; }); saveWatch(w); haptic(); toast(r.sym + ' removed' + (r.note ? ' (note kept)' : '')); redraw(); });
+var a = el('a', 'wl-sym', r.sym); a.href = '#chart/' + encodeURIComponent(r.sym);
+var nt = btn('wl-ib wl-nb' + (r.note ? ' has' : ''), r.note ? '✎' : '+', (r.note ? 'Edit note for ' : 'Add a note for ') + r.sym); nt.setAttribute('aria-haspopup', 'dialog'); nt.dataset.note = r.sym;
+nt.addEventListener('click', function () { noteDlg(r.sym); });
+top.appendChild(star); top.appendChild(a); top.appendChild(nt); th.appendChild(top);
+if (!r.inFile) th.appendChild(el('div', 'wl-sub warn', 'not in market file'));
+else if (r.held || r.cand) th.appendChild(el('div', 'wl-sub', r.held ? 'HELD' : 'CANDIDATE'));
+if (r.note) { var np = el('div', 'wl-np', r.note); np.title = r.note; th.appendChild(np); }
+row.appendChild(th);
+st.cols.forEach(function (k) {
+var td = el('td', 'num wl-' + k); td.dataset.k = k;
+if (k === 'spark') { td.appendChild(spark(r.spark)); if (r.spark.length < 2) td.appendChild(document.createTextNode(DASH)); }
+else if (k === 'price') {
+var v = el('span', 'wl-px', cell(r, k)); td.appendChild(v);
+if (r.src) { var bd = el('span', 'wl-bd', r.src === 'live' ? 'LIVE' : ui.badge || 'DELAYED'); bd.dataset.src = r.src; td.appendChild(bd); }
+else td.appendChild(el('span', 'wl-bd', 'not in market file'));
+} else {
+var txt = cell(r, k); if ((k === 'chg24' || k === 'chg7d' || k === 'chg30d') && isN(r[k]) && Number(Math.abs(r[k]).toFixed(2)) !== 0) { td.classList.add(r[k] > 0 ? 'up' : 'down'); txt = (r[k] > 0 ? '▲ ' : '▼ ') + txt; }
+td.textContent = txt;
+}
+row.appendChild(td);
+});
+if (ui.reorder) {
+var tdo = el('td', 'wl-ord'), up = btn('wl-ib', '↑', 'Move ' + r.sym + ' up'), dn = btn('wl-ib', '↓', 'Move ' + r.sym + ' down');
+up.disabled = i === 0; dn.disabled = i === rows.length - 1;
+var mv = function (d) { var s = loadWl2(); s.manual = move(ordered(watchSyms(loadWatch()), s.manual).slice(0, CAP.SYMS), r.sym, d); s.sort = { k: 'manual', dir: 'asc' }; saveWl2(s); haptic(); redraw(); setTimeout(function () { var f = document.querySelector('tr[data-sym="' + r.sym + '"] .wl-ord button:not([disabled])'); if (f) f.focus(); }, 30); };
+up.addEventListener('click', function () { mv(-1); }); dn.addEventListener('click', function () { mv(1); });
+tdo.appendChild(up); tdo.appendChild(dn); row.appendChild(tdo);
+}
+tbody.appendChild(row);
+});
+t.appendChild(tbody); wrap.appendChild(t); return wrap;
+}
+function after(view, t, arg) {
+if (!view) return;
+if (t === 'markets') {
+var chip = view.querySelector('[data-sort="watch"]');
+if (chip && chip.classList.contains('on') && !view.querySelector('.wl-entry')) {
+var a = el('a', 'wl-entry', 'Watchlist: edit, columns, notes'); a.href = '#watch';
+var head = view.querySelector('.mkhead'); if (head && head.parentNode) head.parentNode.insertBefore(a, head.nextSibling);
+}
+}
+if (t === 'chart' && arg && SYM_RE.test(arg)) {
+var hero = view.querySelector('.card.hero'); if (!hero || hero.querySelector('.wl-entry')) return;
+var on = watchSyms(loadWatch()).indexOf(arg) >= 0, st = loadWl2(), n = own(st.notes, arg) ? st.notes[arg].t : '';
+if (!on && !n) return;
+var box = el('div', 'wl-hero');
+if (n) { box.appendChild(el('div', 'wl-hn-l', 'Your note (this phone only)')); box.appendChild(el('div', 'wl-hn', n)); }
+var l = el('a', 'wl-entry', on ? 'In your watchlist: open, notes, columns' : 'Open watchlist notes'); l.href = '#watch'; box.appendChild(l);
+hero.appendChild(box);
+}
+}
+var B2 = G.AwayB2 = G.AwayB2 || { hooks: [] }; if (!B2.hooks) B2.hooks = [];
+B2.hooks.push(after);
+var X = G.AwayExt = G.AwayExt || {};
+X.watch = { title: 'Watchlist', section: 'markets', render: render };
+api.status = function () { return { blocked: mem.blocked, wl2: loadWl2(), watch: loadWatch(), dialog: !!dlg }; };
 })();
 
 /* Away mode: fetch an AES-256-GCM encrypted snapshot (outbound-only relay), authenticate + decrypt it on the phone with a key that never
