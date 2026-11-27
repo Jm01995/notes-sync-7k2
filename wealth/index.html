@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Wealth</title>
+<meta name="theme-color" content="#0b0f14">
+<meta name="color-scheme" content="dark">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-Pb+O3HJzPGPEauLCWJ8scffyH/ayTic8ics72pkD4J8='; style-src 'sha256-KedEvA/8hbijCezaGyjQXycMq3goFK1zcavGWRCFgus='; img-src 'self'; manifest-src 'self'; worker-src 'none'; connect-src https://jm01995.github.io/notes-sync-7k2/live.enc; form-action 'none'; base-uri 'none'">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Wealth">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="../icons/icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="../icons/apple-touch-icon.png">
+<style>:root{--bg:#0b0f14;--card:#141a22;--card2:#1b232d;--fg:#eef2f6;--mut:#9aa8b8;--good:#2fd37a;--bad:#ff6b6b;--warn:#f5b84a;--line:#222c37;--line2:#2c3843;--sat:env(safe-area-inset-top,0px);--sab:env(safe-area-inset-bottom,0px);--r:14px;--pad:16px;color-scheme:dark}
+*{box-sizing:border-box}
+html{margin:0;background:var(--bg);color:var(--fg);-webkit-font-smoothing:antialiased}
+body{margin:0;background:var(--bg);color:var(--fg);font:1rem/1.45 -apple-system,BlinkMacSystemFont,"SF Pro Text",Inter,"Segoe UI",Roboto,sans-serif;padding-top:var(--sat);padding-bottom:calc(var(--sab) + 24px)}
+header{display:flex;align-items:center;gap:8px;padding:12px var(--pad);position:sticky;top:0;background:var(--bg);z-index:5;border-bottom:1px solid var(--line)}
+h1{font-size:1.35rem;margin:0;flex:1}h2{font-size:1.05rem;margin:20px 0 8px;color:var(--mut);font-weight:600}
+.pill{font-size:.75rem;border:1px solid var(--line2);border-radius:99px;padding:3px 10px;color:var(--mut)}
+.back{font-size:.8125rem;color:#9db4cc;text-decoration:none;border:1px solid #2a3a4c;border-radius:10px;padding:2px 10px}
+main{padding:12px var(--pad)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px;margin:0 0 12px}
+.mut{color:var(--mut)}.small{font-size:.8125rem}small{font-size:.8125rem;color:var(--mut)}
+.card.dead,.relay.dead{border-color:#4a3a3a;color:var(--mut);background:#171417}
+.relay{font-size:.8125rem;color:var(--mut);margin:0 0 12px;padding:8px 12px;border:1px solid var(--line);border-radius:10px}
+.relay.late{color:var(--warn)}
+.big{font-size:2.1rem;font-weight:700;letter-spacing:-.5px;margin:2px 0 8px}
+.lbl{font-size:.8125rem;color:var(--mut);margin:0 0 6px;display:block}
+.kv{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-top:1px solid var(--line)}
+.kv span{color:var(--mut)}.kv b{font-weight:600;text-align:right}
+.pos{color:var(--good)}.neg{color:var(--bad)}.warn{color:var(--warn)}
+.pos-row{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.r{text-align:right}
+.tag{font-size:.6875rem;border:1px solid var(--line2);border-radius:6px;padding:1px 6px;color:var(--mut);vertical-align:middle}
+.chip{font-size:.6875rem;border-radius:99px;padding:2px 8px;border:1px solid var(--line2);color:var(--mut)}
+.chip.ok{color:var(--good);border-color:#1f5b3c}.chip.late{color:var(--warn);border-color:#6b5420}.chip.dead{color:var(--bad);border-color:#6b2c2c}
+.mode{border-radius:var(--r);padding:12px 14px;margin:0 0 12px;display:flex;flex-direction:column;gap:2px;border:1px solid var(--line2)}
+.mode b{font-size:1.1rem;letter-spacing:.08em}.mode span{font-size:.8125rem;color:var(--mut)}
+.mode.mock{background:#10202f;border-color:#27527d}.mode.sandbox{background:#2a2410;border-color:#6b5420}.mode.live{background:#2a1414;border-color:#8a2f2f}.mode.nr{background:#171417;border-color:#4a3a3a}
+.killon{border-color:#8a2f2f;background:#2a1414}.killon .state{font-weight:800;letter-spacing:.06em;font-size:1.1rem}.killoff{padding:6px 14px}
+button{font:inherit;color:var(--fg);background:var(--card2);border:1px solid var(--line2);border-radius:12px;min-height:48px;padding:10px 14px;cursor:pointer;touch-action:manipulation}
+input{width:100%;min-height:48px;font:inherit;color:var(--fg);background:#0e141b;border:1px solid var(--line2);border-radius:12px;padding:10px 12px}
+.inrow{display:flex;gap:8px;margin-bottom:8px}.inrow button{min-width:80px}
+summary{cursor:pointer;color:var(--mut);margin-bottom:8px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}</style>
+</head>
+<body>
+<header><h1>Wealth</h1><span class="pill">READ-ONLY</span><a class="back" href="../">Dash</a></header>
+<main id="view" aria-live="polite"></main>
+<script>(function (root) {
+  'use strict';
+  var LIVE_URL = '../live.enc';
+  var MAX_BYTES = 4 * 1024 * 1024, MAX_AGE_S = 5 * 60;
+  var S = { state: 'nokey', msg: '', o: null, seq: 0, asof: 0, src: null, at: 0, notice: '' }, lkey = null, lkid = 0, busy = false, pend = false, sess = { kid: -1, seq: 0 };
+  var listeners = [];
+
+  function E(code, msg) { var e = new Error(msg || code); e.code = code; return e; }
+  function emit() { for (var i = 0; i < listeners.length; i++) { try { listeners[i](status()); } catch (e) { } } }
+  function set(state, msg, extra) { S.state = state; S.msg = msg || ''; if (extra) for (var k in extra) S[k] = extra[k]; emit(); }
+  function status() { return { state: S.state, msg: S.msg, o: S.o, seq: S.seq, asof: S.asof, src: S.src, at: S.at, notice: S.notice, hasKey: !!lkey }; }
+
+  function idb() {
+    return new Promise(function (res, rej) {
+      if (!root.indexedDB) return rej(new Error('no idb'));
+      var r = indexedDB.open('away', 1);
+      r.onupgradeneeded = function () { r.result.createObjectStore('k'); };
+      r.onsuccess = function () { res(r.result); }; r.onerror = function () { rej(r.error); };
+    });
+  }
+  function idbOp(mode, fn) {
+    return idb().then(function (db) {
+      return new Promise(function (res, rej) {
+        var t = db.transaction('k', mode), s = t.objectStore('k'), q = fn(s);
+        t.oncomplete = function () { res(q && q.result); }; t.onerror = function () { rej(t.error); };
+      });
+    });
+  }
+  function getSeq(kid) { return idbOp('readonly', function (s) { return s.get('wseq'); }).then(function (v) { return v && v.kid === kid ? Number(v.seq) || 0 : 0; }, function () { return 0; }).then(function (st) { return Math.max(st, sess.kid === kid ? sess.seq : 0); }); }
+  function putSeq(n) { if (sess.kid !== lkid || n > sess.seq) sess = { kid: lkid, seq: n }; return idbOp('readwrite', function (s) { return s.put({ kid: lkid, seq: n }, 'wseq'); }).catch(function () { }); }
+
+  function b32(s) {
+    var A = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567', bits = 0, v = 0, out = [];
+    for (var i = 0; i < s.length; i++) {
+      var x = A.indexOf(s[i]); if (x < 0) throw E('keyfmt', 'bad character in key');
+      v = (v << 5) | x; bits += 5;
+      if (bits >= 8) { out.push((v >> (bits - 8)) & 255); bits -= 8; }
+    }
+    return new Uint8Array(out);
+  }
+  function parseKey(text) {
+    text = String(text).replace(/[‐-―−⁃﹘﹣－]/g, '-').replace(/[  -​　﻿]/g, ' ');
+    var m = String(text).match(/TAK1[-A-Za-z2-7 ]+/i);
+    var s = (m ? m[0] : String(text)).toUpperCase().replace(/[^A-Z0-9]/g, '');
+    if (s.indexOf('TAK1') === 0) s = s.slice(4);
+    var raw;
+    try { raw = b32(s); } catch (e) { return Promise.reject(e); }
+    if (raw.length !== 35) return Promise.reject(E('keyfmt', 'The key has the wrong length (expect 14 groups of 4 after TAK1).'));
+    var k = raw[0], key = raw.slice(1, 33), chk = raw.slice(33);
+    var pre = new Uint8Array(5 + 32); pre.set([84, 65, 75, 49, k]); pre.set(key, 5);
+    return crypto.subtle.digest('SHA-256', pre).then(function (h) {
+      h = new Uint8Array(h);
+      if (h[0] !== chk[0] || h[1] !== chk[1]) throw E('keyfmt', 'Typo: the key checksum does not match. Check the characters.');
+      return { kid: k, raw: key };
+    });
+  }
+  function importKey(parsed) { return crypto.subtle.importKey('raw', parsed.raw, { name: 'AES-GCM' }, false, ['decrypt']); }
+  function persistKey() {
+    return idbOp('readwrite', function (s) { return s.put({ kid: lkid, key: lkey }, 'livekey'); }).then(function () { return true; }, function () { return false; });
+  }
+  function decode(b, key, kid) {
+    if (arguments.length < 3) { key = lkey; kid = lkid; }
+    if (!key) return Promise.reject(E('nokey', 'no live key'));
+    if (!(b instanceof Uint8Array) || b.length < 50 || b.length > MAX_BYTES) return Promise.reject(E('format', 'live file size'));
+    if (b[0] !== 84 || b[1] !== 65 || b[2] !== 76 || b[3] !== 49 || b[5] !== 0) return Promise.reject(E('format', 'not a live snapshot (bad header)'));
+    var dv = new DataView(b.buffer, b.byteOffset, b.byteLength), k = b[4], seq = Number(dv.getBigUint64(6)), asof = Number(dv.getBigUint64(14));
+    if (k !== kid) return Promise.reject(E('kid', 'the live key was rotated on the PC'));
+    return crypto.subtle.decrypt({ name: 'AES-GCM', iv: b.slice(22, 34), additionalData: b.slice(0, 22), tagLength: 128 }, key, b.slice(34))
+      .then(function (pt) { return pt; }, function () { throw E('auth', 'live file failed authentication'); })
+      .then(function (pt) {
+        var o; try { o = JSON.parse(new TextDecoder().decode(pt)); } catch (e) { throw E('json', 'live file is not valid JSON'); }
+        if (!o || o.v !== 1 || o.schema !== 'live/1' || !o.data || typeof o.data !== 'object' || o.seq !== seq || o.asof !== asof) throw E('shape', 'live file content is not the expected format');
+        return getSeq(kid).then(function (stored) {
+          if (seq < stored) throw E('replay', 'live file older than one already accepted');
+          return { seq: seq, asof: asof, o: o, blob: b };
+        });
+      });
+  }
+  var NOSTORE = 'This browser blocks storage, so the key is kept in memory only and must be pasted again next time.';
+  function accept(r, src, at) {
+    getSeq(lkid).then(function (cur) { if (r.seq > cur) return putSeq(r.seq); });
+    if (pend && src === 'net') { pend = false; persistKey().then(function (ok) { S.notice = ok ? '' : NOSTORE; emit(); }); }
+    if (src === 'net') idbOp('readwrite', function (s) { return s.put({ kid: lkid, blob: r.blob, at: Math.floor(Date.now() / 1000) }, 'wlive'); }).catch(function () { });
+    set('ok', '', { o: r.o, seq: r.seq, asof: r.asof, src: src, at: at || Math.floor(Date.now() / 1000) });
+  }
+  function loadSaved() {
+    return idbOp('readonly', function (s) { return s.get('wlive'); }).then(function (v) {
+      if (!v || v.kid !== lkid || !(v.blob instanceof Uint8Array)) return false;
+      return decode(v.blob).then(function (r) { accept(r, 'saved', v.at); return true; }, function () { return false; });
+    }, function () { return false; });
+  }
+  function fetchLive() {
+    return fetch(LIVE_URL + '?t=' + Date.now(), { cache: 'no-store', credentials: 'omit', redirect: 'error', referrerPolicy: 'no-referrer' }).then(function (r) {
+      if (r.status === 404) throw E('missing', 'no live file at the relay yet');
+      if (!r.ok) throw E('net', 'HTTP ' + r.status);
+      return r.arrayBuffer();
+    }).then(function (ab) { return new Uint8Array(ab); }, function (e) { throw e.code ? e : E('net', 'cannot reach the relay'); });
+  }
+  var TXT = { missing: 'Live file not at the relay yet.', net: 'Cannot reach the relay right now.', auth: 'The live file failed authentication. Nothing from it is shown.',
+    kid: 'The live key was rotated on the PC. Enter the new live key.', replay: 'The live file is older than one this phone already accepted. Refused.',
+    json: 'The live file is not valid data. Refused.', shape: 'The live file is not in the expected format. Refused.', format: 'The file at the live address is not a live snapshot.' };
+  function refresh(force) {
+    if (!lkey) { set('nokey', 'The live key is not on this phone yet.'); return Promise.resolve(); }
+    if (busy) return Promise.resolve();
+    var start = S.o ? Promise.resolve(true) : loadSaved();
+    return start.then(function () {
+      if (!force && S.o && Date.now() / 1000 - S.at < MAX_AGE_S) return;
+      busy = true;
+      return fetchLive().then(decode).then(function (r) { accept(r, 'net'); }, function (e) {
+        var code = e.code || 'net';
+        if (pend && code !== 'missing' && code !== 'net') { lkey = null; lkid = 0; pend = false; }
+        if (S.o && (code === 'missing' || code === 'net')) set('saved', (TXT[code] || e.message) + ' Showing the last verified snapshot.', { src: 'saved' });
+        else set(code === 'missing' ? 'missing' : 'err:' + code, TXT[code] || e.message, code === 'missing' || code === 'net' ? {} : { o: null });
+      }).then(function () { busy = false; }, function () { busy = false; });
+    });
+  }
+  function setKey(text) {
+    var cand, parsed;
+    return parseKey(text).then(function (p) { parsed = p; return importKey(p); }).then(function (k) {
+      cand = k;
+      return fetchLive().then(function (b) { return decode(b, cand, parsed.kid); }).then(function (r) { return { r: r }; }, function (e) {
+        if (e.code === 'auth' || e.code === 'kid' || e.code === 'format' || e.code === 'json' || e.code === 'shape') throw E('wrongkey', 'That key did not open the relay file');
+        if (e.code === 'replay') throw e;
+        return { r: null, e: e };
+      });
+    }).then(function (o) {
+      if (!o.r) {
+        if (lkey) throw o.e;
+        lkey = cand; lkid = parsed.kid; pend = true; S.o = null; S.at = 0;
+        S.notice = 'Key not saved yet: it is kept in memory until it opens the relay file.';
+        set('err:' + (o.e.code || 'net'), (o.e.message || 'Cannot reach the relay right now.')); return;
+      }
+      lkey = cand; lkid = parsed.kid; pend = false; S.o = null; S.at = 0;
+      return persistKey().then(function (ok) { S.notice = ok ? '' : NOSTORE; accept(o.r, 'net'); });
+    });
+  }
+  function init() {
+    return idbOp('readonly', function (s) { return s.get('livekey'); }).then(function (v) { if (v && v.key) { lkey = v.key; lkid = v.kid; } }).catch(function () { }).then(function () { return refresh(false); });
+  }
+  root.WealthRelay = { status: status, refresh: refresh, setKey: setKey, init: init, on: function (f) { listeners.push(f); }, parseKey: parseKey };
+  if (typeof module !== 'undefined' && module.exports) module.exports = root.WealthRelay;
+})(typeof window !== 'undefined' ? window : globalThis);
+(function (root) {
+  'use strict';
+  var FRESH_MIN = 15, DEAD_MIN = 30;
+  function num(x) { if (x == null || x === '') return null; var v = Number(x); return isFinite(v) ? v : null; }
+  function usd(v) { v = num(v); return v == null ? '-' : (v < 0 ? '-$' : '$') + Math.abs(v).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+  function signed(v) { v = num(v); return v == null ? '-' : (v > 0 ? '+' : '') + usd(v); }
+  function cls(v) { v = num(v); return v == null || v === 0 ? '' : v > 0 ? 'pos' : 'neg'; }
+  function str(x) { return x == null ? '' : String(x); }
+  function modeClass(m) { return { MOCK: 'mock', SANDBOX: 'sandbox', LIVE: 'live' }[m] || 'nr'; }
+
+  function model(status, now) {
+    now = now || Date.now() / 1000;
+    var d = status && status.o && status.o.data ? status.o.data : null;
+    var w = d && d.wealth && typeof d.wealth === 'object' ? d.wealth : null;
+    var relayAge = status && status.asof ? (now - status.asof) / 60 : null;
+    var m = { state: 'none', w: null, ageMin: null, cls: 'dead', relayAge: relayAge };
+    if (!status || !d) { m.state = 'norelay'; return m; }
+    if (!w) return m;
+    if (w.error) { m.state = 'error'; return m; }
+    var age = num(w.asof) != null ? Math.max(0, (now - num(w.asof)) / 60) : null;
+    m.w = w; m.ageMin = age;
+    if (age == null || w.stale === true || age > DEAD_MIN || (relayAge != null && relayAge > DEAD_MIN)) { m.state = 'dead'; m.cls = 'dead'; }
+    else { m.state = age <= FRESH_MIN && (relayAge == null || relayAge <= FRESH_MIN) ? 'ok' : 'late'; m.cls = m.state; }
+    return m;
+  }
+
+  function view(doc) {
+    function h(tag, c, text, kids) {
+      var e = doc.createElement(tag);
+      if (c) e.className = c;
+      if (text != null && text !== '') e.textContent = text;
+      if (kids) for (var i = 0; i < kids.length; i++) if (kids[i]) e.appendChild(kids[i]);
+      return e;
+    }
+    function kv(l, r, c) { return h('div', 'kv', null, [h('span', '', l), h('b', c || '', r)]); }
+    function note(text, c) { return h('div', 'card ' + (c || 'mut'), text); }
+
+    function banner(w) { return h('div', 'mode ' + modeClass(w.mode), null, [h('b', '', str(w.mode) || 'UNKNOWN'), h('span', '', str(w.mode_banner))]); }
+    function stamp(m) {
+      var w = m.w, t = w.asof_hms ? 'as of ' + str(w.asof_hms) + ' UTC' : 'time unknown';
+      var chip = m.state === 'dead' ? 'NOT REPORTING' : Math.round(m.ageMin) + ' min ago';
+      return h('div', 'relay ' + m.cls, 'Wealth Platform ' + t + ', mode ' + (str(w.mode) || 'UNKNOWN') + ' ', [h('span', 'chip ' + m.cls, chip)]);
+    }
+    function killCard(w) {
+      var k = w.kill || {}, kids = [];
+      if (k.engaged) {
+        kids.push(h('div', 'state neg', 'KILL SWITCH ENGAGED'));
+        kids.push(h('div', 'mut small', 'Trading is stopped until it is reset on the platform.' + (k.reason ? ' Reason: ' + str(k.reason) : '')));
+        if (w.breaker) kids.push(kv('Loss breaker', 'TRIPPED', 'neg'));
+        return h('div', 'card killon', null, kids);
+      }
+      kids.push(kv('Kill switch', 'off'));
+      if (w.breaker) kids.push(kv('Loss breaker', 'TRIPPED', 'neg'));
+      return h('div', 'card killoff', null, kids);
+    }
+    function totalCard(w) {
+      var t = w.total || {}, kids = [h('div', 'lbl', 'Total value'), h('div', 'big', usd(t.net_liq)), kv('Day gain / loss', signed(t.day_pnl), cls(t.day_pnl)), kv('Cash', usd(t.cash))];
+      if (t.unallocated != null) kids.push(kv('Not in a bucket', usd(t.unallocated)));
+      return h('div', 'card hero', null, kids);
+    }
+    function pair(left, rTop, rSub, rCls) {
+      return h('div', 'card pos-row', null, [h('div', '', null, left), h('div', 'r', null, [h('b', '', rTop), h('br'), h('small', rCls || '', rSub)])]);
+    }
+    function bucketRows(w) {
+      var bs = Array.isArray(w.buckets) ? w.buckets : [];
+      if (!bs.length) return [note('No buckets reported.')];
+      return bs.map(function (b) {
+        var dr = num(b.drift_pct), warn = dr != null && Math.abs(dr) >= 5;
+        var small = h('small', '', 'target ' + usd(b.target) + (dr != null ? ' · ' : ''), dr != null ? [h('span', warn ? 'warn' : '', 'drift ' + dr.toFixed(1) + ' pts')] : null);
+        return pair([h('b', '', str(b.name)), h('br'), small], usd(b.value), signed(b.pnl), cls(b.pnl));
+      });
+    }
+    function positionRows(w) {
+      var ps = Array.isArray(w.positions) ? w.positions : [];
+      if (!ps.length) return [note('No open positions.')];
+      return ps.map(function (p) {
+        var left = [h('b', '', str(p.symbol)), h('br'), h('small', '', str(p.qty) + (num(p.weight_pct) != null ? ' · ' + str(p.weight_pct) + '%' : ''))];
+        return pair(left, usd(p.value), signed(p.pnl), cls(p.pnl));
+      });
+    }
+    function approvalRows(w) {
+      var as = Array.isArray(w.approvals) ? w.approvals : [], out = [h('h2', '', 'Waiting for your approval (' + as.length + ')')];
+      if (!as.length) { out.push(note('Nothing is waiting.')); return out; }
+      as.forEach(function (a) {
+        var left = [h('b', '', str(a.kind) + ' ' + str(a.symbol)), h('br'), h('small', '', str(a.strategy) + (a.age_min != null ? ' · ' + str(a.age_min) + ' min ago' : '')), h('br'), h('small', '', str(a.reason))];
+        out.push(h('div', 'card pos-row', null, [h('div', '', null, left), h('div', 'r', null, [h('span', 'tag', '#' + str(a.ref))])]));
+      });
+      out.push(h('div', 'mut small', 'Shown for information only. Nothing can be answered from this page.'));
+      return out;
+    }
+    function alertRows(w) {
+      var al = Array.isArray(w.alerts) ? w.alerts : [];
+      if (!al.length) return [];
+      return [h('h2', '', 'Alerts')].concat(al.map(function (a) { return h('div', 'card' + (a.level === 'FAIL' ? ' dead' : ''), null, [h('span', 'tag', str(a.level)), h('span', '', ' ' + str(a.text))]); }));
+    }
+    function render(status, now) {
+      var m = model(status, now);
+      if (m.state === 'norelay') return [note('Wealth Platform: NOT REPORTING. The relay file is not on this phone yet. Enter the live key below.', 'dead')];
+      if (m.state === 'none') return [note('Wealth Platform: NOT REPORTING. The relay is up but the platform is not publishing.', 'dead')];
+      if (m.state === 'error') return [note('Wealth Platform: NOT REPORTING. Its snapshot could not be read on the PC.', 'dead')];
+      var w = m.w, out = [banner(w), stamp(m)];
+      if (m.state === 'dead') return out.concat([note('NOT REPORTING. The last snapshot is older than ' + DEAD_MIN + ' minutes, so no values are shown. Open the platform on the PC.', 'dead'), killCard(w)]);
+      out.push(killCard(w), totalCard(w));
+      out = out.concat(approvalRows(w), [h('h2', '', 'Buckets')], bucketRows(w), [h('h2', '', 'Positions')], positionRows(w), alertRows(w));
+      if (Array.isArray(w.errors) && w.errors.length) out.push(h('div', 'mut small', 'Some parts could not be read: ' + w.errors.map(str).join(', ')));
+      return out;
+    }
+    return { render: render, h: h, note: note };
+  }
+  root.WealthView = { model: model, view: view, DEAD_MIN: DEAD_MIN, FRESH_MIN: FRESH_MIN };
+  if (typeof module !== 'undefined' && module.exports) module.exports = root.WealthView;
+})(typeof window !== 'undefined' ? window : globalThis);
+(function () {
+  'use strict';
+  var V = window.WealthView, R = window.WealthRelay, view = document.getElementById('view'), api = V.view(document), keyOpen = false;
+
+  function keyBox(needed) {
+    var inp = document.createElement('input'), btn = document.createElement('button'), out = api.h('div', 'mut small', ''), row = api.h('div', 'inrow');
+    inp.type = 'password'; inp.autocomplete = 'off'; inp.spellcheck = false; inp.setAttribute('aria-label', 'Live key'); inp.placeholder = 'TAK1-...';
+    btn.type = 'button'; btn.textContent = 'Save key';
+    function go() { var v = inp.value; inp.value = ''; R.setKey(v).then(function () { render(); }, function (err) { out.textContent = err && err.message ? err.message : 'Key not accepted.'; }); }
+    btn.addEventListener('click', go);
+    inp.addEventListener('keydown', function (e) { if (e.key === 'Enter') go(); });
+    row.appendChild(inp); row.appendChild(btn);
+    var body = [api.h('div', 'lbl', 'Live key (paste once, kept on this phone as a non-extractable key)'), row, out];
+    if (needed) return api.h('div', 'card', null, body);
+    var d = document.createElement('details'), s = document.createElement('summary');
+    s.textContent = 'Replace the live key'; d.appendChild(s); body.forEach(function (n) { d.appendChild(n); });
+    d.className = 'card'; if (keyOpen) d.open = true; d.addEventListener('toggle', function () { keyOpen = d.open; });
+    return d;
+  }
+  function render() {
+    var st = R.status(), needed = st.state === 'nokey' || st.state === 'err:kid' || st.state === 'err:auth' || st.state === 'err:keyfmt', nodes = [];
+    if (needed) nodes.push(api.h('div', 'card dead', st.msg || 'The live key is not on this phone yet.'));
+    else nodes = nodes.concat(api.render(st, Date.now() / 1000));
+    if (!needed && st.state !== 'ok' && st.msg) nodes.push(api.h('div', 'mut small', st.msg));
+    if (st.notice) nodes.push(api.h('div', 'mut small', st.notice));
+    nodes.push(keyBox(needed));
+    view.textContent = '';
+    nodes.forEach(function (n) { view.appendChild(n); });
+  }
+  R.on(function () { var a = document.activeElement; if (!(a && a.tagName === 'INPUT')) render(); });
+  setInterval(function () { var a = document.activeElement; if (!document.hidden && !(a && a.tagName === 'INPUT')) render(); }, 30000);
+  setInterval(function () { if (!document.hidden) R.refresh(false); }, 60000);
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) R.refresh(false); });
+  render();
+  if (window.crypto && crypto.subtle) R.init().then(render); else view.textContent = 'This browser cannot do the decryption needed. Open the page from its https address.';
+})();
+</script>
+</body>
+</html>
